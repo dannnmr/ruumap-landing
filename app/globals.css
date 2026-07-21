@@ -36,12 +36,14 @@
   animation: ruum-bounce 1.6s ease-in-out infinite;
 }
 
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-}
+@layer base {
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }

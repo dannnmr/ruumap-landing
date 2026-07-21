@@ -9,8 +9,14 @@ import { siteContent } from "@/content/site";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const { eyebrow, titleLines, subcopy, primaryCta, secondaryCta, backgroundImages } =
-  siteContent.hero;
+const {
+  eyebrow,
+  titleLines,
+  subcopy,
+  primaryCta,
+  secondaryCta,
+  backgroundImages,
+} = siteContent.hero;
 
 const SLIDE_COUNT = backgroundImages.length;
 
@@ -45,7 +51,7 @@ export default function Hero() {
       introTl.fromTo(
         lines,
         { yPercent: 100 },
-        { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.12 }
+        { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.12 },
       );
 
       if (introRef.current) {
@@ -53,7 +59,7 @@ export default function Hero() {
           introRef.current.children,
           { opacity: 0, y: 18 },
           { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.1 },
-          "-=0.6"
+          "-=0.6",
         );
       }
 
@@ -106,21 +112,23 @@ export default function Hero() {
       window.addEventListener("mousemove", handleMouseMove);
       return () => window.removeEventListener("mousemove", handleMouseMove);
     },
-    { scope: sectionRef }
+    { scope: sectionRef },
   );
 
   return (
     <section
       ref={sectionRef}
       data-hero
-      className="relative h-screen overflow-hidden"
-    >
+      className="relative h-screen overflow-hidden">
       {/* Carrusel: track de N slides al 100vw cada uno, trasladado por scroll.
           Cada slide mide exactamente 100vw (w-screen), no un porcentaje
           calculado (100/3% es un decimal periódico y puede dejar un hueco
           de subpíxel entre slides en el límite entre uno y otro). El track
           no necesita ancho explícito: al ser flex con hijos shrink-0, su
-          ancho total sale solo por overflow, y la sección ya lo recorta. */}
+          ancho total sale solo por overflow, y la sección ya lo recorta.
+          Las imágenes son solo el fondo (mismo tamaño, se mueven con el
+          track); el oscurecimiento vive en una única capa estática por
+          fuera del track, para que no quede fragmentado por slide. */}
       <div ref={trackRef} className="absolute inset-0 flex h-full">
         {backgroundImages.map((image, i) => (
           <div key={image.src} className="relative h-full w-screen shrink-0">
@@ -128,8 +136,7 @@ export default function Hero() {
               ref={(el) => {
                 slideRefs.current[i] = el;
               }}
-              className="absolute -inset-[4%] will-change-transform"
-            >
+              className="absolute -inset-[4%] will-change-transform">
               <Image
                 src={image.src}
                 alt={image.alt}
@@ -139,13 +146,14 @@ export default function Hero() {
                 className="object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-background/40" />
           </div>
         ))}
       </div>
 
-      {/* Degradado de contraste para el texto */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_top,oklch(12%_0_0)_10%,transparent_55%)]" />
+      {/* Overlay estático: tinte plano + degradado de contraste, fijo encima
+          del carrusel (no está dentro del track, así que no se traslada). */}
+      <div className="absolute inset-0 bg-background/50" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_top,oklch(12%_0_0)_0%,oklch(12%_0_0/0.35)_50%,transparent_90%)]" />
 
       {/* Contenido, fijo mientras dura el pin */}
       <div className="relative max-w-[820px] px-5 pb-10 pt-24 sm:px-10 sm:pt-20 lg:px-16">
@@ -155,16 +163,14 @@ export default function Hero() {
 
         <h1
           className="mb-7 font-display font-bold leading-[0.98] tracking-tight text-white
-                     drop-shadow-lg text-[clamp(38px,8vw,92px)]"
-        >
+                     drop-shadow-lg text-[clamp(38px,8vw,92px)]">
           {titleLines.map((line, i) => (
             <span key={line} className="block overflow-hidden">
               <span
                 ref={(el) => {
                   lineRefs.current[i] = el;
                 }}
-                className="block will-change-transform"
-              >
+                className="block will-change-transform">
                 {line}
               </span>
             </span>
@@ -181,16 +187,14 @@ export default function Hero() {
               href={primaryCta.href}
               className="rounded-full bg-accent px-7 py-[13px] text-[13px] font-bold text-background
                          transition-all duration-500 hover:scale-105 hover:opacity-90 active:scale-95
-                         sm:text-[13.5px]"
-            >
+                         sm:text-[13.5px]">
               {primaryCta.label}
             </a>
             <a
               href={secondaryCta.href}
               className="rounded-full border border-white/20 px-7 py-[13px] text-[13px] font-semibold text-white
                          transition-all duration-500 hover:scale-105 hover:border-white/50
-                         hover:bg-white/5 active:scale-95 sm:text-[13.5px]"
-            >
+                         hover:bg-white/5 active:scale-95 sm:text-[13.5px]">
               {secondaryCta.label}
             </a>
           </div>
@@ -200,8 +204,7 @@ export default function Hero() {
       {/* Indicador de scroll */}
       <div
         className="absolute bottom-[34px] left-1/2 hidden h-[34px] w-[22px] -translate-x-1/2
-                   justify-center rounded-[14px] border-[1.5px] border-white/20 pt-[6px] sm:flex"
-      >
+                   justify-center rounded-[14px] border-[1.5px] border-white/20 pt-[6px] sm:flex">
         <div className="h-2 w-[3px] animate-ruum-bounce rounded-full bg-accent" />
       </div>
     </section>

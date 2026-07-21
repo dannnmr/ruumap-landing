@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="mx-auto mb-12 grid max-w-[1400px] grid-cols-1 gap-10 sm:mb-16 sm:grid-cols-2 lg:mb-[60px] lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Image
-            src="/assets/ruum_logo_black.png"
+            src="/assets/ruum_logo.svg"
             alt={brand.name}
             width={96}
             height={24}
@@ -30,8 +30,7 @@ export default function Footer() {
                 <a
                   key={link}
                   href="#"
-                  className="w-fit transition-colors duration-300 hover:text-accent"
-                >
+                  className="w-fit transition-colors duration-300 hover:text-accent">
                   {link}
                 </a>
               ))}
@@ -41,7 +40,8 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto max-w-[1400px] border-t border-border pt-[30px] text-[13px] text-muted-7">
-        © {new Date().getFullYear()} {brand.name}. Todos los derechos reservados.
+        © {new Date().getFullYear()} {brand.name}. Todos los derechos
+        reservados.
       </div>
     </footer>
   );
