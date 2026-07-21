@@ -32,12 +32,19 @@ export default function HowItWorks() {
       cards.forEach((card, i) => {
         if (!card) return;
 
+        const isLast = i === cards.length - 1;
+
         ScrollTrigger.create({
           trigger: card,
           start: "top top",
           end: "+=100%",
           pin: true,
-          pinSpacing: false,
+          // Las tarjetas intermedias reciben su espacio de scroll "gratis"
+          // de la siguiente tarjeta (misma altura, apilada justo debajo).
+          // La última no tiene quién le regale ese espacio: si también usa
+          // pinSpacing:false, el documento queda 100vh corto y todo lo que
+          // sigue (ClosingCTA, Footer) se vuelve inalcanzable con scroll.
+          pinSpacing: !isLast ? false : true,
         });
 
         const nextCard = cards[i + 1];
