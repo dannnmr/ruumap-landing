@@ -18,8 +18,8 @@
   --color-muted-6: oklch(60% 0 0);
   --color-muted-7: oklch(55% 0 0);
 
-  --font-display: "Syne", ui-sans-serif, sans-serif;
-  --font-sans: "Public Sans", ui-sans-serif, sans-serif;
+  --font-display: "Playfair Display", ui-serif, serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, sans-serif;
 }
 
 @keyframes ruum-bounce {
@@ -34,10 +34,6 @@
 
 .animate-ruum-bounce {
   animation: ruum-bounce 1.6s ease-in-out infinite;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {

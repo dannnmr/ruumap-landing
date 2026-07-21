@@ -51,10 +51,7 @@ const PROJECTS: Project[] = [
 
 export default function AvailabilityCatalog() {
   return (
-    <section
-      id="proyectos"
-      className="mx-auto max-w-[1400px] scroll-mt-24 px-5 py-20 sm:px-10 sm:py-28 lg:px-16 lg:py-[150px]"
-    >
+    <section className="mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28 lg:px-16 lg:py-[150px]">
       <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:mb-[18px] sm:text-[12.5px]">
         Portafolio de casos de éxito
       </p>
