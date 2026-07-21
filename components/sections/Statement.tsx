@@ -1,9 +1,68 @@
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { siteContent } from "@/content/site";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const words = siteContent.statement.text.split(" ");
+
+/**
+ * Statement a pantalla completa: cada palabra arranca en opacity 0.15 y
+ * sube a opacity 1 individualmente, con un tween scrub -> el "avance" de
+ * la revelación está atado 1:1 a la posición del scroll (no al tiempo).
+ */
 export default function Statement() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
+
+  useGSAP(
+    () => {
+      if (!sectionRef.current) return;
+
+      const targets = wordRefs.current.filter(Boolean);
+
+      gsap.fromTo(
+        targets,
+        { opacity: 0.15 },
+        {
+          opacity: 1,
+          duration: 1,
+          stagger: 0.3,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section className="mx-auto max-w-[1100px] px-5 py-20 text-center sm:px-10 sm:py-32 lg:py-[180px]">
-      <p className="font-display text-[24px] font-bold leading-[1.4] tracking-tight text-white sm:text-[32px] lg:text-[42px] lg:leading-[1.35]">
-        De un plano estático a una experiencia navegable: recorridos virtuales,
-        planos 2D/3D y amenidades exploradas al detalle, unidad por unidad.
+    <section
+      ref={sectionRef}
+      className="flex min-h-screen items-center justify-center px-5 py-24 sm:px-10 lg:px-16"
+    >
+      <p className="max-w-[1400px] text-center font-display text-[clamp(30px,6.5vw,76px)] font-bold leading-[1.15] tracking-tight text-white">
+        {words.map((word, i) => (
+          <span
+            key={`${word}-${i}`}
+            ref={(el) => {
+              wordRefs.current[i] = el;
+            }}
+            className="inline-block"
+          >
+            {word}
+            {i < words.length - 1 ? " " : ""}
+          </span>
+        ))}
       </p>
     </section>
   );

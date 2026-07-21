@@ -1,10 +1,7 @@
 import Image from "next/image";
+import { siteContent } from "@/content/site";
 
-const FOOTER_COLUMNS = [
-  { title: "Producto", links: ["Recorridos virtuales", "Planos 2D/3D", "Amenidades", "Precios"] },
-  { title: "Compañía", links: ["Nosotros", "Contacto"] },
-  { title: "Legal", links: ["Privacidad", "Términos"] },
-];
+const { brand, footer } = siteContent;
 
 export default function Footer() {
   return (
@@ -13,18 +10,17 @@ export default function Footer() {
         <div>
           <Image
             src="/assets/ruum_logo_black.png"
-            alt="ruum"
+            alt={brand.name}
             width={96}
             height={24}
             className="mb-[18px] h-6 w-auto"
           />
           <p className="max-w-[280px] text-sm font-medium leading-relaxed text-gray-300">
-            Recorridos virtuales, planos 2D/3D interactivos y exploración de
-            amenidades para que agentes y desarrolladores vendan más rápido.
+            {footer.tagline}
           </p>
         </div>
 
-        {FOOTER_COLUMNS.map((column) => (
+        {footer.columns.map((column) => (
           <div key={column.title}>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.08em] text-muted-7">
               {column.title}
@@ -45,7 +41,7 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto max-w-[1400px] border-t border-border pt-[30px] text-[13px] text-muted-7">
-        © {new Date().getFullYear()} ruum. Todos los derechos reservados.
+        © {new Date().getFullYear()} {brand.name}. Todos los derechos reservados.
       </div>
     </footer>
   );

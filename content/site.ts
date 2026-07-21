@@ -27,9 +27,14 @@ export type Step = {
   index: string;
   title: string;
   description: string;
+  image: SiteImage;
 };
 
 export const siteContent = {
+  brand: {
+    name: "Ruumap",
+  },
+
   meta: {
     title: "Ruumap — Visualización arquitectónica que vende antes de construir",
     description:
@@ -53,10 +58,24 @@ export const siteContent = {
       "Ruumap transforma planos y renders en experiencias digitales inmersivas —recorridos virtuales, planos 2D/3D interactivos y plataformas web— para que tu próximo desarrollo se venda antes de la primera piedra.",
     primaryCta: { label: "Ver portafolio", href: "#proyectos" },
     secondaryCta: { label: "Hablemos del proyecto", href: "#contacto" },
-    backgroundImage: {
-      src: "https://images.unsplash.com/photo-1767342976156-83239d26f08e?q=80&w=1920&auto=format&fit=crop",
-      alt: "Arquitectura nocturna abstracta, fachadas de rascacielos en contraluz",
-    } satisfies SiteImage,
+    backgroundImages: [
+      {
+        src: "https://images.unsplash.com/photo-1767342976156-83239d26f08e?q=80&w=1920&auto=format&fit=crop",
+        alt: "Arquitectura nocturna abstracta, fachadas de rascacielos en contraluz",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1661263759183-e7937131b420?q=80&w=1920&auto=format&fit=crop",
+        alt: "Skyline nocturno de rascacielos de lujo en contraluz",
+      },
+      {
+        src: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1920&auto=format&fit=crop",
+        alt: "Torres residenciales premium al atardecer junto al agua",
+      },
+    ] satisfies SiteImage[],
+  },
+
+  statement: {
+    text: "De un plano estático a una experiencia navegable: recorridos virtuales, planos 2D/3D y amenidades exploradas al detalle, unidad por unidad.",
   },
 
   revealGallery: {
@@ -150,18 +169,30 @@ export const siteContent = {
         title: "Digitalizamos tu desarrollo",
         description:
           "Partimos de tus planos y renders para construir un recorrido virtual, planos 2D/3D interactivos y amenidades navegables, listos para usarse como herramienta de ventas.",
+        image: {
+          src: "https://images.unsplash.com/photo-1723367194881-fe2e53534170?q=80&w=1400&auto=format&fit=crop",
+          alt: "Vista aérea de una planta arquitectónica digitalizada",
+        },
       },
       {
         index: "02",
         title: "Tus agentes cierran con confianza",
         description:
           "En cada visita o llamada, el equipo comercial muestra unidades, vistas y terminaciones reales sin depender de renders sueltos ni maquetas físicas.",
+        image: {
+          src: "https://images.unsplash.com/photo-1590985607645-75e6570fa4aa?q=80&w=1400&auto=format&fit=crop",
+          alt: "Skyline nocturno premium que un agente comparte con el cliente",
+        },
       },
       {
         index: "03",
         title: "El prospecto visualiza y decide",
         description:
           "El cliente final recorre el proyecto como si ya estuviera construido, acelerando la decisión de compra antes del primer ladrillo.",
+        image: {
+          src: "https://images.unsplash.com/photo-1663092340359-6a53ba3a3066?q=80&w=1400&auto=format&fit=crop",
+          alt: "Desarrollo ya visualizado por completo, listo para decidir",
+        },
       },
     ] satisfies Step[],
   },

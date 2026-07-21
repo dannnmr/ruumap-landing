@@ -5,77 +5,88 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { siteContent } from "@/content/site";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-type FeatureSectionProps = {
-  index: string;
-  title: string;
-  description: string;
-  image: string;
-  alt: string;
-  reverse?: boolean;
-};
+const { features } = siteContent;
 
 /**
- * Parallax de imagen con useGSAP, equivalente a [data-parallax-wrap] /
- * [data-parallax-img] de la maqueta: yPercent -14, scrub.
+ * Horizontal scroll pinned: la sección queda fija en viewport y el track
+ * de tarjetas se traslada en px (no %) en función del scroll vertical,
+ * de derecha a izquierda. La distancia de scroll necesaria es exactamente
+ * el overflow horizontal del track (scrollWidth - innerWidth), así el
+ * mapeo scroll -> desplazamiento es 1:1 sin importar cuántas tarjetas haya
+ * ni su ancho responsive.
  */
-export default function FeatureSection({
-  index,
-  title,
-  description,
-  image,
-  alt,
-  reverse = false,
-}: FeatureSectionProps) {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLDivElement>(null);
+export default function FeatureSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (!imgRef.current || !wrapRef.current) return;
+      if (!sectionRef.current || !trackRef.current) return;
 
-      gsap.to(imgRef.current, {
-        yPercent: -14,
-        ease: "none",
-        scrollTrigger: {
-          trigger: wrapRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
+      const track = trackRef.current;
+      const dwell = 0.4; // fracción extra de scroll para "descansar" en la última tarjeta
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: () => `+=${(track.scrollWidth - window.innerWidth) * (1 + dwell)}`,
+            pin: true,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        })
+        .to(track, {
+          x: () => -(track.scrollWidth - window.innerWidth),
+          ease: "none",
+          duration: 1,
+        })
+        .to({}, { duration: dwell });
     },
-    { scope: wrapRef }
+    { scope: sectionRef }
   );
 
   return (
     <section
-      className="mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-10
-                 px-5 py-20 sm:px-10 sm:py-28 md:grid-cols-2 md:gap-16 lg:gap-20 lg:px-16 lg:py-[150px]"
+      ref={sectionRef}
+      id="servicios"
+      className="relative h-screen overflow-hidden scroll-mt-24"
     >
       <div
-        ref={wrapRef}
-        data-parallax-wrap
-        className={`relative aspect-[4/3] overflow-hidden rounded-xl ${
-          reverse ? "order-1 md:order-2" : "order-1"
-        }`}
+        ref={trackRef}
+        className="flex h-full items-center gap-6 pl-5 pr-[12vw] will-change-transform sm:gap-10 sm:pl-10 lg:gap-14 lg:pl-16"
       >
-        <div ref={imgRef} data-parallax-img className="absolute inset-x-0 -top-[10%] h-[120%]">
-          <Image src={image} alt={alt} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
-        </div>
-      </div>
-      <div className={reverse ? "order-2 md:order-1" : "order-2"}>
-        <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-accent sm:mb-4 sm:text-[12.5px]">
-          {index}
-        </p>
-        <h3 className="mb-4 font-display text-[26px] font-extrabold tracking-tight text-white sm:mb-[18px] sm:text-[34px]">
-          {title}
-        </h3>
-        <p className="max-w-[460px] font-sans text-[15px] font-medium leading-relaxed text-gray-100 sm:text-[16.5px]">
-          {description}
-        </p>
+        {features.map((feature) => (
+          <article
+            key={feature.index}
+            className="relative h-[68vh] w-[82vw] shrink-0 overflow-hidden rounded-xl sm:h-[70vh] sm:w-[60vw] lg:w-[38vw]"
+          >
+            <Image
+              src={feature.image.src}
+              alt={feature.image.alt}
+              fill
+              sizes="(min-width: 1024px) 38vw, (min-width: 640px) 60vw, 82vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-10">
+              <p className="mb-3 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-accent drop-shadow-lg sm:mb-4">
+                {feature.index}
+              </p>
+              <h3 className="mb-4 font-display text-[26px] font-bold leading-[1.05] tracking-tight text-white drop-shadow-lg sm:text-[32px]">
+                {feature.title}
+              </h3>
+              <p className="max-w-[420px] font-sans text-[14px] font-medium leading-relaxed text-gray-100 drop-shadow-lg sm:text-[15px]">
+                {feature.description}
+              </p>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

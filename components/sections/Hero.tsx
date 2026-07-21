@@ -9,53 +9,102 @@ import { siteContent } from "@/content/site";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const { eyebrow, titleLines, subcopy, primaryCta, secondaryCta, backgroundImage } =
+const { eyebrow, titleLines, subcopy, primaryCta, secondaryCta, backgroundImages } =
   siteContent.hero;
 
+const SLIDE_COUNT = backgroundImages.length;
+
 /**
- * Hero con dos animaciones GSAP:
- * 1. Text masking del título — cada línea vive en un contenedor
- *    overflow-hidden y su span interno emerge con yPercent 100 -> 0.
- * 2. Parallax "scrub" del fondo atado al scroll de la sección.
+ * Hero con tres animaciones GSAP independientes:
+ * 1. Text masking del título al montar (yPercent 100 -> 0 por línea).
+ * 2. Carrusel scroll-driven: la sección queda pinned y el track de
+ *    imágenes se traslada horizontalmente en sincronía con el scroll
+ *    vertical (scrub). Al agotarse el recorrido, el scroll continúa
+ *    normalmente hacia la siguiente sección.
+ * 3. Mouse parallax: cada imagen del carrusel se desplaza sutilmente en
+ *    dirección opuesta al cursor, sobre un lienzo sobredimensionado para
+ *    no exponer bordes.
+ *
+ * Sin flechas ni dots: la única forma de avanzar es el scroll.
  */
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const imgWrapRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const lineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const introRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      if (!imgWrapRef.current || !sectionRef.current) return;
+      if (!sectionRef.current || !trackRef.current) return;
 
-      gsap.to(imgWrapRef.current, {
-        yPercent: 16,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
+      // 1. Text masking de entrada
       const lines = lineRefs.current.filter(Boolean);
-      const tl = gsap.timeline({ delay: 0.15 });
+      const introTl = gsap.timeline({ delay: 0.15 });
 
-      tl.fromTo(
+      introTl.fromTo(
         lines,
         { yPercent: 100 },
         { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.12 }
       );
 
       if (introRef.current) {
-        tl.fromTo(
+        introTl.fromTo(
           introRef.current.children,
           { opacity: 0, y: 18 },
           { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.1 },
           "-=0.6"
         );
       }
+
+      // 2. Carrusel horizontal pinned, atado al scroll vertical.
+      // Traslado en px (no xPercent: xPercent es relativo al ancho propio
+      // del track, que mide SLIDE_COUNT*100% del viewport, no el 100% de
+      // un slide — usarlo aquí sobrestima el desplazamiento y el track
+      // termina desplazándose mucho más allá de su contenido real).
+      const track = trackRef.current;
+      const dwell = 0.35; // fracción extra de scroll para "descansar" en el último slide
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: () => `+=${(SLIDE_COUNT - 1 + dwell) * window.innerHeight}`,
+            pin: true,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        })
+        .to(track, {
+          x: () => -(track.scrollWidth - window.innerWidth),
+          ease: "none",
+          duration: SLIDE_COUNT - 1,
+        })
+        .to({}, { duration: dwell });
+
+      // 3. Mouse parallax sobre las imágenes del carrusel
+      const parallaxSetters = slideRefs.current
+        .filter((el): el is HTMLDivElement => Boolean(el))
+        .map((el) => ({
+          x: gsap.quickTo(el, "x", { duration: 0.7, ease: "power3.out" }),
+          y: gsap.quickTo(el, "y", { duration: 0.7, ease: "power3.out" }),
+        }));
+
+      const strength = 22;
+
+      function handleMouseMove(event: MouseEvent) {
+        const relX = (event.clientX / window.innerWidth - 0.5) * 2;
+        const relY = (event.clientY / window.innerHeight - 0.5) * 2;
+
+        parallaxSetters.forEach(({ x, y }) => {
+          x(-relX * strength);
+          y(-relY * strength);
+        });
+      }
+
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => window.removeEventListener("mousemove", handleMouseMove);
     },
     { scope: sectionRef }
   );
@@ -64,25 +113,41 @@ export default function Hero() {
     <section
       ref={sectionRef}
       data-hero
-      className="relative flex h-screen items-center overflow-hidden"
+      className="relative h-screen overflow-hidden"
     >
-      {/* Fondo parallax: arquitectura nocturna abstracta */}
-      <div ref={imgWrapRef} data-hero-img className="absolute inset-x-0 -top-[15%] h-[130%]">
-        <Image
-          src={backgroundImage.src}
-          alt={backgroundImage.alt}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-background/35" />
+      {/* Carrusel: track de N slides al 100vw cada uno, trasladado por scroll.
+          Cada slide mide exactamente 100vw (w-screen), no un porcentaje
+          calculado (100/3% es un decimal periódico y puede dejar un hueco
+          de subpíxel entre slides en el límite entre uno y otro). El track
+          no necesita ancho explícito: al ser flex con hijos shrink-0, su
+          ancho total sale solo por overflow, y la sección ya lo recorta. */}
+      <div ref={trackRef} className="absolute inset-0 flex h-full">
+        {backgroundImages.map((image, i) => (
+          <div key={image.src} className="relative h-full w-screen shrink-0">
+            <div
+              ref={(el) => {
+                slideRefs.current[i] = el;
+              }}
+              className="absolute -inset-[4%] will-change-transform"
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                priority={i === 0}
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="absolute inset-0 bg-background/40" />
+          </div>
+        ))}
       </div>
 
       {/* Degradado de contraste para el texto */}
       <div className="absolute inset-0 bg-[linear-gradient(to_top,oklch(12%_0_0)_10%,transparent_55%)]" />
 
-      {/* Contenido */}
+      {/* Contenido, fijo mientras dura el pin */}
       <div className="relative max-w-[820px] px-5 pb-10 pt-24 sm:px-10 sm:pt-20 lg:px-16">
         <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.32em] text-accent drop-shadow-lg sm:text-[12.5px]">
           {eyebrow}

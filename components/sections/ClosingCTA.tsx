@@ -5,8 +5,11 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { siteContent } from "@/content/site";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const { heading, primaryCta, backgroundImage } = siteContent.closingCTA;
 
 export default function ClosingCTA() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -38,8 +41,8 @@ export default function ClosingCTA() {
       <div ref={wrapRef} data-parallax-wrap className="absolute inset-0">
         <div ref={imgRef} data-parallax-img className="absolute inset-x-0 -top-[15%] h-[130%]">
           <Image
-            src="https://images.unsplash.com/photo-1723369962563-5e873df9b93b?q=80&w=1920&auto=format&fit=crop"
-            alt="Vista aérea de una obra en construcción"
+            src={backgroundImage.src}
+            alt={backgroundImage.alt}
             fill
             sizes="100vw"
             className="object-cover"
@@ -48,16 +51,16 @@ export default function ClosingCTA() {
       </div>
       <div className="absolute inset-0 bg-background/55" />
       <div className="relative px-5 text-center sm:px-16">
-        <h2 className="mx-auto mb-6 max-w-[720px] font-display text-[32px] font-extrabold tracking-tight text-white drop-shadow-lg sm:mb-[34px] sm:text-[52px]">
-          Llevá tu próximo desarrollo a la venta antes de construirlo.
+        <h2 className="mx-auto mb-10 max-w-[760px] font-display text-[clamp(34px,6vw,64px)] font-bold leading-[1.05] tracking-tight text-white drop-shadow-lg sm:mb-12">
+          {heading}
         </h2>
         <button
           type="button"
-          className="inline-block rounded-full bg-accent px-8 py-4 text-sm font-bold
-                     text-background transition-all duration-300 hover:scale-105 hover:opacity-90
-                     active:scale-95 sm:px-10 sm:py-[18px] sm:text-[15px]"
+          className="inline-block rounded-full border-2 border-accent bg-accent px-9 py-4 text-sm font-bold
+                     text-background transition-colors duration-500 hover:bg-transparent hover:text-accent
+                     sm:px-11 sm:py-[18px] sm:text-[15px]"
         >
-          Agendar una demo
+          {primaryCta.label}
         </button>
       </div>
     </section>

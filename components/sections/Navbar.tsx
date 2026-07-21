@@ -1,16 +1,7 @@
 import Image from "next/image";
+import { siteContent } from "@/content/site";
 
-type NavLink = {
-  label: string;
-  href: string;
-};
-
-const NAV_LINKS: NavLink[] = [
-  { label: "Portafolio", href: "#proyectos" },
-  { label: "Soluciones", href: "#recorridos-3d" },
-  { label: "Cómo funciona", href: "#como-funciona" },
-  { label: "Contacto", href: "#contacto" },
-];
+const { links: NAV_LINKS, cta: NAV_CTA } = siteContent.nav;
 
 /**
  * Navbar fija con fondo degradado + blur.
@@ -59,7 +50,7 @@ export default function Navbar() {
                    hover:scale-105 hover:opacity-90 active:scale-95
                    sm:px-[22px] sm:py-[10px] sm:text-[12.5px]"
       >
-        Agendar demo
+        {NAV_CTA}
       </button>
     </header>
   );
