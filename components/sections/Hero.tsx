@@ -61,39 +61,41 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(to_top,oklch(12%_0_0)_10%,transparent_55%)]" />
 
       {/* Contenido */}
-      <div className="relative max-w-[720px] px-5 pb-10 pt-24 sm:px-10 sm:pt-20 lg:px-16">
-        <p className="mb-4 text-[11px] uppercase tracking-[0.16em] text-accent sm:text-[12.5px]">
-          PropTech · Recorridos 3D
+      <div className="relative max-w-[760px] px-5 pb-10 pt-24 sm:px-10 sm:pt-20 lg:px-16">
+        <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent drop-shadow-lg sm:text-[12.5px]">
+          Plataforma de visualización digital inmobiliaria
         </p>
 
         <h1
-          className="mb-5 font-display font-semibold leading-[1.1] tracking-[-0.01em]
-                     text-[clamp(28px,7vw,58px)] sm:leading-[1.08]"
+          className="mb-5 font-display font-extrabold leading-[1.08] tracking-tight text-white
+                     drop-shadow-lg text-balance
+                     text-[clamp(30px,7vw,60px)] sm:leading-[1.05]"
         >
-          Los proyectos más ambiciosos del mundo, documentados en tres dimensiones.
+          Experiencias inmersivas que venden desarrollos antes de construirlos.
         </h1>
 
-        <p className="mb-[26px] max-w-[520px] text-[15px] leading-[1.55] text-muted sm:text-base">
-          ruum convierte cada etapa de construcción en un recorrido 3D navegable, con
-          disponibilidad de unidades actualizada en tiempo real.
+        <p className="mb-[26px] max-w-[540px] font-sans text-[15px] font-medium leading-relaxed text-gray-100 drop-shadow-lg sm:text-base">
+          ruum transforma planos y renders en recorridos virtuales, planos 2D/3D
+          interactivos y experiencias de amenidades navegables, la herramienta de
+          ventas que ayuda a agentes y desarrolladores a cerrar más rápido.
         </p>
 
         <div className="flex flex-wrap gap-4">
           <button
             type="button"
-            className="rounded-full bg-accent px-6 py-3 text-[13px] font-semibold text-background
+            className="rounded-full bg-accent px-6 py-3 text-[13px] font-bold text-background
                        transition-all duration-300 hover:scale-105 hover:opacity-90 active:scale-95
                        sm:px-7 sm:py-[13px] sm:text-[13.5px]"
           >
-            Explorar proyectos
+            Ver portafolio de proyectos
           </button>
           <button
             type="button"
-            className="rounded-full border border-muted-4/60 px-6 py-3 text-[13px] font-medium
+            className="rounded-full border border-muted-4/60 px-6 py-3 text-[13px] font-semibold text-white
                        transition-all duration-300 hover:scale-105 hover:border-foreground/70
                        hover:bg-white/5 active:scale-95 sm:px-7 sm:py-[13px] sm:text-[13.5px]"
           >
-            Ver recorrido 3D
+            Explorar un recorrido virtual
           </button>
         </div>
       </div>

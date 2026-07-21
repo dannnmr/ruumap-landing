@@ -6,8 +6,8 @@ type NavLink = {
 };
 
 const NAV_LINKS: NavLink[] = [
-  { label: "Proyectos", href: "#proyectos" },
-  { label: "Recorridos 3D", href: "#recorridos-3d" },
+  { label: "Portafolio", href: "#proyectos" },
+  { label: "Soluciones", href: "#recorridos-3d" },
   { label: "Cómo funciona", href: "#como-funciona" },
   { label: "Contacto", href: "#contacto" },
 ];
@@ -32,14 +32,14 @@ export default function Navbar() {
         alt="ruum"
         width={90}
         height={22}
-        className="h-[18px] w-auto shrink-0sm:h-[22px]"
+        className="h-[18px] w-auto shrink-0 sm:h-[22px]"
         priority
       />
 
       <nav
         aria-label="Navegación principal"
-        className="hidden shrink-0 gap-[22px] whitespace-nowrap text-[12.5px] tracking-[0.02em]
-                   text-foreground/90 lg:flex"
+        className="hidden shrink-0 gap-[22px] whitespace-nowrap text-[12.5px] font-semibold tracking-[0.02em]
+                   text-gray-100 lg:flex"
       >
         {NAV_LINKS.map((link) => (
           <a
@@ -55,7 +55,7 @@ export default function Navbar() {
       <button
         type="button"
         className="shrink-0 whitespace-nowrap rounded-full bg-accent px-4 py-2 text-[12px]
-                   font-semibold text-background transition-all duration-300
+                   font-bold text-background transition-all duration-300
                    hover:scale-105 hover:opacity-90 active:scale-95
                    sm:px-[22px] sm:py-[10px] sm:text-[12.5px]"
       >

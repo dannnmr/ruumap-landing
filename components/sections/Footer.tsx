@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 const FOOTER_COLUMNS = [
-  { title: "Producto", links: ["Proyectos", "Recorridos 3D", "Precios"] },
+  { title: "Producto", links: ["Recorridos virtuales", "Planos 2D/3D", "Amenidades", "Precios"] },
   { title: "Compañía", links: ["Nosotros", "Contacto"] },
   { title: "Legal", links: ["Privacidad", "Términos"] },
 ];
@@ -18,18 +18,18 @@ export default function Footer() {
             height={24}
             className="mb-[18px] h-6 w-auto"
           />
-          <p className="max-w-[280px] text-sm leading-[1.6] text-muted-5">
-            Recorridos 3D y disponibilidad en tiempo real para proyectos en
-            pre-venta de todo el mundo.
+          <p className="max-w-[280px] text-sm font-medium leading-relaxed text-gray-300">
+            Recorridos virtuales, planos 2D/3D interactivos y exploración de
+            amenidades para que agentes y desarrolladores vendan más rápido.
           </p>
         </div>
 
         {FOOTER_COLUMNS.map((column) => (
           <div key={column.title}>
-            <p className="mb-4 text-xs uppercase tracking-[0.08em] text-muted-7">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.08em] text-muted-7">
               {column.title}
             </p>
-            <div className="flex flex-col gap-3 text-[14.5px] text-foreground/80">
+            <div className="flex flex-col gap-3 text-[14.5px] font-medium text-gray-200">
               {column.links.map((link) => (
                 <a
                   key={link}

@@ -17,47 +17,39 @@ type Landmark = {
 };
 
 // Todas las fotos verificadas como gratuitas (licencia Unsplash, no Unsplash+)
-// antes de usarlas — ver auditoría de fidelidad visual.
+// antes de usarlas — mismas 4 imágenes que en el portafolio de casos de éxito.
 const LANDMARKS: Landmark[] = [
   {
     index: "01",
-    name: "One57",
-    location: "Nueva York, Estados Unidos",
+    name: "Artemis",
+    location: "Torre residencial · Recorrido virtual",
     image:
-      "https://images.unsplash.com/photo-1590985607645-75e6570fa4aa?q=80&w=1600&auto=format&fit=crop",
-    alt: "Skyline nocturno de una ciudad de Estados Unidos",
+      "https://images.unsplash.com/photo-1760259203238-01708384f7a2?q=80&w=1600&auto=format&fit=crop",
+    alt: "Fachada de torre residencial moderna de vidrio, proyecto Artemis",
   },
   {
     index: "02",
-    name: "Bosco Verticale",
-    location: "Milán, Italia",
+    name: "Itagua",
+    location: "Desarrollo horizontal · Exploración de amenidades",
     image:
-      "https://images.unsplash.com/photo-1655447844120-083802457b17?q=80&w=1600&auto=format&fit=crop",
-    alt: "Bosco Verticale, torre residencial con vegetación en Milán",
+      "https://images.unsplash.com/photo-1563657296501-c3770ae0057b?q=80&w=1600&auto=format&fit=crop",
+    alt: "Edificio residencial moderno, proyecto Itagua",
   },
   {
     index: "03",
-    name: "Marina Bay Sands Residences",
-    location: "Singapur",
+    name: "PV Norte",
+    location: "Mixed-use · Planos 2D interactivos",
     image:
-      "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=1600&auto=format&fit=crop",
-    alt: "Marina Bay Sands al atardecer, Singapur",
+      "https://images.unsplash.com/photo-1663092340359-6a53ba3a3066?q=80&w=1600&auto=format&fit=crop",
+    alt: "Skyline nocturno del entorno del proyecto PV Norte",
   },
   {
     index: "04",
-    name: "Burj Khalifa Residences",
-    location: "Dubái, EAU",
+    name: "Buen Retiro",
+    location: "Torre residencial · Recorrido de alta fidelidad",
     image:
-      "https://images.unsplash.com/photo-1546412414-272690cb5cb3?q=80&w=1600&auto=format&fit=crop",
-    alt: "Burj Khalifa en Dubái",
-  },
-  {
-    index: "05",
-    name: "Central Park Tower",
-    location: "Nueva York, Estados Unidos",
-    image:
-      "https://images.unsplash.com/photo-1661263759183-e7937131b420?q=80&w=1600&auto=format&fit=crop",
-    alt: "Skyline nocturno de rascacielos",
+      "https://images.unsplash.com/photo-1590985607645-75e6570fa4aa?q=80&w=1600&auto=format&fit=crop",
+    alt: "Skyline nocturno del entorno del proyecto Buen Retiro",
   },
 ];
 
@@ -134,12 +126,16 @@ function RevealPanel({ landmark }: { landmark: Landmark }) {
         className="absolute bottom-6 left-5 flex items-baseline gap-3 sm:bottom-10 sm:left-10
                    sm:gap-4 lg:bottom-14 lg:left-16"
       >
-        <span className="font-display text-base text-accent sm:text-xl">{landmark.index}</span>
+        <span className="font-display text-base font-bold text-accent drop-shadow-lg sm:text-xl">
+          {landmark.index}
+        </span>
         <div>
-          <div className="font-display text-xl font-semibold sm:text-2xl lg:text-[30px]">
+          <div className="font-display text-xl font-extrabold tracking-tight text-white drop-shadow-lg sm:text-2xl lg:text-[30px]">
             {landmark.name}
           </div>
-          <div className="mt-1 text-xs text-muted-2 sm:text-sm">{landmark.location}</div>
+          <div className="mt-1 font-medium text-gray-100 drop-shadow-lg text-xs sm:text-sm">
+            {landmark.location}
+          </div>
         </div>
       </div>
     </div>
@@ -151,11 +147,11 @@ export default function RevealGallery() {
     <section>
       {/* El texto de cabecera respeta el padding del sitio; los paneles van full-bleed */}
       <div className="px-5 sm:px-10 lg:px-16">
-        <p className="mb-4 text-[12px] uppercase tracking-[0.16em] text-accent sm:mb-[18px] sm:text-[13px]">
-          Referencias globales
+        <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:mb-[18px] sm:text-[13px]">
+          Recorridos destacados
         </p>
-        <h2 className="mb-12 font-display text-[28px] font-semibold sm:mb-16 sm:text-[34px] lg:mb-[90px] lg:text-[40px]">
-          Estándar internacional, en cada proyecto.
+        <h2 className="mb-12 max-w-[820px] font-display text-[28px] font-extrabold tracking-tight text-white sm:mb-16 sm:text-[34px] lg:mb-[90px] lg:text-[40px]">
+          Así se siente explorar un desarrollo antes de que exista.
         </h2>
       </div>
 

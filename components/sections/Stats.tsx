@@ -1,7 +1,7 @@
 const STATS = [
-  { value: "6", label: "continentes" },
-  { value: "1.200+", label: "unidades relevadas" },
-  { value: "Diaria", label: "actualización de datos" },
+  { value: "4+", label: "desarrollos digitalizados" },
+  { value: "3x", label: "cierre de venta más rápido" },
+  { value: "100%", label: "recorrido navegable, sin instalar nada" },
 ];
 
 export default function Stats() {
@@ -12,10 +12,10 @@ export default function Stats() {
     >
       {STATS.map((stat) => (
         <div key={stat.label} className="text-center">
-          <div className="font-display text-[32px] font-semibold text-accent sm:text-[40px]">
+          <div className="font-display text-[32px] font-extrabold tracking-tight text-accent sm:text-[40px]">
             {stat.value}
           </div>
-          <div className="mt-2 text-[12px] uppercase tracking-[0.05em] text-muted-4 sm:text-[13px]">
+          <div className="mt-2 text-[12px] font-medium uppercase tracking-[0.05em] text-gray-300 sm:text-[13px]">
             {stat.label}
           </div>
         </div>

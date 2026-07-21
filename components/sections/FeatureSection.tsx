@@ -67,13 +67,13 @@ export default function FeatureSection({
         </div>
       </div>
       <div className={reverse ? "order-2 md:order-1" : "order-2"}>
-        <p className="mb-3 text-[12px] uppercase tracking-[0.1em] text-accent sm:mb-4 sm:text-[12.5px]">
+        <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-accent sm:mb-4 sm:text-[12.5px]">
           {index}
         </p>
-        <h3 className="mb-4 font-display text-[26px] font-semibold sm:mb-[18px] sm:text-[34px]">
+        <h3 className="mb-4 font-display text-[26px] font-extrabold tracking-tight text-white sm:mb-[18px] sm:text-[34px]">
           {title}
         </h3>
-        <p className="max-w-[440px] text-[15px] leading-[1.6] text-muted-2 sm:text-[16.5px] sm:leading-[1.65]">
+        <p className="max-w-[460px] font-sans text-[15px] font-medium leading-relaxed text-gray-100 sm:text-[16.5px]">
           {description}
         </p>
       </div>
