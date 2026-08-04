@@ -1,6 +1,7 @@
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import Statement from "@/components/sections/Statement";
+import AboutUs from "@/components/sections/AboutUs";
 import RevealGallery from "@/components/sections/RevealGallery";
 import Stats from "@/components/sections/Stats";
 import FeatureSection from "@/components/sections/FeatureSection";
@@ -16,6 +17,8 @@ export default function Home() {
       <Hero />
 
       <Statement />
+      
+      <AboutUs />
 
       <RevealGallery />
 

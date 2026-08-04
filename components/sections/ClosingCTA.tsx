@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
+import { Button } from "@/components/ui/Button";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -54,14 +55,13 @@ export default function ClosingCTA() {
         <h2 className="mx-auto mb-10 max-w-[760px] font-display text-[clamp(34px,6vw,64px)] font-bold leading-[1.05] tracking-tight text-white drop-shadow-lg sm:mb-12">
           {heading}
         </h2>
-        <button
-          type="button"
-          className="inline-block rounded-full border-2 border-accent bg-accent px-9 py-4 text-sm font-bold
-                     text-background transition-colors duration-500 hover:bg-transparent hover:text-accent
-                     sm:px-11 sm:py-[18px] sm:text-[15px]"
+        <Button
+          href={primaryCta.href}
+          variant="primary"
+          className="rounded-full px-9 py-4 text-sm sm:px-11 sm:py-[18px] sm:text-[15px]"
         >
           {primaryCta.label}
-        </button>
+        </Button>
       </div>
     </section>
   );

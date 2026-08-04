@@ -52,12 +52,12 @@ export const siteContent = {
   },
 
   hero: {
-    eyebrow: "Visualización arquitectónica de lujo",
-    titleLines: ["Construye la visión.", "Nosotros la hacemos explorable."],
+    eyebrow: "SHOWROOM · DIGITAL",
+    titleLines: ["Haz que cada proyecto se venda ", "antes de construirse."],
     subcopy:
-      "Ruumap transforma planos y renders en experiencias digitales inmersivas —recorridos virtuales, planos 2D/3D interactivos y plataformas web— para que tu próximo desarrollo se venda antes de la primera piedra.",
-    primaryCta: { label: "Ver portafolio", href: "#proyectos" },
-    secondaryCta: { label: "Hablemos del proyecto", href: "#contacto" },
+      "Ruum convierte renders, recorridos virtuales y experiencias inmersivas en una poderosa herramienta para vender más y captar mejores clientes.",
+    primaryCta: { label: "Explorar proyectos", href: "#proyectos" },
+    secondaryCta: { label: "Agenda una demo", href: "#contacto" },
     backgroundImages: [
       {
         src: "https://images.unsplash.com/photo-1767342976156-83239d26f08e?q=80&w=1920&auto=format&fit=crop",
@@ -75,7 +75,17 @@ export const siteContent = {
   },
 
   statement: {
-    text: "De un plano estático a una experiencia navegable: recorridos virtuales, planos 2D/3D y amenidades exploradas al detalle, unidad por unidad.",
+    text: "Transformamos proyectos inmobiliarios en experiencias navegables que venden.",
+    second_text: "De un plano estático a una experiencia navegable: recorridos virtuales, planos 2D/3D y amenidades exploradas al detalle, unidad por unidad."
+  },
+
+  about: {
+    heading: "Conocé la nueva forma de vender tus proyectos",
+    video: {
+      src: "https://assets.mixkit.co/videos/49806/49806-720.mp4",
+      poster: "",
+    },
+    cta: { label: "Agendá una demo", href: "#contacto" },
   },
 
   revealGallery: {
