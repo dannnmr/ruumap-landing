@@ -29,11 +29,29 @@ export type Project = {
   index: string;
   name: string;
   tag: string;
+  /** Nombre del desarrollador/constructora del proyecto. */
+  developer: string;
+  /** Ubicación mostrada en la tarjeta (ej. "Santa Cruz de la Sierra, Bolivia."). */
+  location: string;
   image: SiteImage;
+  /**
+   * Slug futuro del perfil inmobiliario del proyecto (ver
+   * docs/page-structure.md, sección "Perfiles inmobiliarios"). Sin uso
+   * todavía — no hay rutas dinámicas implementadas en este cambio.
+   */
+  slug?: string;
+  /**
+   * URL futura de la acción "Ver proyecto", provista por el product owner
+   * por proyecto. Mientras no exista, se deja `undefined` a propósito — la
+   * acción se renderiza como no interactiva en vez de inventar un destino.
+   */
+  href?: string;
 };
 
 export type Feature = {
   index: string;
+  /** Micro-label en mayúsculas sobre el título (ej. "VISTAS 360°"). */
+  eyebrow: string;
   title: string;
   description: string;
   image: SiteImage;
@@ -43,7 +61,13 @@ export type Step = {
   index: string;
   title: string;
   description: string;
-  image: SiteImage;
+  /**
+   * Provisional/sin uso: la referencia visual principal muestra estos pasos
+   * como una fila de 3 columnas sin imagen (ver HowItWorks.tsx). El campo se
+   * mantiene opcional en el tipo por si una futura sección de pasos lo
+   * necesita, pero HowItWorks no lo consume.
+   */
+  image?: SiteImage;
 };
 
 export const siteContent = {
@@ -98,7 +122,8 @@ export const siteContent = {
 
   statement: {
     text: "Transformamos proyectos inmobiliarios en experiencias navegables que venden.",
-    second_text: "De un plano estático a una experiencia navegable: recorridos virtuales, planos 2D/3D y amenidades exploradas al detalle, unidad por unidad."
+    second_text:
+      "De un plano estático a una experiencia navegable: recorridos virtuales, planos 2D/3D y amenidades exploradas al detalle, unidad por unidad.",
   },
 
   about: {
@@ -114,71 +139,94 @@ export const siteContent = {
     cta: { label: "Agendá una demo", href: "#contacto" },
   },
 
+  /**
+   * Provisional: catálogo leído de docs/references/projects-secction.png.
+   * Solo se incluyen los proyectos cuyo desarrollador y ubicación son
+   * observables en esa referencia — la relación proyecto↔desarrollador no
+   * está confirmada oficialmente todavía (ver docs/product-context.md).
+   * "PV Norte" existía en una versión anterior de este catálogo pero no
+   * tiene desarrollador/ubicación observable en ninguna referencia, así que
+   * se deja fuera a propósito en vez de inventar esos datos — puede
+   * reincorporarse en cuanto haya datos confirmados.
+   */
   revealGallery: {
-    eyebrow: "Portafolio",
-    heading: "Cuatro desarrollos. Un mismo nivel de detalle.",
+    eyebrow: "CATÁLOGO ACTIVO",
+    heading: "Últimos proyectos añadidos",
     projects: [
       {
         index: "01",
-        name: "Artemis",
-        tag: "RESIDENCIAL PREMIUM — RECORRIDO 3D",
+        name: "Itaguá",
+        tag: "DESARROLLO HORIZONTAL — EXPLORACIÓN DE AMENIDADES",
+        developer: "STTO Group",
+        location: "Santa Cruz de la Sierra, Bolivia.",
         image: {
-          src: "https://images.unsplash.com/photo-1760259203238-01708384f7a2?q=80&w=1600&auto=format&fit=crop",
-          alt: "Fachada de torre residencial de lujo con acabados de vidrio, proyecto Artemis",
+          src: "https://images.unsplash.com/photo-1563657296501-c3770ae0057b?q=80&w=1600&auto=format&fit=crop",
+          alt: "Arquitectura residencial contemporánea con áreas comunes, proyecto Itaguá",
         },
       },
       {
         index: "02",
-        name: "Itagua",
-        tag: "DESARROLLO HORIZONTAL — EXPLORACIÓN DE AMENIDADES",
-        image: {
-          src: "https://images.unsplash.com/photo-1563657296501-c3770ae0057b?q=80&w=1600&auto=format&fit=crop",
-          alt: "Arquitectura residencial contemporánea con áreas comunes, proyecto Itagua",
-        },
-      },
-      {
-        index: "03",
-        name: "PV Norte",
-        tag: "MIXED-USE — PLANOS 2D/3D INTERACTIVOS",
-        image: {
-          src: "https://images.unsplash.com/photo-1546412414-272690cb5cb3?q=80&w=1600&auto=format&fit=crop",
-          alt: "Torre mixed-use de gran altura al atardecer, proyecto PV Norte",
-        },
-      },
-      {
-        index: "04",
         name: "Buen Retiro",
         tag: "TORRE RESIDENCIAL — RECORRIDO DE ALTA FIDELIDAD",
+        developer: "Kohler & Weiss Real Estate Development",
+        location: "Santa Cruz de la Sierra, Bolivia.",
         image: {
           src: "https://images.unsplash.com/photo-1655447844120-083802457b17?q=80&w=1600&auto=format&fit=crop",
           alt: "Torre residencial con jardines verticales integrados, proyecto Buen Retiro",
         },
       },
+      {
+        index: "03",
+        name: "Artemis",
+        tag: "RESIDENCIAL PREMIUM — RECORRIDO 3D",
+        developer: "SYMPRAX",
+        location: "Santa Cruz de la Sierra, Bolivia.",
+        image: {
+          src: "https://images.unsplash.com/photo-1760259203238-01708384f7a2?q=80&w=1600&auto=format&fit=crop",
+          alt: "Fachada de torre residencial de lujo con acabados de vidrio, proyecto Artemis",
+        },
+      },
     ] satisfies Project[],
   },
 
+  /**
+   * Provisional: valores leídos de la referencia visual principal
+   * (docs/references/landing-desktop.png), pendientes de confirmar como
+   * cifras definitivas.
+   */
   stats: [
-    { value: "4+", label: "desarrollos digitalizados" },
-    { value: "3x", label: "cierre de venta más rápido" },
-    { value: "100%", label: "recorrido navegable, sin instalar nada" },
+    { value: "+50", label: "proyectos diseñados" },
+    { value: "15", label: "desarrolladores inmobiliarios" },
+    { value: "+20", label: "países servicios prestados" },
+    { value: "+100", label: "unidades vendidas usando Ruum" },
   ],
 
+  /**
+   * Provisional: las 5 filas y su copy están leídas de
+   * docs/references/landing-desktop.png (recortes de detalle). Las imágenes
+   * de las filas 01 y 03 reutilizan assets que ya estaban en el repo (antes
+   * en "PV Norte" del catálogo de proyectos, retirado de esa sección por no
+   * tener desarrollador/ubicación confirmados) — no se agregó ningún asset
+   * externo nuevo.
+   */
   features: [
     {
       index: "01",
-      title: "Planos 3D Interactivos",
+      eyebrow: "RENDERS DIURNO | NOCTURNO",
+      title: "Visualiza tu proyecto en cualquier momento del día",
       description:
-        "Convertimos planos técnicos en modelos navegables: cambiá de piso, girá la unidad y compará metrajes en tiempo real. Tu equipo comercial presenta cada opción con precisión milimétrica, sin depender de un plano estático.",
+        "Muestra cada espacio con iluminación diurna y nocturna para transmitir la verdadera atmósfera del proyecto.",
       image: {
-        src: "https://images.unsplash.com/photo-1723367194881-fe2e53534170?q=80&w=1400&auto=format&fit=crop",
-        alt: "Vista aérea de una planta arquitectónica de un desarrollo inmobiliario",
+        src: "https://images.unsplash.com/photo-1546412414-272690cb5cb3?q=80&w=1400&auto=format&fit=crop",
+        alt: "Torre mixed-use de gran altura al atardecer",
       },
     },
     {
       index: "02",
-      title: "Recorridos de Alta Fidelidad",
+      eyebrow: "VISTAS 360°",
+      title: "Explora cada espacio desde todos los ángulos",
       description:
-        "Tus prospectos caminan cada unidad, piso y vista antes de que exista un solo ladrillo, con reconstrucción fiel a los acabados finales. Una experiencia fotorrealista que reemplaza la maqueta física.",
+        "Recorre ambientes en 360° con total libertad y permite que cada cliente descubra el proyecto a su propio ritmo.",
       image: {
         src: "https://images.unsplash.com/photo-1751711990617-bec0202c854a?q=80&w=1400&auto=format&fit=crop",
         alt: "Interior arquitectónico moderno con iluminación natural",
@@ -186,9 +234,32 @@ export const siteContent = {
     },
     {
       index: "03",
-      title: "Integración de Amenidades",
+      eyebrow: "VIDEO ORBITAL",
+      title: "Una perspectiva completa del proyecto",
       description:
-        "Alberca, gimnasio, lobby, rooftop: cada amenidad se explora en detalle dentro de la misma experiencia, generando el deseo que acelera la decisión de compra sin necesidad de folletos impresos.",
+        "Navega alrededor del edificio con vistas aéreas que resaltan su arquitectura, ubicación y entorno.",
+      image: {
+        src: "https://images.unsplash.com/photo-1723367194881-fe2e53534170?q=80&w=1400&auto=format&fit=crop",
+        alt: "Vista aérea de una planta arquitectónica de un desarrollo inmobiliario",
+      },
+    },
+    {
+      index: "04",
+      eyebrow: "AMBIENTES HUMANIZADOS",
+      title: "Espacios que cobran vida",
+      description:
+        "Animaciones cinematográficas con personas, movimiento y ambiente para transmitir cómo se vive realmente el proyecto.",
+      image: {
+        src: "https://images.unsplash.com/photo-1663092340359-6a53ba3a3066?q=80&w=1400&auto=format&fit=crop",
+        alt: "Desarrollo residencial completamente visualizado, con ambientes iluminados",
+      },
+    },
+    {
+      index: "05",
+      eyebrow: "PANEL DE CONTROL",
+      title: "Gestiona tu proyecto con información en tiempo real",
+      description:
+        "Administra disponibilidad, contenido y métricas desde un panel centralizado diseñado para equipos comerciales y desarrolladores.",
       image: {
         src: "https://images.unsplash.com/photo-1768230130990-6b4fe57778ce?q=80&w=1400&auto=format&fit=crop",
         alt: "Skyline moderno de edificios residenciales de lujo",
@@ -196,59 +267,80 @@ export const siteContent = {
     },
   ] satisfies Feature[],
 
+  /**
+   * Provisional: copy leído de docs/references/landing-desktop.png. La
+   * referencia muestra estos 3 pasos como una fila simple sin imágenes (ver
+   * HowItWorks.tsx) — los pasos ya no llevan `image`.
+   */
   howItWorks: {
-    eyebrow: "Proceso",
-    heading: "Una herramienta de ventas, no solo una imagen bonita.",
+    eyebrow: "CÓMO FUNCIONA",
+    heading: "Tres pasos para transformar la venta de tu proyecto.",
     steps: [
       {
         index: "01",
-        title: "Digitalizamos tu desarrollo",
+        title: "Creamos tu experiencia digital",
         description:
-          "Partimos de tus planos y renders para construir un recorrido virtual, planos 2D/3D interactivos y amenidades navegables, listos para usarse como herramienta de ventas.",
-        image: {
-          src: "https://images.unsplash.com/photo-1723367194881-fe2e53534170?q=80&w=1400&auto=format&fit=crop",
-          alt: "Vista aérea de una planta arquitectónica digitalizada",
-        },
+          "Convertimos planos, renders y material comercial en una experiencia inmersiva.",
       },
       {
         index: "02",
-        title: "Tus agentes cierran con confianza",
+        title: "Publicamos tu proyecto",
         description:
-          "En cada visita o llamada, el equipo comercial muestra unidades, vistas y terminaciones reales sin depender de renders sueltos ni maquetas físicas.",
-        image: {
-          src: "https://images.unsplash.com/photo-1590985607645-75e6570fa4aa?q=80&w=1400&auto=format&fit=crop",
-          alt: "Skyline nocturno premium que un agente comparte con el cliente",
-        },
+          "Integramos recorridos 3D, disponibilidad, tipologías y contenido en una sola plataforma.",
       },
       {
         index: "03",
-        title: "El prospecto visualiza y decide",
+        title: "Impulsa tus ventas",
         description:
-          "El cliente final recorre el proyecto como si ya estuviera construido, acelerando la decisión de compra antes del primer ladrillo.",
-        image: {
-          src: "https://images.unsplash.com/photo-1663092340359-6a53ba3a3066?q=80&w=1400&auto=format&fit=crop",
-          alt: "Desarrollo ya visualizado por completo, listo para decidir",
-        },
+          "Tus clientes exploran, comparan y encuentran la unidad ideal con una experiencia memorable.",
       },
     ] satisfies Step[],
   },
 
+  /**
+   * Provisional: copy leído de docs/references/landing-desktop.png. El
+   * bloque de contacto (`contact`) reproduce el nombre/teléfono/email
+   * visibles en la referencia — son datos del mockup, no confirmados como
+   * definitivos por el product owner (el teléfono "00000" ya se lee como un
+   * placeholder en la propia referencia). La foto es un placeholder de
+   * Unsplash: no existe todavía el asset real. El `backgroundImage` a
+   * pantalla completa que tenía esta sección se retiró: la referencia
+   * muestra fondo oscuro sólido + retrato, no una imagen de fondo con
+   * parallax (ver comentario en ClosingCTA.tsx).
+   */
   closingCTA: {
-    heading: "Acelera las ventas de tu próximo desarrollo. Hablemos.",
-    primaryCta: { label: "Agendar una llamada", href: "#contacto" },
-    backgroundImage: {
-      src: "https://images.unsplash.com/photo-1723369962563-5e873df9b93b?q=80&w=1920&auto=format&fit=crop",
-      alt: "Vista aérea de una obra en construcción al atardecer",
-    } satisfies SiteImage,
+    heading:
+      "Sumá tu proyecto a la experiencia más inmersiva y mejorá la experiencia de tus ventas.",
+    subcopy:
+      "Contáctanos y conversemos acerca de tu próximo proyecto inmobiliario.",
+    primaryCta: { label: "Contáctanos", href: "#contacto" },
+    contact: {
+      name: "Guillermo Castillo",
+      phone: "+591 780 00000",
+      email: "atencion@ruumap.com",
+      photo: {
+        src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop",
+        alt: "Retrato de Guillermo Castillo, punto de contacto de Ruum",
+      } satisfies SiteImage,
+    },
   },
 
+  /**
+   * Provisional: tagline y columnas leídas de docs/references/footer.png.
+   * Los `href` de columnas y redes sociales quedan en "#" a propósito — no
+   * hay URLs reales confirmadas todavía.
+   */
   footer: {
     tagline:
-      "Recorridos virtuales, planos 2D/3D interactivos y exploración de amenidades para que agentes y desarrolladores vendan más rápido.",
+      "La solución de visualización virtual y gestión en tiempo real para proyectos en pre-venta de todo el mundo.",
     columns: [
-      { title: "Producto", links: ["Recorridos virtuales", "Planos 2D/3D", "Amenidades", "Precios"] },
+      { title: "Producto", links: ["Proyectos", "Recorridos 3D", "Precios"] },
       { title: "Compañía", links: ["Nosotros", "Contacto"] },
       { title: "Legal", links: ["Privacidad", "Términos"] },
+    ],
+    social: [
+      { label: "Facebook", href: "#" },
+      { label: "Instagram", href: "#" },
     ],
   },
 };

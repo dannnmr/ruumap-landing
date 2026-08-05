@@ -6,6 +6,7 @@ import RevealGallery from "@/components/sections/RevealGallery";
 import Stats from "@/components/sections/Stats";
 import FeatureSection from "@/components/sections/FeatureSection";
 import HowItWorks from "@/components/sections/HowItWorks";
+import Logos from "@/components/sections/Logos";
 import ClosingCTA from "@/components/sections/ClosingCTA";
 import Footer from "@/components/sections/Footer";
 
@@ -27,6 +28,8 @@ export default function Home() {
       <FeatureSection />
 
       <HowItWorks />
+
+      <Logos />
 
       <ClosingCTA />
 

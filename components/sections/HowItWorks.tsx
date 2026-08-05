@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { SECTION_IDS } from "@/lib/navigation";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -13,126 +13,75 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const { eyebrow, heading, steps } = siteContent.howItWorks;
 
 /**
- * Stacking cards: cada paso ocupa 100vh y se fija (pin, pinSpacing:false)
- * en el tope al llegar arriba. Como no reserva espacio propio, la tarjeta
- * siguiente sube y se monta encima en el mismo tramo de scroll. Mientras
- * eso pasa, la tarjeta anterior reduce su escala y se oscurece (un tween
- * separado atado al recorrido de scroll de la tarjeta siguiente), dando
- * la sensación de profundidad/apilamiento.
+ * Fila de 3 columnas sin pin, alineada con la referencia visual principal
+ * (número, título, descripción, separador superior por columna). Reemplaza
+ * el efecto anterior de stacking/pin por columna con imagen — ver
+ * design.md del change `complete-remaining-ruum-landing` para el detalle
+ * de la decisión.
  */
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const overlayRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const columnRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useGSAP(
     () => {
-      const cards = cardRefs.current;
-      if (!cards.length || !cards[0]) return;
+      if (prefersReducedMotion) return;
 
-      cards.forEach((card, i) => {
-        if (!card) return;
-
-        const isLast = i === cards.length - 1;
-
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top top",
-          end: "+=100%",
-          pin: true,
-          // Las tarjetas intermedias reciben su espacio de scroll "gratis"
-          // de la siguiente tarjeta (misma altura, apilada justo debajo).
-          // La última no tiene quién le regale ese espacio: si también usa
-          // pinSpacing:false, el documento queda 100vh corto y todo lo que
-          // sigue (ClosingCTA, Footer) se vuelve inalcanzable con scroll.
-          pinSpacing: !isLast ? false : true,
-        });
-
-        const nextCard = cards[i + 1];
-        const overlay = overlayRefs.current[i];
-        if (!nextCard) return;
-
-        const scrub = {
-          trigger: nextCard,
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-        };
-
-        gsap.to(card, { scale: 0.92, ease: "none", scrollTrigger: { ...scrub } });
-        if (overlay) {
-          gsap.to(overlay, { opacity: 0.55, ease: "none", scrollTrigger: { ...scrub } });
+      gsap.fromTo(
+        columnRefs.current.filter(Boolean),
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          ease: "none",
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 75%",
+            end: "top 40%",
+            scrub: true,
+          },
         }
-      });
+      );
     },
-    { scope: sectionRef, dependencies: [steps.length] }
+    { scope: sectionRef, dependencies: [prefersReducedMotion, steps.length] }
   );
 
   return (
     <section
       ref={sectionRef}
       id={SECTION_IDS.proceso}
-      className="relative bg-background scroll-mt-24"
+      className="scroll-mt-24 bg-background px-5 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-[130px]"
     >
-      <div className="mx-auto max-w-[1300px] px-5 pb-16 pt-24 sm:px-10 sm:pt-32 lg:px-16 lg:pt-40">
-        <p className="mb-6 font-sans text-[12px] font-semibold uppercase tracking-[0.28em] text-accent sm:mb-8">
-          {eyebrow}
-        </p>
-        <h2 className="max-w-[760px] font-display text-[clamp(32px,5vw,52px)] font-bold leading-[1.05] tracking-tight text-white">
-          {heading}
-        </h2>
-      </div>
+      <p className="mb-6 font-sans text-[12px] font-semibold uppercase tracking-[0.28em] text-accent sm:mb-8">
+        {eyebrow}
+      </p>
+      <h2 className="mb-10 max-w-[760px] font-display text-[clamp(32px,5vw,52px)] font-bold leading-[1.05] tracking-tight text-white sm:mb-12">
+        {heading}
+      </h2>
 
-      {steps.map((step, i) => (
-        <div
-          key={step.index}
-          ref={(el) => {
-            cardRefs.current[i] = el;
-          }}
-          className="relative flex h-screen w-full flex-col justify-center overflow-hidden border-t border-white/10 bg-background px-5 sm:px-10 lg:px-16"
-        >
-          {/* Número gigante de fondo */}
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-8 lg:gap-14">
+        {steps.map((step, i) => (
           <div
-            aria-hidden
-            className="pointer-events-none absolute -right-[4vw] -top-[8vw] select-none font-display text-[46vw] font-bold leading-none text-white/[0.04] sm:text-[34vw]"
-          >
-            {step.index}
-          </div>
-
-          <div className="relative z-10 grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16 lg:gap-24">
-            <div>
-              <p className="mb-4 font-sans text-[12px] font-semibold uppercase tracking-[0.28em] text-accent sm:mb-6">
-                {eyebrow} — {step.index}
-              </p>
-              <h3 className="mb-6 font-display text-[30px] font-bold leading-[1.05] tracking-tight text-white sm:text-[42px]">
-                {step.title}
-              </h3>
-              <p className="max-w-[440px] font-sans text-[15px] font-medium leading-relaxed text-gray-300 sm:text-[16.5px]">
-                {step.description}
-              </p>
-            </div>
-
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
-              <Image
-                src={step.image.src}
-                alt={step.image.alt}
-                fill
-                sizes="(min-width: 768px) 45vw, 90vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
-
-          {/* Overlay de oscurecimiento cuando la siguiente tarjeta sube */}
-          <div
+            key={step.index}
             ref={(el) => {
-              overlayRefs.current[i] = el;
+              columnRefs.current[i] = el;
             }}
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-black opacity-0"
-          />
-        </div>
-      ))}
+            className="border-t border-border pt-6"
+          >
+            <div className="mb-4 font-display text-[44px] font-bold leading-none text-accent sm:mb-6 sm:text-[52px]">
+              {step.index}
+            </div>
+            <h3 className="mb-3 font-display text-[20px] font-semibold leading-tight text-white sm:text-[22px]">
+              {step.title}
+            </h3>
+            <p className="max-w-[360px] font-sans text-[14.5px] font-medium leading-relaxed text-gray-400 sm:text-[15px]">
+              {step.description}
+            </p>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

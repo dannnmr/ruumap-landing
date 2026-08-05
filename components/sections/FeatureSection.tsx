@@ -6,6 +6,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
+import { Eyebrow } from "@/components/ui/Eyebrow";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { SECTION_IDS } from "@/lib/navigation";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -13,82 +15,79 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const { features } = siteContent;
 
 /**
- * Horizontal scroll pinned: la sección queda fija en viewport y el track
- * de tarjetas se traslada en px (no %) en función del scroll vertical,
- * de derecha a izquierda. La distancia de scroll necesaria es exactamente
- * el overflow horizontal del track (scrollWidth - innerWidth), así el
- * mapeo scroll -> desplazamiento es 1:1 sin importar cuántas tarjetas haya
- * ni su ancho responsive.
+ * Fila image+copy, alineada con la referencia visual principal: 5 bloques
+ * apilados verticalmente (sin pin ni scroll horizontal), cada uno con la
+ * imagen a la izquierda y el copy a la derecha. Reemplaza el carrusel
+ * horizontal pineado anterior — ver design.md del change
+ * `complete-remaining-ruum-landing` para el detalle de la decisión.
  */
 export default function FeatureSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useGSAP(
     () => {
-      if (!sectionRef.current || !trackRef.current) return;
+      if (prefersReducedMotion) return;
 
-      const track = trackRef.current;
-      const dwell = 0.4; // fracción extra de scroll para "descansar" en la última tarjeta
+      rowRefs.current.forEach((row) => {
+        if (!row) return;
 
-      gsap
-        .timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: () => `+=${(track.scrollWidth - window.innerWidth) * (1 + dwell)}`,
-            pin: true,
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        })
-        .to(track, {
-          x: () => -(track.scrollWidth - window.innerWidth),
-          ease: "none",
-          duration: 1,
-        })
-        .to({}, { duration: dwell });
+        gsap.fromTo(
+          row,
+          { opacity: 0, y: 36 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 85%",
+              end: "top 55%",
+              scrub: true,
+            },
+          }
+        );
+      });
     },
-    { scope: sectionRef }
+    { scope: sectionRef, dependencies: [prefersReducedMotion, features.length] }
   );
 
   return (
-    <section
-      ref={sectionRef}
-      id={SECTION_IDS.servicios}
-      className="relative h-screen overflow-hidden scroll-mt-24"
-    >
-      <div
-        ref={trackRef}
-        className="flex h-full items-center gap-6 pl-5 pr-[12vw] will-change-transform sm:gap-10 sm:pl-10 lg:gap-14 lg:pl-16"
-      >
-        {features.map((feature) => (
-          <article
-            key={feature.index}
-            className="relative h-[68vh] w-[82vw] shrink-0 overflow-hidden rounded-xl sm:h-[70vh] sm:w-[60vw] lg:w-[38vw]"
-          >
+    <section ref={sectionRef} id={SECTION_IDS.servicios} className="scroll-mt-24">
+      {/* Cada fila lleva su propio padding (no un gap de contenedor): así el
+          espacio entre filas se arma con dos padding-y consecutivos, igual
+          que el auto-layout de Figma por fila (fill width, hug height,
+          padding 64/96 a nivel de fila). */}
+      {features.map((feature, i) => (
+        <div
+          key={feature.index}
+          ref={(el) => {
+            rowRefs.current[i] = el;
+          }}
+          className="grid grid-cols-1 items-center gap-8 px-5 py-10 sm:px-10 sm:py-14 md:grid-cols-2 md:gap-14 lg:gap-20 lg:px-16 lg:py-24"
+        >
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
             <Image
               src={feature.image.src}
               alt={feature.image.alt}
               fill
-              sizes="(min-width: 1024px) 38vw, (min-width: 640px) 60vw, 82vw"
+              sizes="(min-width: 768px) 45vw, 90vw"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 lg:p-10">
-              <p className="mb-3 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] text-accent drop-shadow-lg sm:mb-4">
-                {feature.index}
-              </p>
-              <h3 className="mb-4 font-display text-[26px] font-bold leading-[1.05] tracking-tight text-white drop-shadow-lg sm:text-[32px]">
-                {feature.title}
-              </h3>
-              <p className="max-w-[420px] font-sans text-[14px] font-medium leading-relaxed text-gray-100 drop-shadow-lg sm:text-[15px]">
-                {feature.description}
-              </p>
-            </div>
-          </article>
-        ))}
-      </div>
+          </div>
+
+          <div>
+            <Eyebrow className="mb-4 sm:mb-6">{feature.eyebrow}</Eyebrow>
+            <h3 className="mb-4 max-w-[480px] font-display text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[36px]">
+              {feature.title}
+            </h3>
+            <p className="max-w-[440px] font-sans text-[15px] font-medium leading-relaxed text-gray-300 sm:text-[16px]">
+              {feature.description}
+            </p>
+          </div>
+        </div>
+      ))}
     </section>
   );
 }

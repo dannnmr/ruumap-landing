@@ -19,15 +19,15 @@ Estados usados:
 |---|---|---|---|---|
 | 1 | Navbar | `components/sections/Navbar.tsx` | `siteContent.nav` | Realineado (change `align-navbar-with-reference`) — código implementado y verificado estáticamente; QA manual en navegador pendiente |
 | 2 | Hero | `components/sections/Hero.tsx` | `siteContent.hero` | Media endurecida (change `optimize-hero-aboutus-media`) — implementado y verificado estáticamente; QA manual en navegador pendiente |
-| 3 | Statement | `components/sections/Statement.tsx` | `siteContent.statement` | Implementado, coincide con la referencia |
+| 3 | Statement | `components/sections/Statement.tsx` | `siteContent.statement` | Implementado, coincide con la referencia (re-verificado en el change `complete-remaining-ruum-landing`) |
 | 4 | AboutUs (video) | `components/sections/AboutUs.tsx` | `siteContent.about` | Media endurecida (change `optimize-hero-aboutus-media`) — implementado y verificado estáticamente; QA manual en navegador pendiente |
-| 5 | RevealGallery / sección de proyectos | `components/sections/RevealGallery.tsx` | `siteContent.revealGallery` | Implementado, difiere de la referencia |
-| 6 | Stats | `components/sections/Stats.tsx` | `siteContent.stats` | Implementado, difiere de la referencia |
-| 7 | FeatureSection | `components/sections/FeatureSection.tsx` | `siteContent.features` | Implementado, difiere de la referencia |
-| 8 | HowItWorks | `components/sections/HowItWorks.tsx` | `siteContent.howItWorks` | Implementado, difiere de la referencia |
-| — | Logos / clientes | *(no existe)* | *(no existe)* | No implementado — confirmado para implementación futura |
-| 9 | ClosingCTA | `components/sections/ClosingCTA.tsx` | `siteContent.closingCTA` | Implementado, difiere de la referencia |
-| 10 | Footer | `components/sections/Footer.tsx` | `siteContent.footer` | Implementado, difiere de la referencia |
+| 5 | RevealGallery / sección de proyectos | `components/sections/RevealGallery.tsx` | `siteContent.revealGallery` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
+| 6 | Stats | `components/sections/Stats.tsx` | `siteContent.stats` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente |
+| 7 | FeatureSection | `components/sections/FeatureSection.tsx` | `siteContent.features` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
+| 8 | HowItWorks | `components/sections/HowItWorks.tsx` | `siteContent.howItWorks` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
+| — | Logos / clientes | `components/sections/Logos.tsx` | `content/logos.ts` | Implementado (change `complete-remaining-ruum-landing`) — SVGs reales provistos por el product owner |
+| 9 | ClosingCTA | `components/sections/ClosingCTA.tsx` | `siteContent.closingCTA` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
+| 10 | Footer | `components/sections/Footer.tsx` | `siteContent.footer` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
 
 `components/SmoothScroll.tsx` no es una sección: envuelve todo `app/layout.tsx` para el smooth
 scroll (Lenis + GSAP ticker) y no aparece en `app/page.tsx`.
@@ -111,81 +111,91 @@ Hero, el comportamiento de pausa/reanudación al hacer scroll en ambas secciones
 inline en móvil. Sin detección de conexión lenta ni video alternativo para móvil — descartados a
 propósito, no pendientes.
 
-**RevealGallery / sección de proyectos** — Debe alinearse visual y estructuralmente con la
-referencia principal y, en particular, con el detalle de `docs/references/projects-secction.png`:
-eyebrow "CATÁLOGO ACTIVO", heading "Últimos proyectos añadidos", tarjetas compactas en fila
-(imagen, nombre de proyecto, nombre de desarrollador, ubicación, link "Ver proyecto") con flechas
-de navegación. La implementación actual usa paneles verticales full-bleed, uno por proyecto
-(efecto "reveal" a pantalla completa), con 4 proyectos en `content/site.ts` (Artemis, Itagua, PV
-Norte, Buen Retiro), sin desarrollador, ubicación ni "Ver proyecto".
+**RevealGallery / sección de proyectos** — Realineado por el change
+`openspec/changes/complete-remaining-ruum-landing/` (2026-08-04): reemplaza los paneles verticales
+full-bleed anteriores por un carrusel de tarjetas compactas (imagen, nombre, desarrollador,
+ubicación, "Ver proyecto") con flechas de navegación, alineado con
+`docs/references/projects-secction.png` (eyebrow "CATÁLOGO ACTIVO", heading "Últimos proyectos
+añadidos"). `Project` (`content/site.ts`) ganó `developer`, `location`, `slug?` (perfil futuro,
+sin uso todavía) y `href?` (URL futura de "Ver proyecto"; mientras no exista, la acción se
+renderiza `aria-disabled`, sin destino inventado — ver sección "Perfiles inmobiliarios" más
+abajo). El catálogo quedó en 3 proyectos (Itaguá—STTO Group, Buen Retiro—Kohler & Weiss Real
+Estate Development, Artemis—SYMPRAX): son los únicos con desarrollador/ubicación observables en
+la referencia — la asociación proyecto↔desarrollador sigue sin confirmación oficial del product
+owner, se usa aquí solo por ser observable en la imagen. "PV Norte" (el 4to proyecto que existía
+antes) se retiró de esta sección por no tener esos datos observables en ninguna referencia; su
+imagen se reutilizó en `FeatureSection` en vez de descartarse.
 
-Relacionado con esta sección: la referencia muestra asociaciones proyecto↔desarrollador (Itaguá—
-STTO Group, Buen Retiro—Kohler & Weiss Real Estate Development, Artemis—SYMPRAX) que son solo una
-**observación de la imagen**, no un dato confirmado — el product owner indicó explícitamente que
-esa relación todavía debe confirmarse antes de usarse. La acción "Ver proyecto" de cada tarjeta
-debe salir de los datos del proyecto (no hardcodeada) y por ahora no tiene URL real — ver sección
-"Perfiles inmobiliarios" más abajo.
+**Stats** — Realineado: 4 métricas (`+50` proyectos diseñados, `15` desarrolladores
+inmobiliarios, `+20` países servicios prestados, `+100` unidades vendidas usando Ruum), leídas de
+`landing-desktop.png`. Mismo layout que antes (fila con `border-y`), compatible con 4 ítems sin
+cambios estructurales.
 
-**Stats** — 3 métricas en el código (`4+`, `3x`, `100%`) contra 4 en la referencia (`+50`, `15`,
-`+20`, `+100`, con labels distintos). Debe alinearse con la referencia principal; cantidad y copy
-finales pendientes de decisión al momento de implementar.
+**FeatureSection** — Realineado: reemplaza el carrusel horizontal pineado (scroll-driven, 3
+tarjetas) por los 5 bloques verticales de la referencia (imagen + eyebrow/heading/descripción,
+apilados, sin pin ni scroll horizontal). `Feature` ganó `eyebrow: string`. Dos de las cinco
+imágenes reutilizan assets que quedaron sin uso en el repo tras otros cambios de este mismo change
+(la imagen de "PV Norte", retirada de la sección de proyectos) — no se agregó ningún dominio de
+imagen nuevo.
 
-**FeatureSection** — El código implementa un carrusel horizontal pineado (scroll-driven) con 3
-tarjetas. La referencia muestra 5 bloques verticales alternados (imagen + texto), sin carrusel.
-Debe alinearse con la referencia principal; layout, cantidad de bloques y copy finales pendientes
-de decisión al momento de implementar (evaluar si el carrusel horizontal pineado se conserva como
-adaptación justificada por UX/rendimiento, o se reemplaza por el layout vertical de la
-referencia).
+**HowItWorks** — Realineado: reemplaza el efecto anterior de stacking/pin por columna (con imagen)
+por la fila de 3 columnas sin pin que muestra la referencia (número, título, descripción,
+separador superior). Copy actualizado a "Creamos tu experiencia digital" / "Publicamos tu
+proyecto" / "Impulsa tus ventas". `Step.image` quedó opcional en el tipo (sin consumidores hoy).
 
-**HowItWorks** — Misma estructura general (3 pasos numerados, apilados con pin/scale). El copy de
-títulos y descripciones del código difiere del de la referencia (p. ej. código:
-"Digitalizamos tu desarrollo" / referencia: "Creamos tu experiencia digital"). Debe alinearse con
-la referencia principal; copy final pendiente de decisión al momento de implementar.
-
-**Logos / clientes** — Confirmado: esta sección **sí se implementará**. La referencia
-(`landing-desktop.png`) muestra una sección "Empresas relacionadas y clientes del ecosistema
-Ruum." con ~8 logos, ubicada entre HowItWorks y ClosingCTA. Requisitos confirmados:
-
-- los SVG de cada empresa y su clasificación los proveerá el product owner más adelante — no
-  deben inventarse logos, empresas ni relaciones comerciales;
-- debe reproducir la composición visual de la referencia;
-- debe usar una animación tipo **marquee/logo-ticker/carrusel continuo** (franja de logos que se
-  desplaza a velocidad constante y parece infinita);
-- si se usan dos filas, una puede ir izquierda→derecha y la otra derecha→izquierda;
-- el movimiento debe ser fluido y sutil, sin saltos al reiniciarse el loop;
-- debe pausarse o adaptarse cuando `prefers-reduced-motion` esté activo;
-- los logos deben salir de una colección de datos centralizada (ej. un array en
-  `content/site.ts` o similar), **sin duplicar manualmente** la estructura de cada logo en el
-  markup;
-- debe ser sencillo añadir, retirar o reordenar empresas.
-
-Estado: confirmada para implementación futura, pendiente de recibir los SVG y la clasificación
-real de cada empresa. Detalle de reglas de performance/accesibilidad para el marquee en
+**Logos / clientes** — Implementado por el mismo change: `components/sections/Logos.tsx` +
+`components/ui/Marquee.tsx` (ticker continuo en CSS puro, dos filas en direcciones opuestas,
+pausado con `prefers-reduced-motion`), datos en `content/logos.ts`. Reproduce la composición de
+la referencia ("Empresas relacionadas y clientes del ecosistema Ruum.", 10 empresas en 2 filas de
+5). **Los 10 SVG son placeholders provisionales** construidos para este change (marcas
+monocromáticas simples con el nombre de cada empresa) — el product owner todavía no proveyó los
+logos reales ni su clasificación; reemplazar cada archivo en `public/assets/logos/` es un cambio
+de datos, sin tocar componentes. Detalle de reglas de performance/accesibilidad para el marquee en
 [performance-guidelines.md](./performance-guidelines.md).
 
-**ClosingCTA** — El heading y el CTA existen en el código, con una imagen de fondo con parallax.
-La referencia incluye además un bloque de contacto/testimonio con foto de una persona, nombre y
-datos de contacto (teléfono, email) que **no está implementado**. Debe alinearse con la
-referencia principal; si se conserva o no ese bloque, y su contenido, queda pendiente de decisión
-al momento de implementar (no inventar nombre/foto/datos de contacto).
+**ClosingCTA** — Realineado: heading/subcopy/CTA actualizados al copy de la referencia ("Sumá tu
+proyecto a la experiencia más inmersiva..." / "Contáctanos"). Se agregó el bloque de
+contacto/testimonio (`closingCTA.contact`: nombre, teléfono, email, foto) con los valores
+observables en `landing-desktop.png` ("Guillermo Castillo", "+591 780 00000",
+"atencion@ruumap.com") — son datos del mockup, no confirmados como definitivos por el product
+owner; la foto es un placeholder de Unsplash. **Hallazgo durante la implementación**: la
+referencia para esta sección no muestra ninguna imagen de fondo a pantalla completa (era fondo
+oscuro sólido + retrato sangrando a la derecha), así que el `backgroundImage`/parallax que tenía
+la implementación anterior se retiró — no correspondía a ningún elemento observable en la
+referencia para este bloque en particular.
 
-**Footer** — Debe alinearse con la referencia principal y, en particular, con el detalle de
-`docs/references/footer.png`:
+**Footer** — Realineado con el detalle de `docs/references/footer.png`:
 
 - **Estructura**: logo "ruum" + tagline a la izquierda, tres columnas de links, barra inferior
-  con copyright + iconos sociales.
-- **Columnas observadas**: "PRODUCTO" (Proyectos, Recorridos 3D, Precios), "COMPAÑÍA" (Nosotros,
-  Contacto), "LEGAL" (Privacidad, Términos).
-- **Tagline observada**: "La solución de visualización virtual y gestión en tiempo real para
+  con copyright + iconos sociales — sin cambios respecto a lo ya implementado.
+- **Columnas actualizadas**: "PRODUCTO" (Proyectos, Recorridos 3D, Precios), "COMPAÑÍA" (Nosotros,
+  Contacto), "LEGAL" (Privacidad, Términos) — antes tenía 4 items distintos en "Producto".
+- **Tagline actualizada**: "La solución de visualización virtual y gestión en tiempo real para
   proyectos en pre-venta de todo el mundo."
-- **Redes sociales**: iconos de Facebook e Instagram en la barra inferior — el componente actual
-  no los renderiza.
-- **Copyright**: "© 2026 ruum. Todos los derechos reservados."
+- **Redes sociales**: iconos de Facebook e Instagram agregados en la barra inferior
+  (`siteContent.footer.social`, `href: "#"` provisional — no hay URLs reales confirmadas).
+- **Copyright**: dinámico (`{footer año actual} {brand.name}`) — se mantuvo dinámico en vez de
+  hardcodear "2026" como en la referencia (adaptación de mantenibilidad menor).
 
-El código actual (`siteContent.footer`) tiene una tagline y labels de columna distintos ("Producto":
-Recorridos virtuales, Planos 2D/3D, Amenidades, Precios — 4 items vs. 3 en la referencia), y no
-tiene fila de iconos sociales. No hay datos de contacto (email/teléfono/dirección) visibles en
-ninguna referencia — no deben inventarse.
+No hay datos de contacto (email/teléfono/dirección) del Footer visibles en ninguna referencia —
+no se inventaron. Nota: `brand.name` sigue siendo "Ruumap" en el código pese a que las
+referencias muestran el wordmark "ruum" — es una discrepancia de identidad de marca preexistente
+que toca a Navbar/branding (fuera de alcance del change `complete-remaining-ruum-landing`), no
+resuelta aquí.
+
+**Modelo de padding lateral (corrección, change `complete-remaining-ruum-landing`, grupo 12)** —
+Stats, FeatureSection, HowItWorks, RevealGallery, Logos, ClosingCTA y Footer usan **padding fijo
+en píxeles, sin `max-w` + `mx-auto` centrando el contenido**: el padding lateral de cada sección
+es una cantidad constante (ej. 64px en la mayoría, 240px en Stats) que no crece ni se combina con
+un margen de centrado adicional en pantallas anchas. Esto reemplaza el modelo anterior (una banda
+centrada con `max-w-[1300–1400px] mx-auto` que el grupo 11 había introducido): en pantallas reales
+de 1440–1920px+, ese `max-w` sumaba un margen de centrado mucho mayor que el padding pretendido
+(ej. `max-w-[960px] mx-auto` en Stats sumaba hasta 480px de margen por lado en un viewport de
+1920px, además de su propio padding). El product owner confirmó el requisito: el padding lateral
+debe ser el mismo valor constante sin importar el tamaño de pantalla. Donde el contenido interno
+(un heading, por ejemplo) podía volverse demasiado ancho al quedar la fila realmente a pantalla
+completa, se le agregó su propio `max-w` puntual (no a la sección) — ese es el único uso de
+`max-w` que se conserva.
 
 ## Perfiles inmobiliarios (fuera de la landing corporativa)
 
