@@ -1,57 +1,32 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { siteContent, type Project } from "@/content/site";
+import { getDeveloperBySlug } from "@/content/developers";
 import { SECTION_IDS } from "@/lib/navigation";
+import { ProjectCard, type ProjectCardData } from "@/components/ui/ProjectCard";
 
 const { eyebrow, heading, projects } = siteContent.revealGallery;
 
-function ProjectCard({ project }: { project: Project }) {
-  return (
-    <article
-      data-project-card
-      className="w-[82vw] shrink-0 snap-start sm:w-[60vw] lg:w-[380px]"
-    >
-      <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-surface">
-        <Image
-          src={project.image.src}
-          alt={project.image.alt}
-          fill
-          sizes="(min-width: 1024px) 380px, (min-width: 640px) 60vw, 82vw"
-          className="object-cover"
-        />
-      </div>
+/**
+ * Mapea `Project` (content/site.ts) a la forma agnóstica que consume
+ * `ProjectCard`, resolviendo `profileHref` solo cuando el desarrollador
+ * referenciado por `developerSlug` existe en content/developers.ts — un
+ * `developerSlug` sin desarrollador configurado no debe llevar a un perfil
+ * roto (ver specs/project-catalog "Catalog card navigates to the project's
+ * developer profile").
+ */
+function toCardData(project: Project): ProjectCardData {
+  const developer = project.developerSlug ? getDeveloperBySlug(project.developerSlug) : undefined;
 
-      <div className="pt-5">
-        <h3 className="font-display text-[20px] font-semibold leading-tight text-white">
-          {project.name}
-        </h3>
-        <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-400">
-          {project.developer}
-        </p>
-        <p className="mt-2 text-[13.5px] text-gray-400">{project.location}</p>
-
-        {project.href ? (
-          <a
-            href={project.href}
-            className="mt-3 inline-block text-[13.5px] font-medium text-accent transition-opacity duration-300 hover:opacity-80"
-          >
-            Ver proyecto
-          </a>
-        ) : (
-          // Sin URL confirmada todavía (ver Project.href en content/site.ts) — se
-          // muestra como acción pendiente, no interactiva, en vez de inventar un destino.
-          <span
-            aria-disabled="true"
-            className="mt-3 inline-block cursor-not-allowed text-[13.5px] font-medium text-accent/50"
-          >
-            Ver proyecto
-          </span>
-        )}
-      </div>
-    </article>
-  );
+  return {
+    name: project.name,
+    developer: project.developer,
+    location: project.location,
+    image: project.image,
+    href: project.href,
+    profileHref: developer ? `/desarrolladores/${developer.slug}` : undefined,
+  };
 }
 
 /**
@@ -59,7 +34,11 @@ function ProjectCard({ project }: { project: Project }) {
  * scroll-snap (sin GSAP, sin dependencias nuevas), alineado con
  * docs/references/projects-secction.png. Reemplaza los paneles verticales
  * full-bleed anteriores — ver design.md del change
- * `complete-remaining-ruum-landing`.
+ * `complete-remaining-ruum-landing`. La tarjeta en sí (imagen, nombre,
+ * desarrollador, ubicación, "Ver proyecto") vive en
+ * `components/ui/ProjectCard.tsx`, reutilizada acá y en los perfiles de
+ * desarrollador (`components/profile/`) — ver el change
+ * `add-reusable-developer-profiles`.
  */
 export default function RevealGallery() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -111,7 +90,9 @@ export default function RevealGallery() {
         className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 sm:gap-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {projects.map((project) => (
-          <ProjectCard key={project.index} project={project} />
+          <div key={project.index} className="w-[82vw] shrink-0 snap-start sm:w-[60vw] lg:w-[380px]">
+            <ProjectCard project={toCardData(project)} theme="dark" />
+          </div>
         ))}
       </div>
 

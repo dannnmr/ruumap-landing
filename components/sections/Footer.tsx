@@ -11,7 +11,13 @@ const { brand, footer } = siteContent;
  */
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   Facebook: (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M15 8.5h2V5.5h-2c-2.2 0-4 1.8-4 4V11H9v3h2v6h3v-6h2.2l.8-3H14V9.5c0-.6.4-1 1-1z"
         fill="currentColor"
@@ -19,8 +25,22 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
     </svg>
   ),
   Instagram: (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="4" y="4" width="16" height="16" rx="4.5" stroke="currentColor" strokeWidth="1.6" />
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <rect
+        x="4"
+        y="4"
+        width="16"
+        height="16"
+        rx="4.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      />
       <circle cx="12" cy="12" r="3.6" stroke="currentColor" strokeWidth="1.6" />
       <circle cx="16.6" cy="7.4" r="1" fill="currentColor" />
     </svg>
@@ -54,7 +74,8 @@ export default function Footer() {
                 <a
                   key={link}
                   href="#"
-                  className="w-fit transition-colors duration-300 hover:text-accent">
+                  className="w-fit transition-colors duration-300 hover:text-accent"
+                >
                   {link}
                 </a>
               ))}
@@ -65,7 +86,8 @@ export default function Footer() {
 
       <div className="flex flex-col-reverse items-center gap-6 border-t border-border pt-[30px] text-[13px] text-muted-7 sm:flex-row sm:justify-between">
         <p>
-          © {new Date().getFullYear()} {brand.name}. Todos los derechos reservados.
+          © {new Date().getFullYear()} {brand.name}. Todos los derechos
+          reservados.
         </p>
 
         <div className="flex gap-3">
@@ -74,7 +96,7 @@ export default function Footer() {
               key={social.label}
               href={social.href}
               aria-label={social.label}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-gray-300 transition-colors duration-300 hover:bg-white/10 hover:text-white"
+              className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-300 transition-colors duration-300 hover:bg-white/10 hover:text-white"
             >
               {SOCIAL_ICONS[social.label]}
             </a>

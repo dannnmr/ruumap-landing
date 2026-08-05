@@ -205,41 +205,74 @@ experiencia, como una página/vista relacionada con los proyectos y desarrollado
 landing (no una sección de la landing corporativa en sí). Al seleccionar un desarrollador o un
 proyecto en la sección correspondiente, debe poder abrirse su perfil.
 
-Ejemplos mencionados por el product owner (sin que la relación proyecto↔desarrollador esté
-confirmada todavía): STTO Group tendrá su propio perfil de desarrollador; Buen Retiro tendrá el
-perfil del desarrollador que se defina; Artemis tendrá su perfil correspondiente; SYMPRAX tendrá
-su perfil correspondiente; los proyectos/desarrolladores futuros deben poder añadirse con la
-misma estructura.
+**Implementado** por el change `openspec/changes/add-reusable-developer-profiles/` (2026-08-05):
 
-Requisitos de producto confirmados para la solución:
+- **Ruta**: `app/desarrolladores/[slug]/page.tsx` — dinámica, pre-renderizada en build
+  (`generateStaticParams`) para cada desarrollador configurado. Un slug sin desarrollador
+  configurado muestra `app/desarrolladores/[slug]/not-found.tsx` en vez de un perfil roto o
+  inventado.
+- **Datos**: colección centralizada `content/developers.ts` (`developers: Developer[]`,
+  `getDeveloperBySlug`) — nombre, logo, slogan, portada, redes, dirección, sitio web, video,
+  descripción, misión, visión, imagen principal, representante, notas de prensa, "otros
+  proyectos". `Project` (`content/site.ts`) ganó `developerSlug` (reemplaza el viejo `slug?` sin
+  uso), `category?` (sin uso visual todavía) y `status: "provisional" | "confirmed"`. La lista de
+  "proyectos añadidos" de un perfil se deriva filtrando `content/site.ts` por `developerSlug` —no
+  se duplica en `Developer`.
+- **Plantilla**: `components/profile/DeveloperProfileTemplate.tsx`, compuesta de
+  `ProfileHeader`, `ProfileInfoBlock`, `RepresentativeBlock`, `AddedProjectsSection`/
+  `OtherProjectsSection` (`components/profile/ProjectsGrid.tsx`), `PressSection`
+  (`components/profile/PressCard.tsx`) y `ProfileFooter` — una sola plantilla para todo perfil,
+  cada sección omitida por completo cuando su dato no está configurado (nunca contenido
+  fabricado). Reutiliza `components/ui/ProjectCard.tsx` (extraído de `RevealGallery`, ahora
+  también usado por el catálogo de la landing) y `components/ui/VideoPlayer.tsx` (extraído de
+  `AboutUs`, mismo comportamiento poster/play/pause sin autoplay).
+- **Tema visual**: el perfil usa un **tema claro**, distinto del fondo oscuro del resto de la
+  landing — decisión confirmada explícitamente por el product owner (2026-08-05), siguiendo la
+  referencia visual (`perfil.desarrollador.inmobiliario.png` es una captura de fondo claro). El
+  footer del perfil (`ProfileFooter`) sí reutiliza el fondo oscuro del sitio — así lo muestra esa
+  misma referencia para esa franja en particular. Tema aplicado solo dentro de
+  `components/profile/` y esta ruta; no toca los tokens globales de `app/globals.css`.
+- **Landing → perfil**: la tarjeta de `RevealGallery` navega al perfil del desarrollador vía
+  `developerSlug` cuando ese desarrollador existe en `content/developers.ts`; si no, la tarjeta no
+  ofrece navegación a un perfil roto.
+- **Contenido de los 3 desarrolladores** (STTO Group, Kohler & Weiss Real Estate Development,
+  SYMPRAX — los únicos con proyecto asociado confirmado en `content/site.ts`): **decisión
+  explícita del product owner (2026-08-05)** — los tres reutilizan literalmente el mismo copy
+  observado en `perfil.desarrollador.inmobiliario.png` (que es, en rigor, el perfil de STTO
+  Group), adaptado solo en el nombre del desarrollador, en vez de dejar a los otros dos con
+  campos vacíos. Es contenido de relleno explícitamente marcado (`status: "provisional"` +
+  comentarios en `content/developers.ts`), a reemplazar por la información real de cada
+  desarrollador cuando esté disponible — no representa hechos reales de Kohler & Weiss ni de
+  SYMPRAX.
 
-- estructura reutilizable basada en `perfil.desarrollador.inmobiliario.png`, con contenido
-  distinto por perfil;
-- solución mantenible y basada en datos — **no** crear una página duplicada manualmente por cada
-  perfil;
-- usar una plantilla reutilizable;
-- centralizar la información de cada desarrollador/proyecto;
-- usar identificadores o slugs únicos;
-- permitir añadir nuevos perfiles sin duplicar componentes;
-- permitir imágenes, videos, información y enlaces específicos por perfil;
-- contemplar rutas dinámicas o una solución equivalente apropiada para Next.js (App Router);
-- mantener separación entre contenido y presentación (mismo criterio que ya sigue
-  `content/site.ts` para la landing).
+Requisitos de producto que guiaron la solución (todos cubiertos arriba): estructura reutilizable
+basada en la referencia, sin página duplicada por perfil, plantilla única, información
+centralizada, slugs únicos, nuevos perfiles solo con datos (sin duplicar componentes), medios/
+información/enlaces por perfil, ruta dinámica de App Router, contenido separado de la
+presentación.
 
-**Explícitamente pendiente de especificación posterior** (no decidir ni implementar todavía): la
-ruta/URL definitiva de los perfiles, y la arquitectura técnica exacta.
+**Sigue pendiente** (no resuelto por este change): información real de cada desarrollador (más
+allá de STTO Group, cuyo copy viene directo de la referencia), logos reales (los tres perfiles
+usan el fallback de iniciales), y confirmación oficial de la relación proyecto↔desarrollador más
+allá de lo observable en `projects-secction.png`.
 
 ### Acción "Ver proyecto"
 
-Cada perfil inmobiliario tendrá una acción "Ver proyecto" que dirige a un enlace específico por
-proyecto, provisto por el product owner más adelante. Reglas confirmadas:
+Cada perfil inmobiliario tiene una acción "Ver proyecto" que dirige a un enlace específico por
+proyecto (`Project.href`, `content/site.ts`), provisto por el product owner más adelante. Reglas
+implementadas (mismo componente, `components/ui/ProjectCard.tsx`, usado en el catálogo de la
+landing y en la lista de "proyectos añadidos" del perfil):
 
-- cada enlace será distinto según el proyecto;
-- debe configurarse desde los datos del proyecto, no hardcodeado en el componente visual;
-- debe soportar enlaces internos o externos según corresponda;
-- no deben usarse URLs temporales inventadas;
-- mientras no exista una URL confirmada, la acción debe mantenerse pendiente (sin destino
-  inventado).
+- cada enlace es distinto según el proyecto, configurado desde los datos, nunca hardcodeado en el
+  componente visual;
+- soporta enlaces internos o externos según corresponda;
+- no se usan URLs temporales inventadas;
+- mientras no exista una URL confirmada, la acción se renderiza `aria-disabled`, sin destino
+  inventado — hoy es el caso de los 3 proyectos existentes (`href` sin definir en
+  `content/site.ts`).
+
+La grilla "Otros proyectos" del perfil no tiene esta acción — no es observable en la referencia
+para esa grilla en particular.
 
 ## Checklist antes de modificar una sección para alinearla con la referencia
 

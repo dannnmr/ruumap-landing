@@ -35,17 +35,36 @@ export type Project = {
   location: string;
   image: SiteImage;
   /**
-   * Slug futuro del perfil inmobiliario del proyecto (ver
-   * docs/page-structure.md, sección "Perfiles inmobiliarios"). Sin uso
-   * todavía — no hay rutas dinámicas implementadas en este cambio.
+   * Slug del `Developer` (content/developers.ts) al que pertenece este
+   * proyecto. Conecta la tarjeta del catálogo con el perfil de ese
+   * desarrollador (`/desarrolladores/[developerSlug]`) y hace que el
+   * proyecto aparezca en la lista de "proyectos añadidos" de ese perfil.
+   * Reemplaza el viejo campo `slug?` (sin uso) — los perfiles son por
+   * desarrollador, no por proyecto (confirmado en docs/product-context.md).
    */
-  slug?: string;
+  developerSlug?: string;
+  /**
+   * Categoría o relación con el perfil (ej. "Torre residencial"). Solo dato
+   * por ahora — ninguna referencia visual muestra un elemento de categoría
+   * visible en la tarjeta del catálogo ni en las listas de proyectos del
+   * perfil, así que este campo no se renderiza todavía.
+   */
+  category?: string;
   /**
    * URL futura de la acción "Ver proyecto", provista por el product owner
    * por proyecto. Mientras no exista, se deja `undefined` a propósito — la
-   * acción se renderiza como no interactiva en vez de inventar un destino.
+   * acción se renderiza como no interactiva en vez de inventar un destino,
+   * tanto en el catálogo de la landing como en el perfil del desarrollador.
    */
   href?: string;
+  /**
+   * Marca editorial: si los datos de esta entrada están confirmados por el
+   * product owner o siguen siendo provisionales/leídos de una referencia.
+   * No condiciona ningún comportamiento por sí sola — la regla existente de
+   * "omitir entradas sin desarrollador/ubicación confirmados" ya cubre eso;
+   * este campo solo ayuda a rastrear qué falta confirmar.
+   */
+  status: "provisional" | "confirmed";
 };
 
 export type Feature = {
@@ -148,6 +167,12 @@ export const siteContent = {
    * tiene desarrollador/ubicación observable en ninguna referencia, así que
    * se deja fuera a propósito en vez de inventar esos datos — puede
    * reincorporarse en cuanto haya datos confirmados.
+   *
+   * `developerSlug` conecta cada entrada con content/developers.ts (ver
+   * docs/page-structure.md, "Perfiles inmobiliarios") — los 3 desarrolladores
+   * abajo ya existen en esa colección. `href` son las URLs reales de "Ver
+   * proyecto" provistas por el usuario (2026-08-05) — ya no son
+   * provisionales.
    */
   revealGallery: {
     eyebrow: "CATÁLOGO ACTIVO",
@@ -163,6 +188,9 @@ export const siteContent = {
           src: "https://images.unsplash.com/photo-1563657296501-c3770ae0057b?q=80&w=1600&auto=format&fit=crop",
           alt: "Arquitectura residencial contemporánea con áreas comunes, proyecto Itaguá",
         },
+        developerSlug: "stto-group",
+        href: "https://itagua.ruumap.com/",
+        status: "confirmed",
       },
       {
         index: "02",
@@ -174,6 +202,9 @@ export const siteContent = {
           src: "https://images.unsplash.com/photo-1655447844120-083802457b17?q=80&w=1600&auto=format&fit=crop",
           alt: "Torre residencial con jardines verticales integrados, proyecto Buen Retiro",
         },
+        developerSlug: "kohler-weiss",
+        href: "https://buenretiro.ruumap.com/",
+        status: "confirmed",
       },
       {
         index: "03",
@@ -185,6 +216,9 @@ export const siteContent = {
           src: "https://images.unsplash.com/photo-1760259203238-01708384f7a2?q=80&w=1600&auto=format&fit=crop",
           alt: "Fachada de torre residencial de lujo con acabados de vidrio, proyecto Artemis",
         },
+        developerSlug: "symprax",
+        href: "https://artemis.ruumap.com/",
+        status: "confirmed",
       },
     ] satisfies Project[],
   },

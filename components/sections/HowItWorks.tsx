@@ -42,10 +42,10 @@ export default function HowItWorks() {
             end: "top 40%",
             scrub: true,
           },
-        }
+        },
       );
     },
-    { scope: sectionRef, dependencies: [prefersReducedMotion, steps.length] }
+    { scope: sectionRef, dependencies: [prefersReducedMotion, steps.length] },
   );
 
   return (
