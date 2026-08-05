@@ -54,10 +54,10 @@ export default function HowItWorks() {
       id={SECTION_IDS.proceso}
       className="scroll-mt-24 bg-background px-5 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-[130px]"
     >
-      <p className="mb-6 font-sans text-[12px] font-semibold uppercase tracking-[0.28em] text-accent sm:mb-8">
+      <p className="mb-6 font-sans text-[12px] font-light uppercase tracking-[0.28em] text-accent sm:mb-8">
         {eyebrow}
       </p>
-      <h2 className="mb-10 max-w-[760px] font-display text-[clamp(32px,5vw,52px)] font-bold leading-[1.05] tracking-tight text-white sm:mb-12">
+      <h2 className="mb-10 max-w-[760px] font-display text-[clamp(32px,5vw,52px)] font-light leading-[1.05] tracking-tight text-white sm:mb-12">
         {heading}
       </h2>
 
@@ -68,15 +68,15 @@ export default function HowItWorks() {
             ref={(el) => {
               columnRefs.current[i] = el;
             }}
-            className="border-t border-border pt-6"
+            className="border-t border-border"
           >
-            <div className="mb-4 font-display text-[44px] font-bold leading-none text-accent sm:mb-6 sm:text-[52px]">
+            <div className="mb-4 mt-7 font-display text-[52px] font-normal leading-none text-accent sm:mb-6 sm:text-[76px] lg:text-[70px]">
               {step.index}
             </div>
-            <h3 className="mb-3 font-display text-[20px] font-semibold leading-tight text-white sm:text-[22px]">
+            <h3 className="mb-3 font-display text-[19px] font-light leading-tight text-white sm:text-[20px]">
               {step.title}
             </h3>
-            <p className="max-w-[360px] font-sans text-[14.5px] font-medium leading-relaxed text-gray-400 sm:text-[15px]">
+            <p className="max-w-[360px] font-sans text-[15px] font-light leading-relaxed text-gray-400 sm:text-[15px]">
               {step.description}
             </p>
           </div>

@@ -17,13 +17,13 @@ function PressCard({ note }: { note: PressNote }) {
         </div>
       )}
       <div className="pt-4">
-        <h3 className="font-display text-[16px] font-semibold leading-snug text-[oklch(18%_0_0)]">
+        <h3 className="font-display text-[22px] font-normal leading-snug text-[oklch(18%_0_0)]">
           {note.headline}
         </h3>
-        <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-[oklch(45%_0_0)]">
+        <p className="mt-1.5 text-[12px] font-normal uppercase tracking-[0.12em] text-[#515151]">
           {note.outlet}
         </p>
-        <span className="mt-2 inline-block text-[13px] font-medium text-accent transition-opacity duration-300 group-hover:opacity-80">
+        <span className="mt-2 inline-block text-[13px] font-normal text-accent transition-opacity duration-300 group-hover:opacity-80 uppercase border-b border-[#D78951] pb-0.5">
           Nota completa
         </span>
       </div>
@@ -45,8 +45,8 @@ export function PressSection({ developer }: { developer: Developer }) {
       id="prensa"
       className="scroll-mt-10 border-t border-[oklch(15%_0_0)]/10 px-5 py-14 sm:px-10 lg:px-24 lg:pb-32 lg:pt-16"
     >
-      <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.28em] text-accent">PRENSA</p>
-      <h2 className="mb-10 font-display text-[26px] font-bold text-[oklch(15%_0_0)] sm:text-[32px]">
+      <p className="mb-2 text-[12px] font-normal uppercase tracking-[0.28em] text-accent">PRENSA</p>
+      <h2 className="mb-10 font-display text-[36px] font-normal text-[oklch(15%_0_0)] sm:text-[40px]">
         Notas de Prensa
       </h2>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-9">

@@ -37,14 +37,14 @@ export function RepresentativeBlock({ developer }: { developer: Developer }) {
       </div>
 
       <div>
-        <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.28em] text-accent">
+        <p className="mb-4 text-[12px] font-normal uppercase tracking-[0.28em] text-accent">
           {representative.name}
         </p>
-        <h2 className="mb-4 font-display text-[26px] font-bold leading-tight text-[oklch(15%_0_0)] sm:text-[32px]">
+        <h2 className="mb-4 font-display text-[35px] font-normal leading-tight text-[oklch(15%_0_0)] sm:text-[40px]">
           {representative.role}
         </h2>
         {representative.quote && (
-          <p className="text-[14.5px] leading-relaxed text-[oklch(35%_0_0)]">{representative.quote}</p>
+          <p className="text-[16px] leading-relaxed font-normal text-[oklch(35%_0_0)]">{representative.quote}</p>
         )}
       </div>
     </section>

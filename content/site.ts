@@ -114,7 +114,7 @@ export const siteContent = {
       { label: "Características", target: SECTION_IDS.servicios },
       { label: "Cómo funciona", target: SECTION_IDS.proceso },
     ] satisfies NavLink[],
-    cta: { label: "Hablemos", target: SECTION_IDS.contacto } satisfies NavLink,
+    cta: { label: "Agenda una demo", target: SECTION_IDS.contacto } satisfies NavLink,
   },
 
   hero: {

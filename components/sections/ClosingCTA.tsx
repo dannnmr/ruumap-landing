@@ -24,19 +24,19 @@ const { heading, subcopy, primaryCta, contact } = siteContent.closingCTA;
 export default function ClosingCTA() {
   return (
     <section id={SECTION_IDS.contacto} className="scroll-mt-24 overflow-hidden bg-background">
-      <div className="flex flex-col lg:flex-row">
-        <div className="flex flex-col justify-center gap-7 px-5 py-20 sm:px-10 sm:py-24 lg:max-w-[780px] lg:shrink-0 lg:px-16 lg:py-24 xl:px-32">
-          <h2 className="max-w-[520px] font-display text-[clamp(30px,5vw,46px)] font-bold leading-[1.1] tracking-tight text-white">
+      <div className="flex flex-col justify-between gap-10 px-5 py-20 sm:px-10 sm:py-24 lg:flex-row lg:items-center lg:gap-16 lg:px-16 lg:py-24 xl:px-32">
+        <div className="flex flex-col justify-center gap-7 lg:max-w-[622px] lg:shrink-0">
+          <h2 className="font-display text-[clamp(30px,5vw,46px)] font-light leading-[1.1] tracking-tight text-white">
             {heading}
           </h2>
-          <p className="max-w-[440px] font-sans text-[15px] font-medium leading-relaxed text-gray-300">
+          <p className="font-sans text-[15px] font-light leading-relaxed text-gray-300">
             {subcopy}
           </p>
           <div>
             <Button
               href={primaryCta.href}
               variant="primary"
-              className="rounded-full px-9 py-4 text-sm sm:px-11 sm:py-[18px] sm:text-[15px]"
+              className="rounded-[10px] px-9 py-4 text-sm sm:px-11 sm:py-[18px] sm:text-[15px]"
             >
               {primaryCta.label}
             </Button>
@@ -72,12 +72,12 @@ export default function ClosingCTA() {
           </div>
         </div>
 
-        <div className="relative h-[45vh] min-w-0 sm:h-[55vh] lg:h-auto lg:min-h-[520px] lg:flex-1 lg:pt-16 xl:pt-32">
+        <div className="relative h-[45vh] w-full min-w-0 overflow-hidden rounded-2xl sm:h-[55vh] lg:h-[520px] lg:flex-1">
           <Image
             src={contact.photo.src}
             alt={contact.photo.alt}
             fill
-            sizes="(min-width: 1024px) 60vw, 100vw"
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover grayscale"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent lg:bg-gradient-to-r lg:from-background/50 lg:via-transparent lg:to-transparent" />

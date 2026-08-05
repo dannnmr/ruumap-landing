@@ -89,7 +89,7 @@ export function ProjectCard({
   );
 
   const heading = (
-    <h3 className={cn("font-display text-[20px] font-semibold leading-tight", palette.name)}>
+    <h3 className={cn("font-display text-[20px] font-light", palette.name)}>
       {project.name}
     </h3>
   );
@@ -111,28 +111,28 @@ export function ProjectCard({
               <Link
                 href={project.profileHref}
                 className={cn(
-                  "text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity duration-300 hover:opacity-70",
+                  "text-[11px] font-light uppercase tracking-[0.12em] transition-opacity duration-300 hover:opacity-70",
                   palette.developer
                 )}
               >
                 {project.developer}
               </Link>
             ) : (
-              <span className={cn("text-[11px] font-semibold uppercase tracking-[0.12em]", palette.developer)}>
+              <span className={cn("text-[12px] font-light uppercase tracking-[0.12em]", palette.developer)}>
                 {project.developer}
               </span>
             )}
           </p>
         )}
         {project.location && (
-          <p className={cn("mt-2 text-[13.5px]", palette.location)}>{project.location}</p>
+          <p className={cn("mt-2 text-[13.5px] font-light", palette.location)}>{project.location}</p>
         )}
 
         {showAction &&
           (project.href ? (
             <a
               href={project.href}
-              className="mt-3 inline-block text-[13.5px] font-medium text-accent transition-opacity duration-300 hover:opacity-80"
+              className="mt-3 inline-block text-[14px] font-light text-accent transition-opacity duration-300 hover:opacity-80"
             >
               Ver proyecto
             </a>

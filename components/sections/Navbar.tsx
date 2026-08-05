@@ -146,8 +146,8 @@ export default function Navbar() {
 
         <nav
           aria-label="Navegación principal"
-          className="hidden flex-1 justify-center gap-8 whitespace-nowrap text-[14px] font-medium tracking-wide
-                     text-gray-300 lg:flex"
+          className="hidden flex-1 justify-center gap-8 whitespace-nowrap text-[14px] font-light tracking-wide
+                     text-[#F2F2F2] lg:flex"
         >
           {NAV_LINKS.map((link) => {
             const href = sectionHref(link.target);
@@ -169,7 +169,7 @@ export default function Navbar() {
             href={sectionHref(NAV_CTA.target)}
             onClick={(event) => handleNavClick(event, sectionHref(NAV_CTA.target))}
             variant="primary"
-            className="hidden lg:inline-flex rounded-[8px] px-6 py-2.5 text-[13px]"
+            className="hidden lg:inline-flex rounded-[8px] px-6 py-2.5 text-[13px] text-white"
           >
             {NAV_CTA.label}
           </Button>

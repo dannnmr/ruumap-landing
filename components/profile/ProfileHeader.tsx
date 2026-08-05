@@ -42,11 +42,11 @@ export function ProfileHeader({ developer }: { developer: Developer }) {
           )}
 
           <div>
-            <h1 className="font-display text-[22px] font-bold leading-tight text-[oklch(15%_0_0)] sm:text-[28px] lg:text-[32px]">
+            <h1 className="font-display text-[22px] font-bold leading-tight text-surface sm:text-[28px] lg:text-[48px]">
               {developer.name}
             </h1>
             {developer.slogan && (
-              <p className="mt-1.5 text-[13.5px] text-[oklch(45%_0_0)] lg:text-[15px]">{developer.slogan}</p>
+              <p className="mt-1.5 text-[13.5px] text-[oklch(45%_0_0)] lg:text-[20px]">{developer.slogan}</p>
             )}
           </div>
         </div>
@@ -55,7 +55,7 @@ export function ProfileHeader({ developer }: { developer: Developer }) {
           {developer.social && developer.social.length > 0 && (
             <SocialLinks social={developer.social} theme="light" />
           )}
-          <div className="text-[12.5px] leading-relaxed text-[oklch(45%_0_0)] sm:text-right">
+          <div className="text-[16px] font-normal leading-relaxed text-[oklch(45%_0_0)] sm:text-right">
             {developer.address && <p>{developer.address}</p>}
             {developer.website && (
               <a

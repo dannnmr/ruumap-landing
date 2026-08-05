@@ -71,10 +71,10 @@ export default function FeatureSection() {
 
             <div>
               <Eyebrow className="mb-4 sm:mb-6">{feature.eyebrow}</Eyebrow>
-              <h3 className="mb-4 max-w-[480px] font-display text-[28px] font-bold leading-[1.1] tracking-tight text-white sm:text-[36px]">
+              <h3 className="mb-4 max-w-[480px] font-display text-[28px] font-light leading-[1.1] tracking-tight text-white sm:text-[36px]">
                 {feature.title}
               </h3>
-              <p className="max-w-[440px] font-sans text-[15px] font-medium leading-relaxed text-gray-300 sm:text-[16px]">
+              <p className="max-w-[440px] font-sans text-[15px] font-light leading-relaxed text-[#9E9E9E] sm:text-[16px]">
                 {feature.description}
               </p>
             </div>

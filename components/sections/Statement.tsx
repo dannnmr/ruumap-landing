@@ -61,7 +61,7 @@ export default function Statement() {
           ))}
         </p>
 
-        <p className="max-w-[800px] text-center font-sans text-[15px] font-light leading-[1.6] text-gray-400">
+        <p className="max-w-[800px] text-center font-sans text-[18px] font-light leading-[1.6] text-gray-400">
           {subWords.map((word, i) => (
             <span key={`sub-${word}-${i}`} className="reveal-word inline-block">
               {word}

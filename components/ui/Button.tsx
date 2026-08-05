@@ -15,7 +15,7 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
     
     const variants = {
       primary: "bg-[#D78951] text-background hover:opacity-90",
-      secondary: "border border-white/20 text-white hover:border-white/50 hover:bg-white/5",
+      secondary: "border border-white border-1  text-white hover:border-white/50 hover:bg-white/5",
     };
 
     return (

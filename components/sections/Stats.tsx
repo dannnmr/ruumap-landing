@@ -8,10 +8,10 @@ export default function Stats() {
     >
       {siteContent.stats.map((stat) => (
         <div key={stat.label} className="text-center">
-          <div className="font-display text-[32px] font-normal tracking-tight text-accent sm:text-[40px] lg:text-[64px]">
+          <div className="font-display text-[32px] font-light tracking-tight text-accent sm:text-[40px] lg:text-[64px]">
             {stat.value}
           </div>
-          <div className="mt-2 text-[12px] font-medium uppercase tracking-[0.05em] text-gray-300 sm:text-[13px]">
+          <div className="mt-2 text-[12px] font-light uppercase tracking-[0.05em] text-gray-300 sm:text-[13px]">
             {stat.label}
           </div>
         </div>

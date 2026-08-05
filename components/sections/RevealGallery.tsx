@@ -77,10 +77,10 @@ export default function RevealGallery() {
   return (
     <section id={SECTION_IDS.proyectos} className="scroll-mt-24 px-5 py-14 sm:px-10 sm:py-20 lg:px-16 lg:py-16">
       <div className="mb-10 sm:mb-14">
-        <p className="mb-4 font-sans text-[12px] font-semibold uppercase tracking-[0.28em] text-accent sm:mb-[18px] sm:text-[13px]">
+        <p className="mb-4 font-sans text-[12px] font-light uppercase tracking-[0.28em] text-accent sm:mb-[18px] sm:text-[13px]">
           {eyebrow}
         </p>
-        <h2 className="max-w-[600px] font-display text-[clamp(28px,5vw,48px)] font-bold tracking-tight text-white">
+        <h2 className="max-w-[900px] font-display text-[clamp(28px,5vw,48px)] font-light tracking-tight text-white">
           {heading}
         </h2>
       </div>

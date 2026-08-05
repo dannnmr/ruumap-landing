@@ -15,10 +15,10 @@ export default function Logos() {
   return (
     <section className="px-5 py-20 sm:px-10 sm:py-28 lg:px-16 lg:py-32">
       <div className="mx-auto mb-14 max-w-[720px] text-center sm:mb-20">
-        <h2 className="mb-4 font-display text-[clamp(26px,4vw,40px)] font-light leading-[1.2] tracking-tight text-white">
+        <h2 className="mb-4 font-display text-[clamp(26px,4vw,40px)] font-extralight leading-[1.2] tracking-tight text-white">
           Empresas relacionadas y clientes del ecosistema Ruum.
         </h2>
-        <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.2em] text-accent">
+        <p className="font-sans text-[12px] font-extralight uppercase tracking-[0.4em] text-accent">
           Partners | Clientes | Desarrolladores inmobiliarios | Constructoras | Software
         </p>
       </div>
@@ -28,7 +28,7 @@ export default function Logos() {
           {row1.map((logo) => (
             <div
               key={logo.name}
-              className="flex aspect-[3/2] w-[120px] items-center justify-center sm:w-[180px] lg:w-[240px]"
+              className="flex aspect-3/2 w-30 items-center justify-center sm:w-45 lg:w-60 p-4 sm:p-6 lg:p-8"
             >
               <img
                 src={logo.src}
@@ -44,7 +44,7 @@ export default function Logos() {
           {row2.map((logo) => (
             <div
               key={logo.name}
-              className="flex aspect-[3/2] w-[120px] items-center justify-center sm:w-[180px] lg:w-[240px]"
+              className="flex aspect-3/2 w-30 items-center justify-center sm:w-45 lg:w-60 p-4 sm:p-6 lg:p-8"
             >
               <img
                 src={logo.src}
