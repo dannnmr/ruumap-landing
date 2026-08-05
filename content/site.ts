@@ -111,7 +111,7 @@ export const siteContent = {
   nav: {
     links: [
       { label: "Proyectos", target: SECTION_IDS.proyectos },
-      { label: "Servicios", target: SECTION_IDS.servicios },
+      { label: "Características", target: SECTION_IDS.servicios },
       { label: "Cómo funciona", target: SECTION_IDS.proceso },
     ] satisfies NavLink[],
     cta: { label: "Hablemos", target: SECTION_IDS.contacto } satisfies NavLink,

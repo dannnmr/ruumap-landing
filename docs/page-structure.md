@@ -23,7 +23,7 @@ Estados usados:
 | 4 | AboutUs (video) | `components/sections/AboutUs.tsx` | `siteContent.about` | Media endurecida (change `optimize-hero-aboutus-media`) — implementado y verificado estáticamente; QA manual en navegador pendiente |
 | 5 | RevealGallery / sección de proyectos | `components/sections/RevealGallery.tsx` | `siteContent.revealGallery` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
 | 6 | Stats | `components/sections/Stats.tsx` | `siteContent.stats` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente |
-| 7 | FeatureSection | `components/sections/FeatureSection.tsx` | `siteContent.features` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
+| 7 | FeatureSection | `components/sections/FeatureSection.tsx` | `siteContent.features` | Rediseñado a cartas apiladas en scroll (`sticky`, pedido explícito del usuario, 2026-08-05) — implementado y verificado estáticamente; QA visual manual pendiente |
 | 8 | HowItWorks | `components/sections/HowItWorks.tsx` | `siteContent.howItWorks` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
 | — | Logos / clientes | `components/sections/Logos.tsx` | `content/logos.ts` | Implementado (change `complete-remaining-ruum-landing`) — SVGs reales provistos por el product owner |
 | 9 | ClosingCTA | `components/sections/ClosingCTA.tsx` | `siteContent.closingCTA` | Realineado (change `complete-remaining-ruum-landing`) — implementado y verificado estáticamente; QA visual manual pendiente |
@@ -131,12 +131,26 @@ inmobiliarios, `+20` países servicios prestados, `+100` unidades vendidas usand
 `landing-desktop.png`. Mismo layout que antes (fila con `border-y`), compatible con 4 ítems sin
 cambios estructurales.
 
-**FeatureSection** — Realineado: reemplaza el carrusel horizontal pineado (scroll-driven, 3
-tarjetas) por los 5 bloques verticales de la referencia (imagen + eyebrow/heading/descripción,
-apilados, sin pin ni scroll horizontal). `Feature` ganó `eyebrow: string`. Dos de las cinco
-imágenes reutilizan assets que quedaron sin uso en el repo tras otros cambios de este mismo change
-(la imagen de "PV Norte", retirada de la sección de proyectos) — no se agregó ningún dominio de
-imagen nuevo.
+**FeatureSection** — Realineado (change `complete-remaining-ruum-landing`): reemplazó el carrusel
+horizontal pineado original (scroll-driven, 3 tarjetas) por 5 bloques verticales de la referencia
+(imagen + eyebrow/heading/descripción, apilados, sin pin ni scroll horizontal). `Feature` ganó
+`eyebrow: string`. Dos de las cinco imágenes reutilizan assets que quedaron sin uso en el repo tras
+otros cambios de ese mismo change (la imagen de "PV Norte", retirada de la sección de proyectos) —
+no se agregó ningún dominio de imagen nuevo.
+
+**Rediseño posterior (2026-08-05, pedido explícito del usuario)** — las 5 tarjetas ahora se apilan
+en scroll ("cartas apiladas"/"papeles en un escritorio"): cada tarjeta es `position: sticky` y se
+pega debajo del Navbar mientras la siguiente sube por detrás y la cubre por completo. Es un
+mecanismo distinto al carrusel horizontal pineado que este mismo change había removido (aquel
+traducía el scroll a desplazamiento horizontal de un track; este apila en vertical con `sticky`,
+sin `pin` de GSAP) — la reautorización para volver a tocar esta sección la dio el usuario
+directamente en esa conversación, no es una reversión de la decisión anterior. El apilado en sí es
+CSS puro; `hooks/useStackedCards.ts` (nuevo) solo agrega un `scrub` de escala sobre la tarjeta
+saliente para dar sensación de profundidad — gateado por `usePrefersReducedMotion()`, y además la
+propiedad `sticky` se apaga con el variant `motion-reduce:` de Tailwind, así que con
+`prefers-reduced-motion` activo las 5 tarjetas vuelven al flujo normal (comportamiento previo, sin
+apilado). `hooks/useHorizontalScroll.ts` no se tocó ni se reutilizó — sigue siendo la hook del
+carrusel horizontal (mecánica distinta), no aplicable a un stack vertical.
 
 **HowItWorks** — Realineado: reemplaza el efecto anterior de stacking/pin por columna (con imagen)
 por la fila de 3 columnas sin pin que muestra la referencia (número, título, descripción,

@@ -143,9 +143,13 @@ Sección confirmada para implementación futura (pendiente de recibir los SVG �
 ## Responsive
 
 - Mantener `sizes` de `next/image` ajustado por breakpoint. *Patrón existente — mantener*.
-- Las secciones con pinning/scroll horizontal (`FeatureSection`, `HowItWorks`, `RevealGallery`)
-  usan unidades `vw`/`vh` que escalan, pero no hay evidencia de testing en dispositivos reales —
-  *pendiente de verificación* antes de dar por buena la experiencia en móvil.
+- Secciones con comportamiento scroll-driven no trivial: `FeatureSection` (cartas apiladas vía
+  `position: sticky`, ver `docs/page-structure.md`), `RevealGallery` (carrusel con scroll-snap
+  nativo, horizontal). Ninguna usa `pin: true` de GSAP hoy (`hooks/useHorizontalScroll.ts` existe
+  pero no está en uso). Usan unidades `dvh`/`vw` que escalan, pero no hay evidencia de testing en
+  dispositivos reales — *pendiente de verificación* antes de dar por buena la experiencia en
+  móvil, sobre todo el largo de scroll de `FeatureSection` (5 tarjetas × ~1 alto de viewport cada
+  una) en pantallas chicas.
 
 ## Fallbacks
 
