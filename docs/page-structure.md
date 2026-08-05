@@ -17,10 +17,10 @@ Estados usados:
 
 | # | Sección (orden en `app/page.tsx`) | Componente | Contenido desde | Estado |
 |---|---|---|---|---|
-| 1 | Navbar | `components/sections/Navbar.tsx` | `siteContent.nav` | Implementado, difiere de la referencia — realineación confirmada, pendiente de ejecutar |
-| 2 | Hero | `components/sections/Hero.tsx` | `siteContent.hero` | Implementado, difiere de la referencia — dirección con video confirmada, recurso actual temporal |
+| 1 | Navbar | `components/sections/Navbar.tsx` | `siteContent.nav` | Realineado (change `align-navbar-with-reference`) — código implementado y verificado estáticamente; QA manual en navegador pendiente |
+| 2 | Hero | `components/sections/Hero.tsx` | `siteContent.hero` | Media endurecida (change `optimize-hero-aboutus-media`) — implementado y verificado estáticamente; QA manual en navegador pendiente |
 | 3 | Statement | `components/sections/Statement.tsx` | `siteContent.statement` | Implementado, coincide con la referencia |
-| 4 | AboutUs (video) | `components/sections/AboutUs.tsx` | `siteContent.about` | Implementado, coincide con la referencia — video confirmado como elemento permanente, recurso actual temporal |
+| 4 | AboutUs (video) | `components/sections/AboutUs.tsx` | `siteContent.about` | Media endurecida (change `optimize-hero-aboutus-media`) — implementado y verificado estáticamente; QA manual en navegador pendiente |
 | 5 | RevealGallery / sección de proyectos | `components/sections/RevealGallery.tsx` | `siteContent.revealGallery` | Implementado, difiere de la referencia |
 | 6 | Stats | `components/sections/Stats.tsx` | `siteContent.stats` | Implementado, difiere de la referencia |
 | 7 | FeatureSection | `components/sections/FeatureSection.tsx` | `siteContent.features` | Implementado, difiere de la referencia |
@@ -34,58 +34,82 @@ scroll (Lenis + GSAP ticker) y no aparece en `app/page.tsx`.
 
 ## Detalle por sección
 
-**Navbar** — Confirmado: debe actualizarse para alinearse con la referencia visual principal, y
-sus enlaces deben revisarse para apuntar a la sección correcta de la landing. Hoy los links del
-código (`Portafolio`, `Servicios`, `Proceso`, `Contacto`) difieren de los de la referencia
-(`Cómo Funciona`, `Proyectos`, `Testimonios`, `Contacto`). Requisitos documentados para cuando se
-implemente:
+**Navbar** — Realineado por el change `openspec/changes/align-navbar-with-reference/` (2026-08-05):
 
-- los nombres de navegación deben corresponder a las secciones finales de la landing;
-- los enlaces internos deben usar los identificadores (`href="#..."`) correctos de cada sección;
-- debe existir una adaptación responsive para móvil (el código ya tiene un drawer móvil — evaluar
-  si se conserva o se ajusta al alinear con la referencia);
-- el diseño y comportamiento deben mantenerse centralizados y reutilizables (copy en
-  `siteContent.nav`, como ya es el patrón).
+- Labels/CTA provisionales, centralizados en `siteContent.nav` (`{label, target}`), leídos de la
+  referencia principal: "Proyectos", "Servicios", "Cómo funciona", CTA "Hablemos". "Testimonios"
+  queda documentado como pendiente (sin sección construida) — no se renderiza como link roto.
+- Los identificadores de sección (`proyectos`/`servicios`/`proceso`/`contacto`) se centralizaron
+  en `lib/navigation.ts` (`SECTION_IDS`), consumidos tanto por `siteContent.nav` como por el `id`
+  de `RevealGallery`, `FeatureSection`, `HowItWorks` y `ClosingCTA` — ya no hay strings de id
+  independientes desincronizables.
+- El drawer móvil ganó accesibilidad completa: `aria-expanded`/`aria-controls`/`role="dialog"`/
+  `aria-modal`, cierre con Escape, foco contenido (Tab-trap manual) y devuelto al trigger al
+  cerrar, scroll del body bloqueado mientras está abierto, y `inert` tanto en el resto de la
+  página mientras el drawer está abierto como en el propio drawer mientras está cerrado — todo
+  sin dependencias nuevas.
+- `HowItWorks` recibió `scroll-mt-24` (mismo patrón que las otras tres secciones destino) para que
+  `#proceso` no quede oculto bajo el header fijo.
+- Los links y el CTA ahora navegan vía `lenis.scrollTo()` (a través de `useLenis()` en el propio
+  `Navbar.tsx`) en vez de depender del salto nativo del navegador — se descubrió, leyendo el
+  código fuente de Lenis, que su interceptación automática de anchors está desactivada por
+  defecto y `SmoothScroll.tsx` nunca la habilita, así que sin este cambio el scroll no era suave.
+- `bg-[#1A1A1C]` y `border-white/5` del header se compararon exactamente (conversión OKLab) contra
+  `bg-surface`/`border-border`: ninguno de los dos tokens compartidos resultó visualmente
+  equivalente, así que ambos valores se conservaron tal cual, documentados con un comentario en
+  `Navbar.tsx`.
 
-No modificar todavía — solo queda documentado como decisión confirmada y pendiente de ejecución.
+**Verificado en esta implementación**: compila sin errores (`npx tsc --noEmit` limpio), el HTML
+servido por el dev server confirma los `href`/`id`/labels correctos y la ausencia de "Testimonios".
+**Pendiente de verificar** (requiere un navegador real, no disponible en el entorno donde se
+implementó — ver `openspec/changes/align-navbar-with-reference/tasks.md` sección 8): navegación
+por teclado de punta a punta, comportamiento visual del scroll hacia `#proceso` en interacción con
+el pin/scale de `ScrollTrigger`, y revisión visual final contra `landing-desktop.png` a resolución
+completa. `npm run lint` tampoco pudo ejecutarse — este repo no tiene ESLint configurado todavía
+(condición previa a este cambio, no introducida por él).
 
-**Hero** — Confirmado: el uso de **video se mantiene como dirección definitiva** del Hero, porque
-comunica mejor el carácter visual e inmersivo de Ruum. El video actual (`assets.mixkit.co`) es
-**temporal** y se reemplazará cuando llegue el recurso oficial. La implementación final deberá
-cumplir:
+**Hero** — Implementado por el change `openspec/changes/optimize-hero-aboutus-media/`
+(2026-08-05). El video (`siteContent.hero.video`) se mantiene como dirección definitiva; el
+recurso actual (`assets.mixkit.co`) sigue siendo temporal, reemplazable editando solo el contenido.
+Lo que cambió respecto al estado anterior:
 
-- el video no debe bloquear la primera carga;
-- debe usar un poster optimizado;
-- debe reservar correctamente su espacio para evitar layout shift (CLS);
-- debe tener un fallback estático;
-- debe funcionar correctamente en móvil;
-- no debe descargar recursos innecesarios;
-- debe respetar `prefers-reduced-motion`;
-- el mensaje principal (headline + CTAs) debe seguir siendo comprensible aunque el video no cargue
-  o no se reproduzca;
-- el reemplazo del video debe poder hacerse fácilmente desde una fuente centralizada
-  (`siteContent.hero`), sin modificar la estructura del componente.
+- El video ya no está hardcodeado en `Hero.tsx` — sale de `siteContent.hero.video`
+  (`{ src, poster }`, tipo `SiteVideo` nuevo).
+- El poster reutiliza una de las 3 imágenes que antes estaban en `hero.backgroundImages` sin
+  usarse (ese array se eliminó — era contenido muerto).
+- Con `prefers-reduced-motion: reduce` activo, no se monta ningún `<video>`: se renderiza la
+  imagen de poster vía `next/image` (`fill priority`) de forma permanente para esos visitantes.
+- Sin reduced-motion, el video (`autoplay loop muted playsInline poster`) se pausa cuando el Hero
+  sale del viewport y se reanuda automáticamente al volver a entrar (`hooks/useInViewport.ts`,
+  nuevo, genérico).
+- El headline/CTAs siguen sin depender del video (ya era así).
 
-No modificar todavía — solo queda documentado como decisión confirmada y pendiente de ejecución.
-Detalle de reglas de performance asociadas en
-[performance-guidelines.md](./performance-guidelines.md).
+No incluye: detección de conexión lenta ni un video alternativo para móvil — ambos evaluados y
+descartados explícitamente por el product owner (ver `design.md` del change). Detalle de reglas de
+performance asociadas en [performance-guidelines.md](./performance-guidelines.md).
 
-**AboutUs (video)** — Confirmado: la sección **conserva el video como elemento principal**. Debe
-prepararse para que el recurso se pueda reemplazar fácilmente cuando llegue el video definitivo,
-sin modificar la estructura interna del componente. El video deberá configurarse desde contenido/
-configuración centralizada (`siteContent.about.video`, como ya es el patrón) y contemplar:
+**AboutUs (video)** — Implementado por el mismo change. La sección **conserva el video como
+elemento principal**, con el mismo `SiteVideo` centralizado que el Hero (comparten el poster
+provisional, ya que ambos usan hoy el mismo video de prueba). Lo que cambió:
 
-- poster;
-- fallback;
-- lazy loading cuando corresponda;
-- dimensiones o relación de aspecto estable;
-- comportamiento responsive;
-- reproducción accesible;
-- buena experiencia en conexiones lentas.
+- `about.video.poster` ya no está vacío — se conecta al `<video poster=...>`, que antes no lo
+  usaba pese a que el campo existía.
+- `preload="none"` explícito (la sección no está above-the-fold y la reproducción sigue siendo
+  100% iniciada por el usuario con el botón de play existente, sin cambios).
+- El video se pausa si el usuario lo dejó reproduciendo y hace scroll fuera de la sección — pero
+  a diferencia del Hero, **no se reanuda solo por volver a estar en viewport**; queda pausado
+  hasta que el usuario lo reactive a propósito (mismo hook `useInViewport`, distinta reacción en
+  cada componente).
+- El botón de play/pause, sus `aria-label`, y el 16:9 con `before:pt-[56.25%]` que ya evitaba CLS,
+  quedan sin cambios.
 
-Nota técnica actual: `siteContent.about.video.poster` ya existe como campo pero está vacío (`""`)
-y el componente no lo usa — no hay poster real configurado todavía. No modificar todavía — solo
-queda documentado como decisión confirmada y pendiente de ejecución.
+**Verificado en Hero/AboutUs**: `npx tsc --noEmit` y `npm run build` limpios. **Pendiente de
+verificar** (requiere navegador real, no disponible en el entorno donde se implementó — ver
+`openspec/changes/optimize-hero-aboutus-media/tasks.md` sección 5): que el poster se vea antes del
+primer frame en conexión lenta, que con reduced-motion activo nunca se monte el `<video>` del
+Hero, el comportamiento de pausa/reanudación al hacer scroll en ambas secciones, y reproducción
+inline en móvil. Sin detección de conexión lenta ni video alternativo para móvil — descartados a
+propósito, no pendientes.
 
 **RevealGallery / sección de proyectos** — Debe alinearse visual y estructuralmente con la
 referencia principal y, en particular, con el detalle de `docs/references/projects-secction.png`:

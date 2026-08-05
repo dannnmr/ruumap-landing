@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
+import { SECTION_IDS } from "@/lib/navigation";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -68,7 +69,11 @@ export default function HowItWorks() {
   );
 
   return (
-    <section ref={sectionRef} id="proceso" className="relative bg-background">
+    <section
+      ref={sectionRef}
+      id={SECTION_IDS.proceso}
+      className="relative bg-background scroll-mt-24"
+    >
       <div className="mx-auto max-w-[1300px] px-5 pb-16 pt-24 sm:px-10 sm:pt-32 lg:px-16 lg:pt-40">
         <p className="mb-6 font-sans text-[12px] font-semibold uppercase tracking-[0.28em] text-accent sm:mb-8">
           {eyebrow}

@@ -1,14 +1,26 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { siteContent } from "@/content/site";
 import { Button } from "@/components/ui/Button";
+import { useInViewport } from "@/hooks/useInViewport";
 
 const { heading, video, cta } = siteContent.about;
 
 export default function AboutUs() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const isInViewport = useInViewport(containerRef);
+
+  // Reproducción siempre iniciada por el usuario: si sale del viewport se
+  // pausa, pero no se reanuda solo por volver a verse — queda como el
+  // usuario la dejó.
+  useEffect(() => {
+    if (isInViewport) return;
+    videoRef.current?.pause();
+  }, [isInViewport]);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -29,10 +41,15 @@ export default function AboutUs() {
         </h2>
 
         {/* Contenedor del Video (16:9 Aspect Ratio) */}
-        <div className="relative mb-12 w-full max-w-[800px] overflow-hidden rounded-2xl bg-[#131314] shadow-2xl before:block before:pt-[56.25%] sm:mb-16">
+        <div
+          ref={containerRef}
+          className="relative mb-12 w-full max-w-[800px] overflow-hidden rounded-2xl bg-[#131314] shadow-2xl before:block before:pt-[56.25%] sm:mb-16"
+        >
           <video
             ref={videoRef}
             src={video.src}
+            poster={video.poster.src}
+            preload="none"
             className="absolute inset-0 h-full w-full object-cover"
             playsInline
             onPlay={() => setIsPlaying(true)}

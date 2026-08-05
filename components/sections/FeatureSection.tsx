@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
+import { SECTION_IDS } from "@/lib/navigation";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -54,7 +55,7 @@ export default function FeatureSection() {
   return (
     <section
       ref={sectionRef}
-      id="servicios"
+      id={SECTION_IDS.servicios}
       className="relative h-screen overflow-hidden scroll-mt-24"
     >
       <div

@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent, type Project } from "@/content/site";
+import { SECTION_IDS } from "@/lib/navigation";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -112,7 +113,7 @@ function RevealPanel({ project }: { project: Project }) {
 
 export default function RevealGallery() {
   return (
-    <section id="proyectos" className="scroll-mt-24">
+    <section id={SECTION_IDS.proyectos} className="scroll-mt-24">
       {/* El texto de cabecera respeta el padding del sitio; los paneles van full-bleed */}
       <div className="px-5 sm:px-10 lg:px-16">
         <p className="mb-4 font-sans text-[12px] font-semibold uppercase tracking-[0.28em] text-accent sm:mb-[18px] sm:text-[13px]">

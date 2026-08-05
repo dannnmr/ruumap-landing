@@ -29,40 +29,55 @@ autorización, porque hoy no se cumplen (se marcan como "pendiente").
   poster/imagen estática en conexiones lentas, en vez de forzar autoplay inmediato siempre (ver
   "Conexiones lentas" abajo).
 
-## Hero — requisitos específicos (confirmado 2026-08-04)
+## Hero — implementado (change `optimize-hero-aboutus-media`, 2026-08-05)
 
-El video se mantiene como dirección definitiva del Hero (ver
-[page-structure.md](./page-structure.md)); el video actual es temporal. La implementación final
-debe cumplir:
+El video se mantiene como dirección definitiva del Hero (ver [page-structure.md](./page-structure.md));
+el video actual sigue siendo temporal. Estado de cada requisito original:
 
-- el video no debe bloquear la primera carga;
-- debe usar un poster optimizado;
-- debe reservar correctamente su espacio para evitar layout shift (dimensiones/aspect-ratio fijos
-  antes de que el video cargue);
-- debe tener un fallback estático (poster o imagen) si el video no carga o no se reproduce;
-- debe funcionar correctamente en móvil;
-- no debe descargar recursos innecesarios (ej. no cargar el video si el fallback ya cumple en
-  conexiones lentas o con `saveData`);
-- debe respetar `prefers-reduced-motion`;
-- el mensaje principal (headline + CTAs) debe seguir siendo comprensible aunque el video no cargue
-  o no se reproduzca — nunca depender del video para transmitir el mensaje;
-- el reemplazo del recurso de video debe poder hacerse desde una fuente centralizada
-  (`siteContent.hero`), sin modificar la estructura del componente `Hero.tsx`.
+- ✅ **no bloquea la primera carga** — el texto/CTAs no dependen del video (ya era así).
+- ✅ **poster** — `siteContent.hero.video.poster`, reutilizando una imagen ya existente en el repo
+  (provisional, no inventada).
+- ✅ **reserva de espacio / sin layout shift** — sin cambios necesarios: la sección ya es
+  `h-screen` con el video `absolute inset-0`, así que nunca tuvo riesgo real de CLS.
+- ✅ **fallback estático** — con `prefers-reduced-motion: reduce` activo, no se monta ningún
+  `<video>`; se renderiza el poster vía `next/image` (`fill priority`) de forma permanente. Sin
+  reduced-motion, el `poster` nativo del `<video>` cubre el instante antes del primer frame.
+- ✅ **respeta `prefers-reduced-motion`** — vía `hooks/usePrefersReducedMotion.ts` (nuevo,
+  genérico, reutilizable por otras secciones que lo necesiten más adelante).
+- ✅ **pausa fuera de viewport** — vía `hooks/useInViewport.ts` (nuevo, genérico); el Hero reanuda
+  automáticamente al volver a estar visible (video ambiental, siempre-activo).
+- ✅ **reemplazo desde fuente centralizada** — `siteContent.hero.video` (`SiteVideo`), sin tocar
+  `Hero.tsx`.
+- ⛔ **"no debe descargar recursos innecesarios" vía detección de conexión lenta** — evaluado y
+  **descartado a propósito**: la API (`navigator.connection`) no existe en Safari/Firefox, así que
+  cualquier implementación cubriría de forma desigual a los navegadores. No es un pendiente, es
+  una decisión tomada — ver `design.md` del change.
+- 🔲 **funciona correctamente en móvil** — implementado (`playsInline` se mantiene), pero la
+  verificación real en un dispositivo/viewport móvil requiere navegador, no se pudo hacer en el
+  entorno donde se implementó.
 
-## About Us — requisitos específicos (confirmado 2026-08-04)
+## About Us — implementado (change `optimize-hero-aboutus-media`, 2026-08-05)
 
-El video se mantiene como elemento principal de esta sección; debe poder reemplazarse fácilmente
-cuando llegue el recurso definitivo, sin tocar la estructura interna del componente. El video
-debe configurarse desde `siteContent.about.video` (o equivalente centralizado) y contemplar:
+El video se mantiene como elemento principal de esta sección, configurado desde
+`siteContent.about.video` (mismo tipo `SiteVideo` que el Hero). Estado de cada requisito original:
 
-- poster (hoy el campo existe pero está vacío — pendiente de un valor real);
-- fallback si el video no carga;
-- lazy loading cuando corresponda (esta sección no es above-the-fold);
-- dimensiones o relación de aspecto estable (ya existe el patrón `before:pt-[56.25%]` para 16:9
-  en el componente — mantenerlo/adaptarlo);
-- comportamiento responsive;
-- reproducción accesible (control de play/pausa visible y operable por teclado);
-- buena experiencia en conexiones lentas.
+- ✅ **poster** — ya conectado al `<video poster=...>` (antes el campo existía pero no se usaba).
+- ✅ **fallback si no carga** — el `poster` nativo cubre ese caso.
+- ✅ **lazy loading** — `preload="none"` explícito (antes no declarado); nada se descarga hasta
+  que el usuario presiona play.
+- ✅ **dimensiones/aspect-ratio estable** — sin cambios, ya lo resolvía `before:pt-[56.25%]`.
+- ✅ **reproducción accesible** — botón de play/pausa y `aria-label` existentes, sin cambios.
+- ✅ **pausa fuera de viewport** — vía `useInViewport()`; a diferencia del Hero, **no reanuda
+  automáticamente** al volver a estar visible (la reproducción sigue siendo 100% iniciada por el
+  usuario).
+- ⛔ **detección de conexión lenta** — mismo criterio que el Hero: descartada a propósito, no
+  pendiente.
+- 🔲 **comportamiento responsive / conexiones lentas en la práctica** — requiere verificación en
+  navegador real, no disponible en el entorno donde se implementó.
+
+Ninguna de las dos secciones incorporó una fuente de video alternativa para móvil
+(`mobileSrc`) — evaluado y descartado a propósito por no haber un recurso real todavía; el tipo
+`SiteVideo` puede ampliarse con ese campo el día que haga falta, sin tocar los componentes.
 
 ## Recursos 3D / recorridos virtuales
 

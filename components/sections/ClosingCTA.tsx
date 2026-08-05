@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
 import { Button } from "@/components/ui/Button";
+import { SECTION_IDS } from "@/lib/navigation";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -36,7 +37,7 @@ export default function ClosingCTA() {
 
   return (
     <section
-      id="contacto"
+      id={SECTION_IDS.contacto}
       className="relative flex h-[70vh] scroll-mt-24 items-center justify-center overflow-hidden sm:h-[80vh]"
     >
       <div ref={wrapRef} data-parallax-wrap className="absolute inset-0">
