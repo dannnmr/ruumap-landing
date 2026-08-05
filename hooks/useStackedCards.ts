@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { RefObject } from "react";
+import { RefObject, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -19,8 +19,20 @@ interface UseStackedCardsProps {
  * tarjeta saliente mientras la siguiente se desliza encima. Solo anima
  * `transform` (scale), con `scrub` atado al scroll — mismo criterio que
  * `useHorizontalScroll`/`useParallax` y las demás secciones del repo.
+ *
+ * También expone `activeIndex`: el índice de la tarjeta actualmente al
+ * frente del stack. Se deriva de los mismos `ScrollTrigger` de arriba (sin
+ * agregar listeners de scroll propios que dupliquen lo que ya maneja
+ * Lenis/GSAP): como las transiciones son secuenciales y no se solapan en el
+ * scroll, la transición hacia la tarjeta `i` es la única con progreso
+ * cambiante en cada momento, así que basta con "¿ya pasó la mitad de su
+ * recorrido?" para decidir si el frente pasó de `i - 1` a `i`. Lo consume
+ * `FeatureSection` para autoplay condicionado (solo la tarjeta activa
+ * reproduce su video, ver `components/ui/AutoplayVideo.tsx`).
  */
 export function useStackedCards({ sectionRef, cardRefs, disabled = false }: UseStackedCardsProps) {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   useGSAP(
     () => {
       if (disabled || !sectionRef.current) return;
@@ -43,6 +55,7 @@ export function useStackedCards({ sectionRef, cardRefs, disabled = false }: UseS
               start: "top bottom",
               end: "top top",
               scrub: true,
+              onUpdate: (self) => setActiveIndex(self.progress >= 0.5 ? i : i - 1),
             },
           }
         );
@@ -50,4 +63,6 @@ export function useStackedCards({ sectionRef, cardRefs, disabled = false }: UseS
     },
     { scope: sectionRef, dependencies: [disabled, cardRefs.current.length] }
   );
+
+  return { activeIndex };
 }

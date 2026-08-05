@@ -8,6 +8,8 @@ import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { DayNightToggle } from "@/components/ui/DayNightToggle";
+import { Embed360Viewer } from "@/components/ui/Embed360Viewer";
+import { AutoplayVideo } from "@/components/ui/AutoplayVideo";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useStackedCards } from "@/hooks/useStackedCards";
 import { SECTION_IDS } from "@/lib/navigation";
@@ -18,16 +20,49 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const { features } = siteContent;
 
 /**
- * Imagen de una fila de features. Cuando `feature.imageNight` existe (hoy
- * solo la fila 01, "RENDERS DIURNO | NOCTURNO"), monta ambas imágenes
- * apiladas y las alterna solo con `opacity` (crossfade fluido, sin
- * parpadeo/CLS) según un toggle día/noche propio de la tarjeta; el resto de
- * las filas sigue mostrando una única imagen estática, sin cambios.
+ * Imagen de una fila de features:
+ * - `feature.embed360` (hoy solo la fila 02, "VISTAS 360°"): poster estático
+ *   + botón explícito que carga un iframe bajo demanda (nunca automático al
+ *   entrar en viewport — ver docs/performance-guidelines.md, "Recursos 3D /
+ *   recorridos virtuales"). Ver `components/ui/Embed360Viewer.tsx`.
+ * - `feature.video` (hoy filas 03 "VIDEO ORBITAL", 04 "AMBIENTES
+ *   HUMANIZADOS" y 05 "PANEL DE CONTROL"): `image` como poster + reproducción
+ *   automática en loop, muted, solo mientras la tarjeta está activa (al
+ *   frente del stack) — pedido explícito del usuario, 2026-08-05. Ver
+ *   `components/ui/AutoplayVideo.tsx` y `hooks/useStackedCards.ts`
+ *   (`activeIndex`).
+ * - `feature.imageNight` (hoy solo la fila 01, "RENDERS DIURNO | NOCTURNO"):
+ *   monta ambas imágenes apiladas y las alterna solo con `opacity`
+ *   (crossfade fluido, sin parpadeo/CLS) según un toggle día/noche propio de
+ *   la tarjeta.
+ * - Resto de las filas: una única imagen estática, sin cambios.
  */
-function FeatureVisual({ feature }: { feature: (typeof features)[number] }) {
+function FeatureVisual({
+  feature,
+  isActive,
+}: {
+  feature: (typeof features)[number];
+  isActive: boolean;
+}) {
   const [mode, setMode] = useState<"day" | "night">("day");
   const hasNight = Boolean(feature.imageNight);
   const isNight = hasNight && mode === "night";
+
+  if (feature.embed360) {
+    return (
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+        <Embed360Viewer src={feature.embed360.src} poster={feature.image} title={feature.title} />
+      </div>
+    );
+  }
+
+  if (feature.video) {
+    return (
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+        <AutoplayVideo src={feature.video.src} poster={feature.image} isActive={isActive} />
+      </div>
+    );
+  }
 
   return (
     <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
@@ -84,7 +119,7 @@ export default function FeatureSection() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  useStackedCards({ sectionRef, cardRefs, disabled: prefersReducedMotion });
+  const { activeIndex } = useStackedCards({ sectionRef, cardRefs, disabled: prefersReducedMotion });
 
   return (
     <section
@@ -106,7 +141,7 @@ export default function FeatureSection() {
               auto-layout de Figma por fila (fill width, hug height, padding
               64/96 a nivel de fila). */}
           <div className="grid w-full grid-cols-1 items-center gap-8 px-5 py-10 sm:px-10 sm:py-14 md:grid-cols-2 md:gap-14 lg:gap-20 lg:px-16 lg:py-24">
-            <FeatureVisual feature={feature} />
+            <FeatureVisual feature={feature} isActive={activeIndex === i} />
 
             <div>
               <Eyebrow className="mb-4 sm:mb-6">{feature.eyebrow}</Eyebrow>

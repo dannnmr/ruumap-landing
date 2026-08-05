@@ -80,6 +80,23 @@ export type Feature = {
    * la fila 01, "RENDERS DIURNO | NOCTURNO", la tiene).
    */
   imageNight?: SiteImage;
+  /**
+   * Recorrido 360°/3D embebible (iframe), opcional. Cuando está presente,
+   * `FeatureSection` muestra `image` como poster con un botón explícito que
+   * carga el iframe bajo demanda (nunca automático al entrar en viewport —
+   * ver docs/performance-guidelines.md, "Recursos 3D / recorridos
+   * virtuales"). Hoy solo la fila 02, "VISTAS 360°", la tiene.
+   */
+  embed360?: { src: string };
+  /**
+   * Video de demo/showcase, opcional. Cuando está presente, `FeatureSection`
+   * muestra `image` como poster y reproduce este video con el mismo patrón
+   * de `components/ui/VideoPlayer.tsx` (click-to-play, `preload="none"`,
+   * pausa fuera de viewport — nunca autoplay). Hoy lo tienen las filas 03
+   * ("VIDEO ORBITAL"), 04 ("AMBIENTES HUMANIZADOS") y 05 ("PANEL DE
+   * CONTROL").
+   */
+  video?: { src: string };
 };
 
 export type Step = {
@@ -194,7 +211,7 @@ export const siteContent = {
         developer: "STTO Group",
         location: "Santa Cruz de la Sierra, Bolivia.",
         image: {
-          src: "https://images.unsplash.com/photo-1563657296501-c3770ae0057b?q=80&w=1600&auto=format&fit=crop",
+          src: "https://cdn.ruumap.com/itagua_facade_2a92cdf6a4.webp",
           alt: "Arquitectura residencial contemporánea con áreas comunes, proyecto Itaguá",
         },
         developerSlug: "stto-group",
@@ -208,7 +225,7 @@ export const siteContent = {
         developer: "Kohler & Weiss Real Estate Development",
         location: "Santa Cruz de la Sierra, Bolivia.",
         image: {
-          src: "https://images.unsplash.com/photo-1655447844120-083802457b17?q=80&w=1600&auto=format&fit=crop",
+          src: "https://cdn.ruumap.com/buenretiro_facade_3d896f3b6f.webp",
           alt: "Torre residencial con jardines verticales integrados, proyecto Buen Retiro",
         },
         developerSlug: "kohler-weiss",
@@ -222,7 +239,21 @@ export const siteContent = {
         developer: "SYMPRAX",
         location: "Santa Cruz de la Sierra, Bolivia.",
         image: {
-          src: "https://images.unsplash.com/photo-1760259203238-01708384f7a2?q=80&w=1600&auto=format&fit=crop",
+          src: "https://cdn.ruumap.com/artemise_facade_3343535dfe.webp",
+          alt: "Fachada de torre residencial de lujo con acabados de vidrio, proyecto Artemis",
+        },
+        developerSlug: "symprax",
+        href: "https://artemis.ruumap.com/",
+        status: "confirmed",
+      },
+      {
+        index: "04",
+        name: "PV Norte",
+        tag: "DESARROLLO PREMIUM — RECORRIDO 3D",
+        developer: "SYMPRAX",
+        location: "Santa Cruz de la Sierra, Bolivia.",
+        image: {
+          src: "https://cdn.ruumap.com/pvnorte_4d32edbe69.webp",
           alt: "Fachada de torre residencial de lujo con acabados de vidrio, proyecto Artemis",
         },
         developerSlug: "symprax",
@@ -278,6 +309,9 @@ export const siteContent = {
         src: "https://images.unsplash.com/photo-1751711990617-bec0202c854a?q=80&w=1400&auto=format&fit=crop",
         alt: "Interior arquitectónico moderno con iluminación natural",
       },
+      embed360: {
+        src: "https://kuula.co/share/collection/7TxHH?logo=-1&info=0&fs=0&vr=1&sd=0&initload=1&thumbs=0",
+      },
     },
     {
       index: "03",
@@ -286,8 +320,11 @@ export const siteContent = {
       description:
         "Navega alrededor del edificio con vistas aéreas que resaltan su arquitectura, ubicación y entorno.",
       image: {
-        src: "https://images.unsplash.com/photo-1723367194881-fe2e53534170?q=80&w=1400&auto=format&fit=crop",
+        src: "https://cdn.ruumap.com/fotograma_pv_272067cccf.png",
         alt: "Vista aérea de una planta arquitectónica de un desarrollo inmobiliario",
+      },
+      video: {
+        src: "https://cdn.ruumap.com/orbitalbuenretiro_aaac35da95.mp4",
       },
     },
     {
@@ -297,8 +334,11 @@ export const siteContent = {
       description:
         "Animaciones cinematográficas con personas, movimiento y ambiente para transmitir cómo se vive realmente el proyecto.",
       image: {
-        src: "https://images.unsplash.com/photo-1663092340359-6a53ba3a3066?q=80&w=1400&auto=format&fit=crop",
+        src: "https://cdn.ruumap.com/fotograma_br_09b739d42d.webp",
         alt: "Desarrollo residencial completamente visualizado, con ambientes iluminados",
+      },
+      video: {
+        src: "https://cdn.ruumap.com/videos_humanizados_777e87659f.mp4",
       },
     },
     {
@@ -308,8 +348,11 @@ export const siteContent = {
       description:
         "Administra disponibilidad, contenido y métricas desde un panel centralizado diseñado para equipos comerciales y desarrolladores.",
       image: {
-        src: "https://images.unsplash.com/photo-1768230130990-6b4fe57778ce?q=80&w=1400&auto=format&fit=crop",
+        src: "https://cdn.ruumap.com/fotograma_paanel_12208f2b3b.webp",
         alt: "Skyline moderno de edificios residenciales de lujo",
+      },
+      video: {
+        src: "https://cdn.ruumap.com/cpanel2_2465d15c1c.mp4",
       },
     },
   ] satisfies Feature[],
@@ -366,7 +409,7 @@ export const siteContent = {
       phone: "+591 780 00000",
       email: "atencion@ruumap.com",
       photo: {
-        src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop",
+        src: "/images/contact.section.img.webp",
         alt: "Retrato de Guillermo Castillo, punto de contacto de Ruum",
       } satisfies SiteImage,
     },
