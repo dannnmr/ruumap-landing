@@ -74,6 +74,12 @@ export type Feature = {
   title: string;
   description: string;
   image: SiteImage;
+  /**
+   * Versión nocturna de `image`, opcional. Cuando está presente,
+   * `FeatureSection` muestra un toggle día/noche sobre la imagen (hoy solo
+   * la fila 01, "RENDERS DIURNO | NOCTURNO", la tiene).
+   */
+  imageNight?: SiteImage;
 };
 
 export type Step = {
@@ -114,7 +120,10 @@ export const siteContent = {
       { label: "Características", target: SECTION_IDS.servicios },
       { label: "Cómo funciona", target: SECTION_IDS.proceso },
     ] satisfies NavLink[],
-    cta: { label: "Agenda una demo", target: SECTION_IDS.contacto } satisfies NavLink,
+    cta: {
+      label: "Agenda una demo",
+      target: SECTION_IDS.contacto,
+    } satisfies NavLink,
   },
 
   hero: {
@@ -131,9 +140,9 @@ export const siteContent = {
      * inventó ningún recurso nuevo.
      */
     video: {
-      src: "https://assets.mixkit.co/videos/49806/49806-720.mp4",
+      src: "https://cdn.ruumap.com/rumm_hero_2618d6b3d1.mp4",
       poster: {
-        src: "https://images.unsplash.com/photo-1767342976156-83239d26f08e?q=80&w=1920&auto=format&fit=crop",
+        src: "https://cdn.ruumap.com/fotograma_1_dec780ddbc.webp",
         alt: "Arquitectura nocturna abstracta, fachadas de rascacielos en contraluz",
       },
     } satisfies SiteVideo,
@@ -251,8 +260,12 @@ export const siteContent = {
       description:
         "Muestra cada espacio con iluminación diurna y nocturna para transmitir la verdadera atmósfera del proyecto.",
       image: {
-        src: "https://images.unsplash.com/photo-1546412414-272690cb5cb3?q=80&w=1400&auto=format&fit=crop",
-        alt: "Torre mixed-use de gran altura al atardecer",
+        src: "https://cdn.ruumap.com/itagua_face_day_62c3442020.webp",
+        alt: "Fachada del proyecto Itagua Face, render diurno",
+      },
+      imageNight: {
+        src: "https://cdn.ruumap.com/itagua_face_night_09a552c08c.webp",
+        alt: "Fachada del proyecto Itagua Face, render nocturno",
       },
     },
     {

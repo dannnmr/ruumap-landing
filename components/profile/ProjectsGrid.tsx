@@ -57,7 +57,7 @@ export function OtherProjectsSection({ otherProjects }: { otherProjects?: OtherP
       <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.28em] text-accent">
         PORTAFOLIO
       </p>
-      <h2 className="mb-10 font-display text-[26px] font-bold text-[oklch(15%_0_0)] sm:text-[32px]">
+      <h2 className="mb-10 font-display text-[36px] font-normal text-[oklch(15%_0_0)] sm:text-[40px]">
         Otros proyectos
       </h2>
       {/* Imagen 408×306 en el diseño Figma (proporción 4/3 exacta). */}

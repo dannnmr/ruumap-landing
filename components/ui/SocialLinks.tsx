@@ -52,11 +52,11 @@ export function SocialLinks({
 }) {
   const iconWrapper =
     theme === "light"
-      ? "text-[oklch(25%_0_0)]"
+      ? "text-[oklch(20%_0_0)] hover:text-black/60"
       : "bg-white text-black hover:bg-white/40 hover:text-white";
 
   return (
-    <div className={cn("flex gap-3", className)}>
+    <div className={cn("flex gap-4 sm:justify-end", className)}>
       {social.map(
         (item) =>
           SOCIAL_ICONS[item.label] && (
@@ -65,7 +65,7 @@ export function SocialLinks({
               href={item.href}
               aria-label={item.label}
               className={cn(
-                "flex h-8 w-8 items-center justify-center transition-colors duration-300 rounded-[6px]",
+                "flex h-7 w-7 items-center justify-center transition-colors duration-300",
                 iconWrapper
               )}
             >

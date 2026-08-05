@@ -35,9 +35,7 @@ export function DeveloperProfileTemplate({ developer, addedProjects }: Developer
 
       {developer.video && (
         <section className="px-5 py-14 sm:px-10 lg:px-24 lg:py-16">
-          {/* lg:max-w-[720px]: a esa altura, before:pt-[56.25%] (16:9) ya da
-              los 405px de alto del diseño Figma — no hace falta una altura
-              fija. Sin cap en mobile/tablet: sigue w-full ahí. */}
+          {/* Tarjeta de video destacada con sombra y proporciones de la referencia visual */}
           <VideoPlayer video={developer.video} className="mx-auto lg:max-w-[720px]" />
         </section>
       )}

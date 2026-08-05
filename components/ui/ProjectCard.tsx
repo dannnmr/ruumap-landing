@@ -89,7 +89,7 @@ export function ProjectCard({
   );
 
   const heading = (
-    <h3 className={cn("font-display text-[20px] font-light", palette.name)}>
+    <h3 className={cn("font-display text-[20px] font-normal", palette.name)}>
       {project.name}
     </h3>
   );

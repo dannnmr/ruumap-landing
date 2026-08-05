@@ -9,14 +9,8 @@ import { useInViewport } from "@/hooks/useInViewport";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 
-const {
-  eyebrow,
-  titleLines,
-  subcopy,
-  primaryCta,
-  secondaryCta,
-  video,
-} = siteContent.hero;
+const { eyebrow, titleLines, subcopy, primaryCta, secondaryCta, video } =
+  siteContent.hero;
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -112,10 +106,18 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <Button href={primaryCta.href} variant="primary" className="rounded-[10px] px-8 py-3.5">
+            <Button
+              href={primaryCta.href}
+              variant="primary"
+              className="rounded-[10px] px-8 py-3.5"
+            >
               {primaryCta.label}
             </Button>
-            <Button href={secondaryCta.href} variant="secondary" className="rounded-[10px] px-8 py-3.5">
+            <Button
+              href={secondaryCta.href}
+              variant="secondary"
+              className="rounded-[10px] px-8 py-3.5"
+            >
               {secondaryCta.label}
             </Button>
           </div>

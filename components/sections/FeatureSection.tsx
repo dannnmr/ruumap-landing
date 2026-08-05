@@ -1,19 +1,66 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { DayNightToggle } from "@/components/ui/DayNightToggle";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useStackedCards } from "@/hooks/useStackedCards";
 import { SECTION_IDS } from "@/lib/navigation";
+import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const { features } = siteContent;
+
+/**
+ * Imagen de una fila de features. Cuando `feature.imageNight` existe (hoy
+ * solo la fila 01, "RENDERS DIURNO | NOCTURNO"), monta ambas imágenes
+ * apiladas y las alterna solo con `opacity` (crossfade fluido, sin
+ * parpadeo/CLS) según un toggle día/noche propio de la tarjeta; el resto de
+ * las filas sigue mostrando una única imagen estática, sin cambios.
+ */
+function FeatureVisual({ feature }: { feature: (typeof features)[number] }) {
+  const [mode, setMode] = useState<"day" | "night">("day");
+  const hasNight = Boolean(feature.imageNight);
+  const isNight = hasNight && mode === "night";
+
+  return (
+    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+      <Image
+        src={feature.image.src}
+        alt={feature.image.alt}
+        fill
+        sizes="(min-width: 768px) 45vw, 90vw"
+        className={cn(
+          "object-cover transition-opacity duration-700 ease-in-out motion-reduce:transition-none",
+          isNight ? "opacity-0" : "opacity-100"
+        )}
+      />
+
+      {feature.imageNight && (
+        <Image
+          src={feature.imageNight.src}
+          alt={feature.imageNight.alt}
+          fill
+          sizes="(min-width: 768px) 45vw, 90vw"
+          className={cn(
+            "object-cover transition-opacity duration-700 ease-in-out motion-reduce:transition-none",
+            isNight ? "opacity-100" : "opacity-0"
+          )}
+        />
+      )}
+
+      {hasNight && (
+        <DayNightToggle mode={mode} onChange={setMode} className="absolute left-4 top-4 z-10" />
+      )}
+    </div>
+  );
+}
 
 /**
  * "Cartas apiladas" en scroll: cada una de las 5 tarjetas de servicio es
@@ -59,15 +106,7 @@ export default function FeatureSection() {
               auto-layout de Figma por fila (fill width, hug height, padding
               64/96 a nivel de fila). */}
           <div className="grid w-full grid-cols-1 items-center gap-8 px-5 py-10 sm:px-10 sm:py-14 md:grid-cols-2 md:gap-14 lg:gap-20 lg:px-16 lg:py-24">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
-              <Image
-                src={feature.image.src}
-                alt={feature.image.alt}
-                fill
-                sizes="(min-width: 768px) 45vw, 90vw"
-                className="object-cover"
-              />
-            </div>
+            <FeatureVisual feature={feature} />
 
             <div>
               <Eyebrow className="mb-4 sm:mb-6">{feature.eyebrow}</Eyebrow>
