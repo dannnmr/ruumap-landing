@@ -31,7 +31,7 @@ export function DayNightToggle({
       aria-label={isNight ? "Ver render diurno" : "Ver render nocturno"}
       onClick={() => onChange(isNight ? "day" : "night")}
       className={cn(
-        "relative flex h-8 w-16 shrink-0 items-center rounded-full border border-white/20 bg-black/40 backdrop-blur-sm transition-colors duration-500 hover:border-white/40",
+        "relative flex h-7 w-14 shrink-0 items-center rounded-full border border-white/20 bg-black/40 backdrop-blur-sm transition-colors duration-500 hover:border-white/40",
         className,
       )}
     >
@@ -40,7 +40,7 @@ export function DayNightToggle({
           viewBox="0 0 24 24"
           fill="none"
           className={cn(
-            "size-3.5 shrink-0 transition-all duration-500",
+            "size-4 shrink-0 transition-all duration-500",
             isNight ? "scale-90 opacity-40" : "scale-100 opacity-100",
           )}
         >
@@ -56,7 +56,7 @@ export function DayNightToggle({
           viewBox="0 0 24 24"
           fill="currentColor"
           className={cn(
-            "size-3.5 shrink-0 transition-all duration-500",
+            "size-4 shrink-0 transition-all duration-500",
             isNight ? "scale-100 opacity-100" : "scale-90 opacity-40",
           )}
         >
@@ -66,8 +66,8 @@ export function DayNightToggle({
       <span
         aria-hidden
         className={cn(
-          "absolute left-1 top-1 size-6 rounded-full bg-white shadow-md transition-transform duration-500 ease-in-out motion-reduce:transition-none",
-          isNight ? "translate-x-8" : "translate-x-0",
+          "absolute left-1 top-1/2 size-5 -translate-y-1/2 rounded-full bg-white shadow-md transition-transform duration-500 ease-in-out motion-reduce:transition-none",
+          isNight ? "translate-x-7" : "translate-x-0",
         )}
       />
     </button>
