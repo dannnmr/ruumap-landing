@@ -5,9 +5,14 @@ import { useEffect, useId, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 import { siteContent } from "@/content/site";
 import { sectionHref } from "@/lib/navigation";
-import { Button } from "@/components/ui/Button";
 
-const { links: NAV_LINKS, cta: NAV_CTA } = siteContent.nav;
+// Botón de CTA quitado a propósito (pedido explícito del usuario,
+// 2026-08-05): `nav.cta` sigue definida en content/site.ts (no se borró),
+// pero ya no se consume acá — el link a ClosingCTA ahora vive como una
+// entrada más de `nav.links` (ver content/site.ts). Para reintroducir el
+// botón, volver a desestructurar `cta: NAV_CTA` de `siteContent.nav` acá y
+// el import de `Button`.
+const { links: NAV_LINKS } = siteContent.nav;
 
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
@@ -70,7 +75,7 @@ export default function Navbar() {
     const mainEl = document.querySelector("main");
     const inertedSiblings = mainEl
       ? (Array.from(mainEl.children) as HTMLElement[]).filter(
-          (el) => !el.hasAttribute("data-navbar-root")
+          (el) => !el.hasAttribute("data-navbar-root"),
         )
       : [];
     inertedSiblings.forEach((el) => {
@@ -90,7 +95,7 @@ export default function Navbar() {
       if (event.key !== "Tab" || !panel) return;
 
       const focusable = Array.from(
-        panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+        panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
       );
       if (focusable.length === 0) return;
 
@@ -165,15 +170,6 @@ export default function Navbar() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-4">
-          <Button
-            href={sectionHref(NAV_CTA.target)}
-            onClick={(event) => handleNavClick(event, sectionHref(NAV_CTA.target))}
-            variant="primary"
-            className="hidden lg:inline-flex rounded-[8px] px-6 py-2.5 text-[13px] text-white"
-          >
-            {NAV_CTA.label}
-          </Button>
-
           {/* Botón de Menú Hamburguesa */}
           <button
             ref={triggerRef}
@@ -185,7 +181,17 @@ export default function Navbar() {
             aria-expanded={isMobileMenuOpen}
             aria-controls={panelId}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <line x1="4" x2="20" y1="12" y2="12" />
               <line x1="4" x2="20" y1="6" y2="6" />
               <line x1="4" x2="20" y1="18" y2="18" />
@@ -200,7 +206,9 @@ export default function Navbar() {
         data-navbar-root
         inert={!isMobileMenuOpen}
         className={`fixed inset-0 z-[60] lg:hidden transition-opacity duration-300 ${
-          isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          isMobileMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       >
         <div
@@ -226,7 +234,17 @@ export default function Navbar() {
               onClick={closeMenu}
               aria-label="Cerrar menú"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M18 6 6 18" />
                 <path d="m6 6 12 12" />
               </svg>
@@ -250,18 +268,6 @@ export default function Navbar() {
                 </a>
               );
             })}
-
-            <Button
-              href={sectionHref(NAV_CTA.target)}
-              variant="primary"
-              className="mt-4 w-full rounded-[8px] py-3 text-[14px]"
-              onClick={(event) => {
-                handleNavClick(event, sectionHref(NAV_CTA.target));
-                closeMenu();
-              }}
-            >
-              {NAV_CTA.label}
-            </Button>
           </nav>
         </div>
       </div>

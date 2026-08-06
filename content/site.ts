@@ -130,15 +130,23 @@ export const siteContent = {
    * sección construida todavía — se omite acá a propósito (no se renderiza
    * como link roto); agregar su entrada cuando la sección exista, junto con
    * su id en lib/navigation.ts.
+   *
+   * El botón de CTA del Navbar se quitó a propósito (pedido explícito del
+   * usuario, 2026-08-05): en su lugar, `links` ganó una entrada más que
+   * apunta a `ClosingCTA` (`SECTION_IDS.contacto`), como un link de texto
+   * más entre los demás en vez de un botón destacado. `cta` se deja definida
+   * tal cual (no se borra) por si se reintroduce el botón más adelante —
+   * `Navbar.tsx` ya no la consume, ver comentario ahí.
    */
   nav: {
     links: [
       { label: "Proyectos", target: SECTION_IDS.proyectos },
       { label: "Características", target: SECTION_IDS.servicios },
       { label: "Cómo funciona", target: SECTION_IDS.proceso },
+      { label: "Contacto", target: SECTION_IDS.contacto },
     ] satisfies NavLink[],
     cta: {
-      label: "Agenda una demo",
+      label: "Agendá una demo",
       target: SECTION_IDS.contacto,
     } satisfies NavLink,
   },
@@ -149,7 +157,7 @@ export const siteContent = {
     subcopy:
       "Ruum convierte renders, recorridos virtuales y experiencias inmersivas en una poderosa herramienta para vender más y captar mejores clientes.",
     primaryCta: { label: "Explorar proyectos", href: "#proyectos" },
-    secondaryCta: { label: "Agenda una demo", href: "#contacto" },
+    secondaryCta: { label: "Agendá una demo", href: "#contacto" },
     /**
      * Provisional: video y poster son recursos de prueba, pendientes de
      * reemplazo por los definitivos. El poster reutiliza una imagen que ya
@@ -306,7 +314,7 @@ export const siteContent = {
       description:
         "Recorre ambientes en 360° con total libertad y permite que cada cliente descubra el proyecto a su propio ritmo.",
       image: {
-        src: "https://images.unsplash.com/photo-1751711990617-bec0202c854a?q=80&w=1400&auto=format&fit=crop",
+        src: "https://cdn.ruumap.com/thumb_360_77cd6e3518.webp",
         alt: "Interior arquitectónico moderno con iluminación natural",
       },
       embed360: {
