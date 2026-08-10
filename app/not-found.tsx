@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Logo } from "@/components/ui/Logo";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Button } from "@/components/ui/Button";
 
@@ -12,13 +12,7 @@ import { Button } from "@/components/ui/Button";
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background px-5 py-24 text-center">
-      <Image
-        src="/assets/ruum_logo_black.png"
-        alt="ruum"
-        width={90}
-        height={22}
-        className="h-[22px] w-auto"
-      />
+      <Logo className="h-[22px] w-auto text-white" />
 
       <Eyebrow>404</Eyebrow>
 

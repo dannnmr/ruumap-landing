@@ -97,13 +97,21 @@ export function ProjectCard({
   return (
     <article data-project-card className={cn("w-full", className)}>
       {project.href ? (
-        <a href={project.href}>{media}</a>
+        <a href={project.href} target="_blank" rel="noopener noreferrer">
+          {media}
+        </a>
       ) : (
         media
       )}
 
       <div className="pt-5">
-        {project.href ? <a href={project.href}>{heading}</a> : heading}
+        {project.href ? (
+          <a href={project.href} target="_blank" rel="noopener noreferrer">
+            {heading}
+          </a>
+        ) : (
+          heading
+        )}
 
         {showDeveloper && project.developer && (
           <p className="mt-1.5">
@@ -132,6 +140,8 @@ export function ProjectCard({
           (project.href ? (
             <a
               href={project.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-3 inline-block text-[14px] font-light text-accent transition-opacity duration-300 hover:opacity-80"
             >
               Ver proyecto

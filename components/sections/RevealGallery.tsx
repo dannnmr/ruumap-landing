@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { siteContent, type Project } from "@/content/site";
-// import { getDeveloperBySlug } from "@/content/developers"; // ver comentario en toCardData: profileHref deshabilitado a propósito
+import { getDeveloperBySlug } from "@/content/developers";
 import { SECTION_IDS } from "@/lib/navigation";
 import { ProjectCard, type ProjectCardData } from "@/components/ui/ProjectCard";
 
@@ -10,22 +10,11 @@ const { eyebrow, heading, projects } = siteContent.revealGallery;
 
 /**
  * Mapea `Project` (content/site.ts) a la forma agnóstica que consume
- * `ProjectCard`, resolviendo `profileHref` solo cuando el desarrollador
- * referenciado por `developerSlug` existe en content/developers.ts — un
- * `developerSlug` sin desarrollador configurado no debe llevar a un perfil
- * roto (ver specs/project-catalog "Catalog card navigates to the project's
- * developer profile").
- *
- * `profileHref` deshabilitado a propósito por ahora (pedido explícito del
- * usuario, 2026-08-05): no se quiere que se pueda entrar al perfil del
- * desarrollador todavía desde el catálogo. `ProjectCard` ya sabe renderizar
- * la línea de desarrollador como texto no interactivo cuando `profileHref`
- * es `undefined` (mismo patrón que "Ver proyecto" sin `href`), así que no
- * hace falta tocar ese componente. Para reactivarlo: descomentar la
- * resolución de `developer` y volver a pasar `profileHref` abajo.
+ * `ProjectCard`, resolviendo `profileHref` cuando el desarrollador
+ * referenciado por `developerSlug` existe en content/developers.ts.
  */
 function toCardData(project: Project): ProjectCardData {
-  // const developer = project.developerSlug ? getDeveloperBySlug(project.developerSlug) : undefined;
+  const developer = project.developerSlug ? getDeveloperBySlug(project.developerSlug) : undefined;
 
   return {
     name: project.name,
@@ -33,8 +22,7 @@ function toCardData(project: Project): ProjectCardData {
     location: project.location,
     image: project.image,
     href: project.href,
-    // profileHref: developer ? `/desarrolladores/${developer.slug}` : undefined,
-    profileHref: undefined,
+    profileHref: developer ? `/desarrolladores/${developer.slug}` : undefined,
   };
 }
 

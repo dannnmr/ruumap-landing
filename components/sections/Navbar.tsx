@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Logo } from "@/components/ui/Logo";
 import { useEffect, useId, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 import { siteContent } from "@/content/site";
@@ -140,14 +140,7 @@ export default function Navbar() {
         className="fixed inset-x-0 top-0 z-50 flex items-center justify-between
                    px-5 py-4 sm:px-8 sm:py-5 lg:px-12 bg-[#1A1A1C] border-b border-white/5"
       >
-        <Image
-          src="/assets/ruum_logo_black.png"
-          alt="ruum"
-          width={90}
-          height={22}
-          className="h-[20px] w-auto shrink-0 sm:h-[24px]"
-          priority
-        />
+        <Logo className="h-[20px] w-auto shrink-0 text-white sm:h-[24px]" />
 
         <nav
           aria-label="Navegación principal"
