@@ -1,7 +1,9 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    Pick<React.AnchorHTMLAttributes<HTMLAnchorElement>, "target" | "rel"> {
   asChild?: boolean;
   variant?: "primary" | "secondary";
   href?: string;

@@ -36,6 +36,8 @@ export default function ClosingCTA() {
           </p>
           <Button
             href={primaryCta.href}
+            target={primaryCta.href.startsWith("http") ? "_blank" : undefined}
+            rel={primaryCta.href.startsWith("http") ? "noopener noreferrer" : undefined}
             variant="primary"
             className="rounded-[10px] px-9 font-normal py-4 text-sm sm:px-11 sm:py-[18px] sm:text-[15px]"
           >
