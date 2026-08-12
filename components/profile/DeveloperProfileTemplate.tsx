@@ -4,6 +4,7 @@ import { VideoPlayer } from "@/components/ui/VideoPlayer";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { ProfileInfoBlock } from "@/components/profile/ProfileInfoBlock";
 import { RepresentativeBlock } from "@/components/profile/RepresentativeBlock";
+import { BusinessUnitsBlock } from "@/components/profile/BusinessUnitsBlock";
 import { AddedProjectsSection, OtherProjectsSection } from "@/components/profile/ProjectsGrid";
 import { PressSection } from "@/components/profile/PressCard";
 import { ProfileFooter } from "@/components/profile/ProfileFooter";
@@ -16,25 +17,13 @@ export type DeveloperProfileTemplateProps = {
   addedProjects: Project[];
 };
 
-/**
- * Plantilla única y reutilizable para todo perfil de desarrollador —
- * ver docs/references/perfil.desarrollador.inmobiliario.png y
- * specs/developer-profiles. Cada sección se omite por completo cuando su
- * dato no está configurado; esta plantilla es la única responsable de esa
- * decisión (los componentes de sección hijos son presentacionales).
- *
- * Tema claro, propio de esta plantilla y de `components/profile/` — no
- * toca los tokens globales de `app/globals.css` ni el fondo oscuro del
- * resto de la landing (ver design.md "Profile visual theme is light,
- * scoped to components/profile/ and the new route only").
- */
 export function DeveloperProfileTemplate({ developer, addedProjects }: DeveloperProfileTemplateProps) {
   return (
     <div className="bg-[oklch(98%_0_0)] font-sans text-[oklch(15%_0_0)]">
       <ProfileHeader developer={developer} />
 
       {developer.video && (
-        <section className="px-5 py-14 sm:px-10 lg:px-24 lg:py-16">
+        <section className="bg-white px-6 py-12 lg:px-16">
           {/* Tarjeta de video destacada con sombra y proporciones de la referencia visual */}
           <VideoPlayer video={developer.video} className="mx-auto lg:max-w-[720px]" />
         </section>
@@ -42,6 +31,7 @@ export function DeveloperProfileTemplate({ developer, addedProjects }: Developer
 
       <ProfileInfoBlock developer={developer} />
       <RepresentativeBlock developer={developer} />
+      <BusinessUnitsBlock developer={developer} />
       <AddedProjectsSection projects={addedProjects} />
       <OtherProjectsSection otherProjects={developer.otherProjects} />
       <PressSection developer={developer} />

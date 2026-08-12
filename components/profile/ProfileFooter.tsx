@@ -20,8 +20,8 @@ const FOOTER_NAV = [
  */
 export function ProfileFooter({ developer }: { developer: Developer }) {
   return (
-    <footer className="bg-background px-5 py-10 sm:px-10 lg:px-16">
-      <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between">
+    <footer className="bg-background px-6 py-10 lg:px-16">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-8 sm:flex-row sm:justify-between">
         <div className="flex items-center gap-3">
           {developer.logo ? (
             <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded">
@@ -51,7 +51,7 @@ export function ProfileFooter({ developer }: { developer: Developer }) {
         )}
       </div>
 
-      <p className="mt-8 text-center text-[12px] text-muted-7">
+      <p className="mx-auto mt-8 text-center text-[12px] text-muted-7 max-w-[1440px]">
         Desarrollado por Ruum, {new Date().getFullYear()}. Todos los derechos reservados.
       </p>
     </footer>

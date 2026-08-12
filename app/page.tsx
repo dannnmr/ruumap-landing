@@ -23,9 +23,9 @@ export default function Home() {
 
       <Stats />
 
-      <RevealGallery />
-
       <FeatureSection />
+      
+      <RevealGallery />
 
       <HowItWorks />
 

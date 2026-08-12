@@ -2,11 +2,8 @@ import Image from "next/image";
 import type { Developer } from "@/content/developers";
 
 /**
- * Descripción / misión / visión del desarrollador, junto a su imagen
- * principal — cada campo es independientemente opcional (ver
- * specs/developer-profiles "Narrative block presents description, mission,
- * and vision"). No se renderiza nada si ninguno de los cuatro campos está
- * configurado.
+ * Bloque de información del desarrollador (Descripción, Misión y Visión) adaptado 1 a 1 con Figma:
+ * padding: 64px (px-16 py-16), gap: 48px (gap-12), max-w-[1312px] mx-auto.
  */
 export function ProfileInfoBlock({ developer }: { developer: Developer }) {
   const hasText = developer.description || developer.mission || developer.vision;
@@ -15,52 +12,61 @@ export function ProfileInfoBlock({ developer }: { developer: Developer }) {
   return (
     <section
       id="caracteristicas"
-      className="grid scroll-mt-10 grid-cols-1 gap-10 px-5 py-14 sm:px-10 lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-12 lg:px-24 lg:py-16"
+      className="scroll-mt-10 bg-white px-6 py-12 lg:px-16"
     >
-      {hasText && (
-        <div>
-          <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.28em] text-accent">
-            {developer.name}
-          </p>
-          <h1 className="font-display text-[22px] font-normal leading-tight text-surface sm:text-[28px] lg:text-[40px]">
-            Construyendo Futuros Sostenibles
-          </h1>
-
-          {developer.description && (
-            <p className="mb-6 mt-6 text-[16px] font-normal leading-relaxed text-[oklch(35%_0_0)]">
-              {developer.description}
+      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-12">
+        {hasText && (
+          <div className="flex flex-col gap-4">
+            <p className="font-sans text-[12px] font-medium uppercase tracking-[0.25em] text-[#D78951]">
+              {developer.name}
             </p>
-          )}
+            <h2 className="font-display text-[28px] font-light leading-[1.15] tracking-tight text-[#141414] sm:text-[36px] lg:text-[40px]">
+              Construyendo con innovación
+            </h2>
 
-          {developer.mission && (
-            <div className="mb-5">
-              <p className=" text-[16px] font-semibold text-[oklch(15%_0_0)]">Misión</p>
-              <p className="text-[16px] font-normal leading-relaxed text-[oklch(35%_0_0)]">{developer.mission}</p>
-            </div>
-          )}
+            {developer.description && (
+              <p className="mb-2 font-sans text-[15px] font-light leading-relaxed text-[#292929] sm:text-[16px]">
+                {developer.description}
+              </p>
+            )}
 
-          {developer.vision && (
-            <div>
-              <p className=" text-[16px] font-semibold text-[oklch(15%_0_0)]">Visión</p>
-              <p className="text-[16px] font-normal leading-relaxed text-[oklch(35%_0_0)]">{developer.vision}</p>
-            </div>
-          )}
-        </div>
-      )}
+            {developer.mission && (
+              <div className="mb-2">
+                <p className="mb-1 font-sans text-[15px] font-semibold text-[#141414] sm:text-[16px]">
+                  Misión
+                </p>
+                <p className="font-sans text-[15px] font-light leading-relaxed text-[#292929] sm:text-[16px]">
+                  {developer.mission}
+                </p>
+              </div>
+            )}
 
-      {developer.mainImage && (
-        // 540×400 en el diseño Figma (proporción 27/20) — max-w para no
-        // estirarse de más en columnas anchas, se achica en mobile.
-        <div className="relative aspect-27/20 w-full overflow-hidden rounded-xl bg-[oklch(90%_0_0)] lg:max-w-135 lg:justify-self-end">
-          <Image
-            src={developer.mainImage.src}
-            alt={developer.mainImage.alt}
-            fill
-            sizes="(min-width: 1024px) 540px, 100vw"
-            className="object-cover"
-          />
-        </div>
-      )}
+            {developer.vision && (
+              <div>
+                <p className="mb-1 font-sans text-[15px] font-semibold text-[#141414] sm:text-[16px]">
+                  Visión
+                </p>
+                <p className="font-sans text-[15px] font-light leading-relaxed text-[#292929] sm:text-[16px]">
+                  {developer.vision}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {developer.mainImage && (
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-[#141414]">
+            <Image
+              src={developer.mainImage.src}
+              alt={developer.mainImage.alt}
+              fill
+              priority
+              sizes="(min-width: 768px) 45vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        )}
+      </div>
     </section>
   );
 }

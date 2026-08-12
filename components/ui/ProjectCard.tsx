@@ -55,11 +55,13 @@ const THEME_CLASSES = {
     name: "text-white",
     developer: "text-gray-400",
     location: "text-gray-400",
+    action: "text-accent",
   },
   light: {
-    name: "text-[oklch(18%_0_0)]",
-    developer: "text-[oklch(45%_0_0)]",
-    location: "text-[oklch(45%_0_0)]",
+    name: "text-[#141414]",
+    developer: "text-[#8F8F8F]",
+    location: "text-[#8F8F8F]",
+    action: "text-[#D78951]",
   },
 } as const;
 
@@ -75,7 +77,7 @@ export function ProjectCard({
 
   const media = (
     <div
-      className="relative overflow-hidden rounded-xl bg-surface"
+      className="relative overflow-hidden rounded-2xl bg-surface"
       style={{ aspectRatio: aspectRatio.replace("/", " / ") }}
     >
       <Image
@@ -89,7 +91,7 @@ export function ProjectCard({
   );
 
   const heading = (
-    <h3 className={cn("font-display text-[20px] font-normal", palette.name)}>
+    <h3 className={cn("font-display text-[18px] sm:text-[20px] font-normal leading-snug", palette.name)}>
       {project.name}
     </h3>
   );
@@ -104,7 +106,7 @@ export function ProjectCard({
         media
       )}
 
-      <div className="pt-5">
+      <div className="pt-4">
         {project.href ? (
           <a href={project.href} target="_blank" rel="noopener noreferrer">
             {heading}
@@ -114,7 +116,7 @@ export function ProjectCard({
         )}
 
         {showDeveloper && project.developer && (
-          <p className="mt-1.5">
+          <p className="mt-1">
             {project.profileHref ? (
               <Link
                 href={project.profileHref}
@@ -133,7 +135,7 @@ export function ProjectCard({
           </p>
         )}
         {project.location && (
-          <p className={cn("mt-2 text-[13.5px] font-light", palette.location)}>{project.location}</p>
+          <p className={cn("mt-1 text-[13.5px] font-light", palette.location)}>{project.location}</p>
         )}
 
         {showAction &&
@@ -142,17 +144,14 @@ export function ProjectCard({
               href={project.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-block text-[14px] font-light text-accent transition-opacity duration-300 hover:opacity-80"
+              className={cn("mt-2 inline-block text-[14px] font-medium transition-opacity duration-300 hover:opacity-80", palette.action)}
             >
               Ver proyecto
             </a>
           ) : (
-            // Sin URL confirmada todavía — se muestra como acción pendiente,
-            // no interactiva, en vez de inventar un destino (ver
-            // Project.href en content/site.ts).
             <span
               aria-disabled="true"
-              className="mt-3 inline-block cursor-not-allowed text-[13.5px] font-medium text-accent/50"
+              className={cn("mt-2 inline-block cursor-not-allowed text-[13.5px] font-medium opacity-60", palette.action)}
             >
               Ver proyecto
             </span>
