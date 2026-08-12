@@ -45,7 +45,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       data-hero
-      className="relative flex h-screen min-h-150 items-center overflow-hidden bg-background"
+      className="relative flex h-screen min-h-150 items-center justify-center overflow-hidden bg-background"
     >
       {/* Fondo: video ambiental, o imagen estática si el usuario prefiere menos movimiento */}
       <div className="absolute inset-0">
@@ -73,18 +73,25 @@ export default function Hero() {
         )}
       </div>
 
-      {/* Overlays: Oscurecer para legibilidad */}
-      <div className="absolute inset-0 bg-black/20" />
-      <div className="absolute inset-0 bg-linear-to-r from-background/90 via-background/40 to-transparent" />
-      <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent" />
+      {/* Overlays */}
+      {/* Capa 1: Filtro uniforme #000000 al 30% de opacidad */}
+      <div className="absolute inset-0 bg-black/35 pointer-events-none" />
+      {/* Capa 2: Gradiente Linear (75% opacidad): 10% negro abajo -> 50% transparente hacia arriba */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(0deg, rgba(0, 0, 0, 0.75) 10%, rgba(0, 0, 0, 0) 50%)",
+        }}
+      />
 
       {/* Content */}
-      <div className="relative w-full max-w-[900px] px-5 sm:px-10 lg:px-16">
-        <Eyebrow className="mb-6">{eyebrow}</Eyebrow>
+      <div className="relative mx-auto w-full max-w-328 px-5 text-center sm:px-10 lg:px-16">
+        <Eyebrow className="mb-6 text-white/70 drop-shadow-none">{eyebrow}</Eyebrow>
 
         <h1
           className="mb-7 font-display font-light leading-[1.05] tracking-tight text-white
-                     drop-shadow-lg text-[clamp(42px,7vw,88px)]"
+                     text-[clamp(42px,7vw,64px)]"
         >
           {titleLines.map((line, i) => (
             <span key={line} className="block overflow-hidden pb-1">
@@ -101,11 +108,11 @@ export default function Hero() {
         </h1>
 
         <div ref={introRef}>
-          <p className="mb-9 max-w-[540px] font-sans text-[15px] font-light leading-relaxed text-gray-200 drop-shadow-md sm:text-base">
+          <p className="mb-9 mx-auto max-w-[670px] font-sans text-[16px] font-light leading-relaxed text-white/80 sm:text-base">
             {subcopy}
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <Button
               href={primaryCta.href}
               variant="primary"

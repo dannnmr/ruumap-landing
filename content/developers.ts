@@ -163,7 +163,7 @@ const PLACEHOLDER_PRESS_NOTES: PressNote[] = [
 /** Mismo texto de descripción/misión/visión/representante observado en la
  *  referencia, reutilizado literalmente en los tres perfiles. */
 const PLACEHOLDER_DESCRIPTION =
-  "Con más de 10 años de experiencia, {name} se ha consolidado como líder en el sector inmobiliario, con más de 20 proyectos exitosos en áreas residenciales, comerciales e industriales en Bolivia. Nuestro compromiso con la innovación nos permite integrar las últimas tecnologías, como Building Information Modeling (BIM) y materiales ecoamigables, garantizando eficiencia y sostenibilidad en cada obra.";
+  "Con más de 10 años de experiencia, {name} se ha consolidado como líder en el sector inmobiliario, con más de 20 proyectos exitosos en áreas residenciales, comerciales e industriales en Bolivia. Nuestro compromiso con la innovación nos ha permitido integrar las últimas tecnologías, como Building Information Modeling (BIM) y materiales ecoamigables, garantizando eficiencia y sostenibilidad en cada obra.";
 const PLACEHOLDER_MISSION =
   "Transformar ideas en espacios funcionales y sostenibles, superando expectativas con calidad y responsabilidad.";
 const PLACEHOLDER_VISION =

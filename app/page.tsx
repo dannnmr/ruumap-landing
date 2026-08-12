@@ -21,9 +21,9 @@ export default function Home() {
       
       <AboutUs />
 
-      <RevealGallery />
-
       <Stats />
+
+      <RevealGallery />
 
       <FeatureSection />
 

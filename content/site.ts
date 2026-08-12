@@ -153,11 +153,11 @@ export const siteContent = {
 
   hero: {
     eyebrow: "SHOWROOM · DIGITAL",
-    titleLines: ["Haz que cada proyecto se venda ", "antes de construirse."],
+    titleLines: ["Haz que cada proyecto se venda ", "antes de construirse"],
     subcopy:
       "Ruum convierte renders, recorridos virtuales y experiencias inmersivas en una poderosa herramienta para vender más y captar mejores clientes.",
-    primaryCta: { label: "Explorar proyectos", href: "#proyectos" },
-    secondaryCta: { label: "Agendá una demo", href: "#contacto" },
+    primaryCta: { label: "Explora proyectos", href: "#proyectos" },
+    secondaryCta: { label: "Contáctanos", href: "#contacto" },
     /**
      * Provisional: video y poster son recursos de prueba, pendientes de
      * reemplazo por los definitivos. El poster reutiliza una imagen que ya
@@ -265,7 +265,7 @@ export const siteContent = {
           alt: "Fachada de torre residencial de lujo con acabados de vidrio, proyecto Artemis",
         },
         developerSlug: "symprax",
-        href: "https://artemis.ruumap.com/",
+        href: "https://pvnorte.ruumap.com/",
         status: "confirmed",
       },
     ] satisfies Project[],
