@@ -105,9 +105,9 @@ export type Developer = {
 /** Reutilizado tal cual de siteContent.hero/about.video — mismo video/poster
  *  de prueba ya usado en Hero y AboutUs, mismo criterio de reuso. */
 const PLACEHOLDER_VIDEO: SiteVideo = {
-  src: "https://assets.mixkit.co/videos/49806/49806-720.mp4",
+  src: "https://cdn.ruumap.com/video_stto_profile_1_3053d3bd26.mp4",
   poster: {
-    src: "https://images.unsplash.com/photo-1767342976156-83239d26f08e?q=80&w=1920&auto=format&fit=crop",
+    src: "https://cdn.ruumap.com/fotograma_video_1d5fffd0c0.webp",
     alt: "Arquitectura nocturna abstracta, fachadas de rascacielos en contraluz",
   },
 };
@@ -115,12 +115,12 @@ const PLACEHOLDER_VIDEO: SiteVideo = {
 /** Reutilizado de siteContent.closingCTA.contact.photo — mismo placeholder
  *  de retrato ya usado en la landing para un rol de "punto de contacto". */
 const PLACEHOLDER_REPRESENTATIVE_PHOTO: SiteImage = {
-  src: "https://cdn.ruumap.com/899c970782a3830a3ece48d7f38d4e80d66bdbc8_1_436b878ca6.webp",
+  src: "https://cdn.ruumap.com/developer_stto_ddbdd035cc.jpg",
   alt: "Retrato del representante del desarrollador",
 };
 
 const PLACEHOLDER_COVER_IMAGE: SiteImage = {
-  src: "https://cdn.ruumap.com/cover_stto_5f6607968b.png",
+  src: "https://cdn.ruumap.com/cover_78f8bc17ac.webp",
   alt: "Torre mixed-use de gran altura al atardecer",
 };
 
@@ -128,7 +128,7 @@ const PLACEHOLDER_COVER_IMAGE: SiteImage = {
  *  reutilizan acá para las grillas "Proyectos añadidos"/"Otros proyectos"
  *  en vez de introducir assets nuevos. */
 const ITAGUA_IMAGE: SiteImage = {
-  src: "https://images.unsplash.com/photo-1563657296501-c3770ae0057b?q=80&w=1600&auto=format&fit=crop",
+  src: "https://cdn.ruumap.com/itagua_developer_d03e6f0e71.webp",
   alt: "Arquitectura residencial contemporánea con áreas comunes, proyecto Itaguá",
 };
 const BUEN_RETIRO_IMAGE: SiteImage = {
@@ -150,7 +150,7 @@ const STTO_OTHER_PROJECTS: OtherProjectRef[] = [
     name: "Stratto Equipetrol",
     location: "Santa Cruz de la Sierra, Bolivia.",
     image: {
-      src: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1400&auto=format&fit=crop",
+      src: "https://cdn.ruumap.com/stratto_equietrol_stto_ddf3e6b49d.webp",
       alt: "Stratto Equipetrol",
     },
   },
@@ -158,7 +158,7 @@ const STTO_OTHER_PROJECTS: OtherProjectRef[] = [
     name: "Stratto UP",
     location: "Santa Cruz de la Sierra, Bolivia.",
     image: {
-      src: "https://cdn.ruumap.com/noticia1_2bbab59780.webp",
+      src: "https://cdn.ruumap.com/stratto_up_stto_9054617429.webp",
       alt: "Strattato UP",
     },
   },
@@ -166,7 +166,7 @@ const STTO_OTHER_PROJECTS: OtherProjectRef[] = [
     name: "Strattto Vind",
     location: "Santa Cruz de la Sierra, Bolivia.",
     image: {
-      src: "https://images.unsplash.com/photo-1577495508048-b635879837f1?q=80&w=1400&auto=format&fit=crop",
+      src: "https://cdn.ruumap.com/stratto_vind_6077128207.webp",
       alt: "Stratto Vind",
     },
   },
@@ -174,7 +174,7 @@ const STTO_OTHER_PROJECTS: OtherProjectRef[] = [
     name: "Itaguá",
     location: "Santa Cruz de la Sierra, Bolivia.",
     image: {
-      src: "https://cdn.ruumap.com/itagua_facade_2a92cdf6a4.webp",
+      src: "https://cdn.ruumap.com/itagua_stto_night_67658571c2.webp",
       alt: "Itaguá",
     },
   },
@@ -189,7 +189,7 @@ const PLACEHOLDER_PRESS_NOTES: PressNote[] = [
       "Reconocida por innovar y realizar proyectos con tecnología de punta y alta calidad, Stratto, perteneciente al grupo empresarial STTO Group, realizó la entrega del innovador proyecto Stratto UP.",
     href: "https://eldeber.com.bo/te-puede-interesar/stto-group-presento-stratto-up-edificio-residencial-eleva-vida-equipetrol-norte_1780347682",
     image: {
-      src: "https://cdn.ruumap.com/noticia1_2bbab59780.webp",
+      src: "https://cdn.ruumap.com/stratto_up_40c91b6f65.webp",
       alt: "STRATTO UP Edificio residencial",
     },
   },
@@ -200,7 +200,7 @@ const PLACEHOLDER_PRESS_NOTES: PressNote[] = [
       "El proyecto, de 19 niveles y una inversión de $us 7 millones, incorpora domótica avanzada para automatizar la iluminación, climatización, cortinas y accesos inteligentes, brindando mayor comodidad, seguridad y control desde cada departamento.",
     href: "https://construmarket.com.bo/actualidad/presentan-stratto-up-el-edificio-residencial-con-domotica-avanzada/",
     image: {
-      src: "https://cdn.ruumap.com/eab7688a1f5bb947807d1d74e4b4fa47749a539b_fafb679755.webp",
+      src: "https://cdn.ruumap.com/domotica_4b297d1e6b.webp",
       alt: "Domótica avanzada en STRATTO UP",
     },
   },
@@ -211,7 +211,7 @@ const PLACEHOLDER_PRESS_NOTES: PressNote[] = [
       "La capital cruceña fue el escenario del lanzamiento oficial de STRATTO UP, el nuevo proyecto residencial de STTO Group ubicado en Equipetrol Norte.",
     href: "#",
     image: {
-      src: "https://cdn.ruumap.com/fdba2dd9fe1f4e073625cc28209ba96b64ae1844_23d22d0418.webp",
+      src: "https://cdn.ruumap.com/carlos_zamorano_scott_9f89b8b8e2.webp",
       alt: "Lanzamiento oficial de STRATTO UP",
     },
   },
@@ -222,7 +222,7 @@ const PLACEHOLDER_PRESS_NOTES: PressNote[] = [
       "STTO Group es un holding que integra ocho unidades de negocio y combina tecnología, sostenibilidad y marketing estratégico en proyectos inmobiliarios.",
     href: "https://www.linkedin.com/posts/semanario-bolivian-business_stratto-activity-7370063247791509504-2LM-/",
     image: {
-      src: "https://cdn.ruumap.com/899c970782a3830a3ece48d7f38d4e80d66bdbc8_1_436b878ca6.webp",
+      src: "https://cdn.ruumap.com/developer_stto_ddbdd035cc.jpg",
       alt: "Carlos Zamorano en evento de prensa",
     },
   },
@@ -236,6 +236,86 @@ const PLACEHOLDER_MISSION =
   "Transformar ideas en espacios funcionales y sostenibles, superando expectativas con calidad y responsabilidad.";
 const PLACEHOLDER_VISION =
   "Ser referentes globales en construcción innovadora, contribuyendo al desarrollo urbano y al cuidado del medio ambiente.";
+
+const KOHLER_WEISS_OTHER_PROJECTS: OtherProjectRef[] = [
+  {
+    name: "Buen Retiro",
+    location: "Equipetrol Norte, Santa Cruz de la Sierra, Bolivia.",
+    image: {
+      src: "https://cdn.ruumap.com/buenretiro_facade_3d896f3b6f.webp",
+      alt: "Buen Retiro Torre Residencial",
+    },
+  },
+  {
+    name: "Torres Kohler Park",
+    location: "Santa Cruz de la Sierra, Bolivia.",
+    image: {
+      src: "https://images.unsplash.com/photo-1655447844120-083802457b17?q=80&w=1400&auto=format&fit=crop",
+      alt: "Torres Kohler Park",
+    },
+  },
+  {
+    name: "Residencial Green View",
+    location: "Santa Cruz de la Sierra, Bolivia.",
+    image: {
+      src: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1400&auto=format&fit=crop",
+      alt: "Residencial Green View",
+    },
+  },
+];
+
+const KOHLER_WEISS_PRESS_NOTES: PressNote[] = [
+  {
+    outlet: "ARQUITECTURA & DISEÑO",
+    headline: "Buen Retiro: La torre residencial que integra vegetación y arquitectura sostenible",
+    excerpt: "Kohler & Weiss presenta un proyecto enfocado en la conexión entre naturaleza y vida urbana moderna en Equipetrol Norte.",
+    href: "https://buenretiro.ruumap.com/",
+    image: {
+      src: "https://cdn.ruumap.com/buenretiro_facade_3d896f3b6f.webp",
+      alt: "Buen Retiro Torre Residencial",
+    },
+  },
+];
+
+const SYMPRAX_OTHER_PROJECTS: OtherProjectRef[] = [
+  {
+    name: "Artemis",
+    location: "Av. La Salle, Santa Cruz de la Sierra, Bolivia.",
+    image: {
+      src: "https://cdn.ruumap.com/artemise_facade_3343535dfe.webp",
+      alt: "Artemis Premium Tower",
+    },
+  },
+  {
+    name: "Symprax Glass Tower",
+    location: "Santa Cruz de la Sierra, Bolivia.",
+    image: {
+      src: "https://images.unsplash.com/photo-1760259203238-01708384f7a2?q=80&w=1400&auto=format&fit=crop",
+      alt: "Symprax Glass Tower",
+    },
+  },
+  {
+    name: "Plaza Symprax",
+    location: "Santa Cruz de la Sierra, Bolivia.",
+    image: {
+      src: "https://cdn.ruumap.com/641f482eeb7f86bc7f4d30c64f758f1d597d6dd1_0354c6227f.webp",
+      alt: "Plaza Symprax",
+    },
+  },
+];
+
+const SYMPRAX_PRESS_NOTES: PressNote[] = [
+  {
+    outlet: "TECH & REAL ESTATE",
+    headline: "Artemis: Innovación arquitectónica en vidrio y recorridos inmersivos 3D",
+    excerpt: "SYMPRAX revoluciona la experiencia de pre-venta con acabados premium e integración tecnológica de vanguardia.",
+    href: "https://artemis.ruumap.com/",
+    image: {
+      src: "https://cdn.ruumap.com/artemise_facade_3343535dfe.webp",
+      alt: "Proyecto Artemis SYMPRAX",
+    },
+  },
+];
 
 export const developers: Developer[] = [
   {
@@ -253,7 +333,7 @@ export const developers: Developer[] = [
       { label: "LinkedIn", href: "https://www.linkedin.com/company/strattobolivia/" },
     ],
     address: "Torre Alas, Piso 14. Centro Empresarial Equipetrol, Santa Cruz de la Sierra, Bolivia",
-    website: "https://www.sttogroup.com",
+    website: "https://www.stto.bo",
     video: PLACEHOLDER_VIDEO,
     description:
       "Con más de 10 años de experiencia, STTO Group se ha consolidado como líder en el sector inmobiliario, con más de 20 proyectos exitosos en áreas residenciales, comerciales e industriales en Bolivia. Nuestro compromiso con la innovación nos ha permitido integrar las últimas tecnologías, como Building Information Modeling (BIM) y materiales ecoamigables, garantizando eficiencia y sostenibilidad en cada obra.",
@@ -291,15 +371,15 @@ export const developers: Developer[] = [
   {
     slug: "kohler-weiss",
     name: "Kohler & Weiss Real Estate Development",
-    slogan: "Innovación y Diseño Residencial",
+    slogan: "Innovación y Diseño Residencial Sustentable",
     coverImage: {
       src: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1920&auto=format&fit=crop",
       alt: "Torre residencial Kohler & Weiss al atardecer",
     },
     social: [
-      { label: "Facebook", href: "#" },
-      { label: "Instagram", href: "#" },
-      { label: "LinkedIn", href: "#" },
+      { label: "Facebook", href: "https://facebook.com" },
+      { label: "Instagram", href: "https://instagram.com" },
+      { label: "LinkedIn", href: "https://linkedin.com" },
     ],
     address: "Av. San Martín 1500, Equipetrol Norte, Santa Cruz de la Sierra, Bolivia",
     website: "https://buenretiro.ruumap.com",
@@ -312,28 +392,31 @@ export const developers: Developer[] = [
       "Liderar el mercado de desarrollo residencial de lujo en la región a través de proyectos icónicos y sustentables.",
     mainImage: BUEN_RETIRO_IMAGE,
     representative: {
-      name: "Equipo Kohler & Weiss",
+      name: "EQUIPO DIRECCIÓN KOHLER & WEISS",
       role: "Desarrollo y Gestión Inmobiliaria",
       quote:
-        "Diseñamos espacios pensando en la armonía entre la arquitectura urbana y la naturaleza.",
-      photo: PLACEHOLDER_REPRESENTATIVE_PHOTO,
+        "Diseñamos espacios pensando en la armonía entre la arquitectura urbana y la naturaleza, creando entornos vivos donde el bienestar y la sustentabilidad convergen.",
+      photo: {
+        src: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
+        alt: "Director de Kohler & Weiss",
+      },
     },
-    pressNotes: PLACEHOLDER_PRESS_NOTES,
-    otherProjects: STTO_OTHER_PROJECTS,
+    pressNotes: KOHLER_WEISS_PRESS_NOTES,
+    otherProjects: KOHLER_WEISS_OTHER_PROJECTS,
     status: "confirmed",
   },
   {
     slug: "symprax",
     name: "SYMPRAX",
-    slogan: "Arquitectura Inmobiliaria de Vanguardia",
+    slogan: "Arquitectura Inmobiliaria de Vanguardia e Integración 3D",
     coverImage: {
       src: "https://cdn.ruumap.com/641f482eeb7f86bc7f4d30c64f758f1d597d6dd1_0354c6227f.webp",
       alt: "Desarrollo residencial premium SYMPRAX",
     },
     social: [
-      { label: "Facebook", href: "#" },
-      { label: "Instagram", href: "#" },
-      { label: "LinkedIn", href: "#" },
+      { label: "Facebook", href: "https://facebook.com" },
+      { label: "Instagram", href: "https://instagram.com" },
+      { label: "LinkedIn", href: "https://linkedin.com" },
     ],
     address: "Av. La Salle #400, Santa Cruz de la Sierra, Bolivia",
     website: "https://artemis.ruumap.com",
@@ -346,14 +429,17 @@ export const developers: Developer[] = [
       "Consolidarse como la desarrolladora de referencia para proyectos de alta gama y vanguardia tecnológica en Latinoamérica.",
     mainImage: ARTEMIS_IMAGE,
     representative: {
-      name: "Directorio SYMPRAX",
+      name: "EQUIPO CREATIVO SYMPRAX",
       role: "Desarrollo de Proyectos Premium",
       quote:
-        "Ofrecemos proyectos de alta gama que combinan tecnología, diseño y la mejor rentabilidad.",
-      photo: PLACEHOLDER_REPRESENTATIVE_PHOTO,
+        "Ofrecemos proyectos de alta gama que combinan tecnología, diseño inmersivo y la mejor rentabilidad para nuestros clientes.",
+      photo: {
+        src: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
+        alt: "Equipo Directivo SYMPRAX",
+      },
     },
-    pressNotes: PLACEHOLDER_PRESS_NOTES,
-    otherProjects: STTO_OTHER_PROJECTS,
+    pressNotes: SYMPRAX_PRESS_NOTES,
+    otherProjects: SYMPRAX_OTHER_PROJECTS,
     status: "confirmed",
   },
 ];
