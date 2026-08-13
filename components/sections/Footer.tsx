@@ -1,16 +1,52 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLenis } from "lenis/react";
 import { Logo } from "@/components/ui/Logo";
 import { SocialIcon } from "@/components/ui/Icons";
 import { siteContent } from "@/content/site";
 
+import { scrollToHash } from "@/lib/navigation";
+
 const { brand, footer } = siteContent;
 
 export default function Footer() {
+  const lenis = useLenis();
+  const pathname = usePathname();
+
+  function handleLinkClick(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    const hashIndex = href.indexOf("#");
+    if (hashIndex !== -1) {
+      const targetHash = href.substring(hashIndex);
+      const targetPath = href.substring(0, hashIndex);
+
+      if (pathname === "/" || targetPath === "" || targetPath === "/") {
+        if (lenis) {
+          event.preventDefault();
+          scrollToHash(targetHash, lenis);
+        }
+      }
+    }
+  }
+
   return (
-    <footer className="border-t border-border px-5 pb-10 pt-14 sm:px-10 sm:pb-12 sm:pt-16 lg:px-16 lg:pb-[50px] lg:pt-[70px]">
-      <div className="mb-12 grid grid-cols-1 gap-10 sm:mb-16 sm:grid-cols-2 lg:mb-[60px] lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <footer className="border-t border-border px-5 pb-10 pt-14 sm:px-10 sm:pb-12 sm:pt-16 lg:px-16 lg:pb-12.5 lg:pt-17.5">
+      <div className="mb-12 grid grid-cols-1 gap-10 sm:mb-16 sm:grid-cols-2 lg:mb-15 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Logo className="mb-[18px] h-6 w-auto text-white" />
-          <p className="max-w-[280px] text-sm font-medium leading-relaxed text-gray-300">
+          <Logo className="mb-4.5 h-6 w-auto text-white" />
+          <p className="max-w-70 text-sm font-medium leading-relaxed text-gray-300">
             {footer.tagline}
           </p>
         </div>
@@ -22,20 +58,21 @@ export default function Footer() {
             </p>
             <div className="flex flex-col gap-3 text-[14.5px] font-medium text-gray-200">
               {column.links.map((link) => (
-                <a
-                  key={link}
-                  href="#"
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
                   className="w-fit transition-colors duration-300 hover:text-accent"
                 >
-                  {link}
-                </a>
+                  {link.label}
+                </Link>
               ))}
             </div>
           </div>
         ))}
       </div>
 
-      <div className="flex flex-col-reverse items-center gap-6 border-t border-border pt-[30px] text-[13px] text-muted-7 sm:flex-row sm:justify-between">
+      <div className="flex flex-col-reverse items-center gap-6 border-t border-border pt-7.5 text-[13px] text-muted-7 sm:flex-row sm:justify-between">
         <p>
           © {new Date().getFullYear()} {brand.name}. Todos los derechos
           reservados.
@@ -46,6 +83,8 @@ export default function Footer() {
             <a
               key={social.label}
               href={social.href}
+              target={social.href.startsWith("http") ? "_blank" : undefined}
+              rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
               aria-label={social.label}
               className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-300 transition-colors duration-300 hover:bg-white/10 hover:text-white"
             >

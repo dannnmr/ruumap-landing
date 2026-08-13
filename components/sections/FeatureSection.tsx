@@ -130,11 +130,12 @@ export default function FeatureSection() {
       {features.map((feature, i) => (
         <div
           key={feature.index}
+          id={feature.index === "02" ? "recorridos-3d" : undefined}
           ref={(el) => {
             cardRefs.current[i] = el;
           }}
           style={{ zIndex: i + 1 }}
-          className="sticky top-24 flex h-[calc(100dvh-6rem)] items-center overflow-hidden bg-surface shadow-2xl motion-reduce:static motion-reduce:h-auto motion-reduce:rounded-none motion-reduce:border-x-0 motion-reduce:border-t-0 motion-reduce:shadow-none"
+          className="sticky top-24 flex h-[calc(100dvh-6rem)] items-center overflow-hidden bg-surface shadow-2xl motion-reduce:static motion-reduce:h-auto motion-reduce:rounded-none motion-reduce:border-x-0 motion-reduce:border-t-0 motion-reduce:shadow-none scroll-mt-24"
         >
           {/* Cada fila lleva su propio padding (no un gap de contenedor): así el
               espacio interno se arma con el padding de la fila, igual que el

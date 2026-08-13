@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/Button";
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background px-5 py-24 text-center">
-      <Logo className="h-[22px] w-auto text-white" />
+      <Logo className="h-5.5 w-auto text-white" />
 
       <Eyebrow>404</Eyebrow>
 

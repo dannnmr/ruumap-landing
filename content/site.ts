@@ -13,6 +13,8 @@ import { SECTION_IDS, type SectionId } from "@/lib/navigation";
 export type SiteImage = {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
 };
 
 export type SiteVideo = {
@@ -439,13 +441,31 @@ export const siteContent = {
     tagline:
       "La solución de visualización virtual y gestión en tiempo real para proyectos en pre-venta de todo el mundo.",
     columns: [
-      { title: "Producto", links: ["Proyectos", "Recorridos 3D", "Precios"] },
-      { title: "Compañía", links: ["Nosotros", "Contacto"] },
-      { title: "Legal", links: ["Privacidad", "Términos"] },
+      {
+        title: "Producto",
+        links: [
+          { label: "Proyectos", href: "/#proyectos" },
+          { label: "Recorridos 3D", href: "/#recorridos-3d" },
+        ],
+      },
+      {
+        title: "Compañía",
+        links: [
+          { label: "Nosotros", href: "/#nosotros" },
+          { label: "Contacto", href: "/#contacto" },
+        ],
+      },
+      {
+        title: "Legal",
+        links: [
+          { label: "Privacidad", href: "/privacidad" },
+          { label: "Términos", href: "/terminos" },
+        ],
+      },
     ],
     social: [
-      { label: "Facebook", href: "#" },
-      { label: "Instagram", href: "#" },
+      { label: "Facebook", href: "https://www.facebook.com" },
+      { label: "Instagram", href: "https://www.instagram.com" },
     ],
   },
 };

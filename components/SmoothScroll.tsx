@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import { ReactLenis, type LenisRef } from "lenis/react";
 import gsap from "gsap";
 
+import { scrollToHash } from "@/lib/navigation";
+
 /**
  * Lenis debe correr en el mismo ticker que GSAP: si cada uno maneja su
  * propio requestAnimationFrame, los ScrollTrigger con scrub (Hero,
@@ -20,6 +22,15 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
     gsap.ticker.add(onTick);
     gsap.ticker.lagSmoothing(0);
+
+    if (typeof window !== "undefined" && window.location.hash) {
+      const hash = window.location.hash;
+      setTimeout(() => {
+        if (lenisRef.current?.lenis) {
+          scrollToHash(hash, lenisRef.current.lenis);
+        }
+      }, 200);
+    }
 
     return () => gsap.ticker.remove(onTick);
   }, []);

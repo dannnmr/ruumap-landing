@@ -108,7 +108,7 @@ export default function Hero() {
         </h1>
 
         <div ref={introRef}>
-          <p className="mb-9 mx-auto max-w-[670px] font-sans text-[16px] font-light leading-relaxed text-white/80 sm:text-base">
+          <p className="mb-9 mx-auto max-w-167.5 font-sans text-base font-light leading-relaxed text-white/80 sm:text-base">
             {subcopy}
           </p>
 

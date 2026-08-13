@@ -16,6 +16,7 @@ export const SECTION_IDS = {
   servicios: "servicios",
   proceso: "proceso",
   contacto: "contacto",
+  nosotros: "nosotros",
 } as const;
 
 export type SectionId = keyof typeof SECTION_IDS;
@@ -36,3 +37,36 @@ export function sectionHref(id: SectionId): string {
  * juntos — no introducir un segundo número hardcodeado en ningún otro lugar.
  */
 export const NAV_OFFSET_PX = 96;
+
+/**
+ * Realiza un scroll suave hacia el hash especificado respetando Lenis y la
+ * posición exacta de elementos estáticos y tarjetas apiladas (sticky).
+ */
+export function scrollToHash(hash: string, lenis: any) {
+  if (typeof window === "undefined" || !lenis || !hash) return;
+
+  const hashIndex = hash.indexOf("#");
+  const cleanHash = hashIndex !== -1 ? hash.substring(hashIndex) : `#${hash}`;
+
+  // Caso especial: Tarjeta "VISTAS 360°" / "Recorridos 3D" en FeatureSection (stack sticky)
+  if (cleanHash === "#recorridos-3d" || cleanHash === "#vistas-360") {
+    const featureSection = document.getElementById(SECTION_IDS.servicios);
+    const cardEl = document.getElementById("recorridos-3d");
+    if (featureSection) {
+      const sectionTop = featureSection.getBoundingClientRect().top + window.scrollY;
+      const cardHeight = cardEl?.clientHeight || window.innerHeight - NAV_OFFSET_PX;
+
+      // Card 02 tiene índice 1 (segunda carta apilada)
+      const targetScroll = sectionTop - NAV_OFFSET_PX + 1 * cardHeight;
+      lenis.scrollTo(targetScroll);
+      window.history.pushState(null, "", cleanHash);
+      return;
+    }
+  }
+
+  const targetEl = document.querySelector(cleanHash);
+  if (targetEl) {
+    lenis.scrollTo(cleanHash);
+    window.history.pushState(null, "", cleanHash);
+  }
+}
