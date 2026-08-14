@@ -328,7 +328,7 @@ export const siteContent = {
         index: "04",
         name: "PV Norte",
         tag: "DESARROLLO PREMIUM — RECORRIDO 3D",
-        developer: "STTO Group",
+        developer: "Kohler & Weiss",
         location: "Santa Cruz de la Sierra, Bolivia.",
         image: {
           src: "https://cdn.ruumap.com/pvnorte_4d32edbe69.webp",
