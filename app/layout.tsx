@@ -19,7 +19,7 @@ const { brand, meta, closingCTA } = siteContent;
 /**
  * `metadataBase` + robots + Open Graph/Twitter viven acá porque aplican a
  * todo el sitio; cada ruta con su propio contenido (home vía `app/page.tsx`
- * heredando esto, `/privacidad`, `/terminos`, `/desarrolladores/[slug]`)
+ * heredando esto, `/privacy`, `/terms`, `/developers/[slug]`)
  * agrega su propio `alternates.canonical` y, cuando corresponde, su propio
  * title/description/OG (ver esas rutas). El copy en sí vive en
  * `content/site.ts` — nada hardcodeado acá (ver

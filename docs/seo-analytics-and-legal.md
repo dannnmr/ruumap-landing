@@ -20,9 +20,15 @@ construyó y qué queda pendiente" para no tener que releer los changes archivad
   dirección/redes/premios inventados).
 - `app/robots.ts` / `app/sitemap.ts`: `robots.txt` **siempre** permite crawl completo (nunca
   `Disallow: /`); el sitemap solo lista rutas cuando `SITE_INDEXABLE=true` (home + perfiles de
-  desarrollador; `/privacidad`/`/terminos` quedan fuera a propósito).
-- Canonical + OG propios en cada ruta (`/`, `/privacidad`, `/terminos`,
-  `/desarrolladores/[slug]`).
+  desarrollador; `/privacy`/`/terms` quedan fuera a propósito).
+- Canonical + OG propios en cada ruta (`/`, `/privacy`, `/terms`,
+  `/developers/[slug]`).
+- **URLs públicas en inglés (2026-08-14)**: `/developers/[slug]`, `/privacy`, `/terms` son las
+  rutas canónicas/indexables. Las carpetas siguen en español bajo `app/`
+  (`app/desarrolladores/[slug]`, `app/privacidad`, `app/terminos` — no se renombraron) y sirven el
+  contenido vía `rewrites()` en `next.config.ts`; las URLs viejas en español redirigen (308,
+  permanente) a su equivalente en inglés vía `redirects()` en el mismo archivo, así que ningún
+  link/backlink/favorito viejo rompe.
 - Copy SEO (`siteContent.meta` en `content/site.ts`) sigue el posicionamiento aprobado:
   "showrooms digitales/experiencias interactivas" como propuesta principal, "plataforma" solo como
   descriptor técnico — nunca protagonista del title/description.
@@ -57,7 +63,7 @@ construyó y qué queda pendiente" para no tener que releer los changes archivad
 
 ## 3. Páginas legales (`legal-pages-content`)
 
-`/privacidad` y `/terminos` fueron reemplazadas por completo con los documentos aprobados por el
+`/privacy` y `/terms` fueron reemplazadas por completo con los documentos aprobados por el
 equipo legal (`content/site.ts` → `legal.privacidad.document` / `legal.terminos.document`,
 tipo `LegalDocument`, renderizados por `components/legal/LegalPage.tsx`).
 
@@ -77,7 +83,7 @@ tipo `LegalDocument`, renderizados por `components/legal/LegalPage.tsx`).
   los reemplaza manualmente cuando el equipo le entregue los datos, antes de migrar a Cloudflare.
 - La caja "Sobre este documento" de los PDFs (nota interna sobre placeholders pendientes) **no**
   se transcribió — las páginas deben leerse como contenido terminado, no como borrador.
-- `/privacidad#cookies` sigue siendo el destino del banner; el ancla ahora vive en la sección 11.
+- `/privacy#cookies` sigue siendo el destino del banner; el ancla ahora vive en la sección 11.
 
 ## 4. Pendientes conocidos (no resueltos en este trabajo)
 

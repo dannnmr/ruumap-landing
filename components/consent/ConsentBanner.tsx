@@ -9,7 +9,7 @@ const { banner } = siteContent.consent;
 
 /**
  * Banner de consentimiento: "Aceptar analíticas" / "Rechazar" / "Más
- * información" (→ /privacidad#cookies), más la barra fija inferior estándar
+ * información" (→ /privacy#cookies), más la barra fija inferior estándar
  * de cookie-banner. Se muestra vía `ConsentProvider.bannerOpen` — sin
  * decisión vigente, o reabierto desde la entrada "Preferencias de cookies"
  * del footer. No es un modal bloqueante: el resto de la página sigue siendo

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 
 /**
  * Fallback para cualquier URL del sitio sin ruta asociada. Cubre todo lo
- * que no sea /desarrolladores/[slug] (ese segmento tiene su propio
+ * que no sea /developers/[slug] (ese segmento tiene su propio
  * not-found, tema claro — ver app/desarrolladores/[slug]/not-found.tsx).
  * Este usa el tema oscuro de la landing corporativa, igual que el resto
  * del sitio.

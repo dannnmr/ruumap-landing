@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
   const title = `${developer.name} — ${siteContent.brand.name}`;
   const description =
     developer.slogan ?? developer.description ?? `Perfil de ${developer.name} en Ruum.`;
-  const canonical = `/desarrolladores/${developer.slug}`;
+  const canonical = `/developers/${developer.slug}`;
 
   return {
     title,

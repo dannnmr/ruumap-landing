@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: legalMeta.title,
   description: legalMeta.description,
   alternates: {
-    canonical: "/privacidad",
+    canonical: "/privacy",
   },
   openGraph: {
     title: legalMeta.title,
     description: legalMeta.description,
-    url: "/privacidad",
+    url: "/privacy",
   },
 };
 

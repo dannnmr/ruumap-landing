@@ -1,7 +1,7 @@
 import type { LegalContentItem, LegalDocument } from "@/content/site";
 
 /**
- * Renderer compartido para `/privacidad` y `/terminos` — ver
+ * Renderer compartido para `/privacy` y `/terms` — ver
  * openspec/changes/adopt-legal-terms-and-privacy-content. Ambas páginas son
  * wrappers finos alrededor de este componente, pasándole su propio
  * `LegalDocument` (content/site.ts). Cada `LegalContentItem.kind` mapea a

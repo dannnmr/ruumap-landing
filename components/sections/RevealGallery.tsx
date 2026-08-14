@@ -23,7 +23,7 @@ function toCardData(project: Project): ProjectCardData {
     location: project.location,
     image: project.image,
     href: project.href,
-    profileHref: developer ? `/desarrolladores/${developer.slug}` : undefined,
+    profileHref: developer ? `/developers/${developer.slug}` : undefined,
   };
 }
 

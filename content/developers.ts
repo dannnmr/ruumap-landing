@@ -376,7 +376,7 @@ export const developers: Developer[] = [
    *   `ProjectCard` no genera link al perfil (el nombre del desarrollador se muestra como texto
    *   plano, no clickeable) para los proyectos que los referencian en `content/site.ts`.
    * - `generateStaticParams()` en app/desarrolladores/[slug]/page.tsx ya no pre-renderiza esas
-   *   rutas, así que entrar directo a /desarrolladores/kohler-weiss o /desarrolladores/symprax
+   *   rutas, así que entrar directo a /developers/kohler-weiss o /developers/symprax
    *   muestra el not-found de esa ruta.
    * Descomentar (y sacar este comentario) en cuanto se verifique su información.
    *

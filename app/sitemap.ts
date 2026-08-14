@@ -9,10 +9,14 @@ import { getSiteUrl, isSiteIndexable } from "@/lib/site-config";
  * rutas públicas, canónicas: home + cada perfil de desarrollador (misma
  * lista `developers` que ya usa `generateStaticParams` en
  * app/desarrolladores/[slug]/page.tsx — no se introduce una segunda fuente
- * de verdad para qué perfiles existen). `/privacidad` y `/terminos` quedan
+ * de verdad para qué perfiles existen). `/privacy` y `/terms` quedan
  * fuera a propósito: tienen su propio canonical/OG por si se comparten
  * directamente, pero no son superficies de descubrimiento de marketing (ver
  * design.md, "robots.ts / sitemap.ts shape").
+ *
+ * URLs en inglés (`/developers/[slug]`) — coincide con el canonical de
+ * `app/desarrolladores/[slug]/page.tsx` y con los redirects 308 desde las
+ * rutas en español en `next.config.ts` (2026-08-14).
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!isSiteIndexable()) return [];
@@ -22,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: siteUrl },
     ...developers.map((developer) => ({
-      url: `${siteUrl}/desarrolladores/${developer.slug}`,
+      url: `${siteUrl}/developers/${developer.slug}`,
     })),
   ];
 }

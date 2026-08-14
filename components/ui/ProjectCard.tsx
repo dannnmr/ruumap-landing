@@ -26,7 +26,7 @@ export type ProjectCardData = {
    */
   href?: string;
   /** Si está presente, la línea de desarrollador navega al perfil de ese
-   *  desarrollador (siempre interna: `/desarrolladores/[slug]`). */
+   *  desarrollador (siempre interna: `/developers/[slug]`). */
   profileHref?: string;
 };
 
@@ -78,7 +78,7 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const palette = THEME_CLASSES[theme];
 
-  // `profileHref` ya trae el slug embebido (`/desarrolladores/<slug>`) — se
+  // `profileHref` ya trae el slug embebido (`/developers/<slug>`) — se
   // reutiliza para el payload de `profile_open` en vez de agregar un campo
   // nuevo a `ProjectCardData` solo para esto.
   const developerSlug = project.profileHref?.split("/").pop();

@@ -224,7 +224,9 @@ proyecto en la sección correspondiente, debe poder abrirse su perfil.
 - **Ruta**: `app/desarrolladores/[slug]/page.tsx` — dinámica, pre-renderizada en build
   (`generateStaticParams`) para cada desarrollador configurado. Un slug sin desarrollador
   configurado muestra `app/desarrolladores/[slug]/not-found.tsx` en vez de un perfil roto o
-  inventado.
+  inventado. **URL pública (2026-08-14)**: `/developers/[slug]` — la carpeta sigue en español,
+  pero se sirve en inglés vía `rewrites()`/`redirects()` en `next.config.ts` (ver
+  `docs/seo-analytics-and-legal.md`).
 - **Datos**: colección centralizada `content/developers.ts` (`developers: Developer[]`,
   `getDeveloperBySlug`) — nombre, logo, slogan, portada, redes, dirección, sitio web, video,
   descripción, misión, visión, imagen principal, representante, notas de prensa, "otros

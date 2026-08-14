@@ -39,7 +39,7 @@ export type Project = {
   /**
    * Slug del `Developer` (content/developers.ts) al que pertenece este
    * proyecto. Conecta la tarjeta del catálogo con el perfil de ese
-   * desarrollador (`/desarrolladores/[developerSlug]`) y hace que el
+   * desarrollador (`/developers/[developerSlug]`) y hace que el
    * proyecto aparezca en la lista de "proyectos añadidos" de ese perfil.
    * Reemplaza el viejo campo `slug?` (sin uso) — los perfiles son por
    * desarrollador, no por proyecto (confirmado en docs/product-context.md).
@@ -115,7 +115,8 @@ export type Step = {
 };
 
 /**
- * Modelo de contenido para `/privacidad` y `/terminos` — ver
+ * Modelo de contenido para `/privacy` y `/terms` (rutas servidas internamente
+ * desde `app/privacidad`/`app/terminos` — ver next.config.ts) — ver
  * openspec/changes/adopt-legal-terms-and-privacy-content. Cada documento se
  * transcribe de forma casi literal desde los PDFs aprobados por el equipo
  * legal (RUUM_Politica_de_Privacidad, RUUM_Terminos_y_Condiciones_de_Uso):
@@ -541,14 +542,20 @@ export const siteContent = {
       {
         title: "Legal",
         links: [
-          { label: "Privacidad", href: "/privacidad" },
-          { label: "Términos", href: "/terminos" },
+          { label: "Privacidad", href: "/privacy" },
+          { label: "Términos", href: "/terms" },
         ],
       },
     ],
     social: [
-      { label: "Facebook", href: "https://www.facebook.com" },
-      { label: "Instagram", href: "https://www.instagram.com" },
+      {
+        label: "Facebook",
+        href: "https://www.facebook.com/share/1HTZh243De/?mibextid=wwXIfr",
+      },
+      {
+        label: "Instagram",
+        href: "https://www.instagram.com/ruum.ap?igsh=ZmxhdnkyMzBsaTV4",
+      },
     ],
     /** Entrada permanente para reabrir el banner de consentimiento (ver `consent` abajo). */
     cookiePreferences: {
@@ -593,10 +600,17 @@ export const siteContent = {
             ],
           },
           {
-            heading: "2. Quién es responsable de tus datos: el doble rol de RUUM",
+            heading:
+              "2. Quién es responsable de tus datos: el doble rol de RUUM",
             content: [
-              { kind: "p", text: "La Plataforma tiene dos superficies distintas, con implicaciones distintas para tus datos:" },
-              { kind: "subheading", text: "a) Landing Page general y Perfiles de Desarrollador" },
+              {
+                kind: "p",
+                text: "La Plataforma tiene dos superficies distintas, con implicaciones distintas para tus datos:",
+              },
+              {
+                kind: "subheading",
+                text: "a) Landing Page general y Perfiles de Desarrollador",
+              },
               {
                 kind: "p",
                 text: "Si enviaste tus datos a través de la Landing Page general de RUUM o de un Perfil de Desarrollador (es decir, sin pasar por el Enlace propio de un Proyecto específico), RUUM — {{RAZÓN SOCIAL DE RUUM}}, con NIT {{NIT DE RUUM}} y domicilio en {{DOMICILIO LEGAL DE RUUM}} — actúa como RESPONSABLE del tratamiento de esos datos. Lo mismo aplica a los datos de navegación de la Plataforma en general y a los datos de las cuentas de acceso al Panel de Administración.",
@@ -616,7 +630,10 @@ export const siteContent = {
           {
             heading: "3. Qué datos recopilamos",
             content: [
-              { kind: "p", text: "Recopilamos datos personales en los siguientes casos:" },
+              {
+                kind: "p",
+                text: "Recopilamos datos personales en los siguientes casos:",
+              },
               {
                 kind: "list",
                 items: [
@@ -671,7 +688,10 @@ export const siteContent = {
           {
             heading: "6. Con quién compartimos tus datos",
             content: [
-              { kind: "p", text: "Compartimos datos personales únicamente en los siguientes casos:" },
+              {
+                kind: "p",
+                text: "Compartimos datos personales únicamente en los siguientes casos:",
+              },
               {
                 kind: "list",
                 items: [
@@ -681,7 +701,10 @@ export const siteContent = {
                   "Autoridades competentes, cuando exista un requerimiento legal válido.",
                 ],
               },
-              { kind: "p", text: "RUUM no vende datos personales a terceros ni los comparte con fines publicitarios ajenos a la Plataforma." },
+              {
+                kind: "p",
+                text: "RUUM no vende datos personales a terceros ni los comparte con fines publicitarios ajenos a la Plataforma.",
+              },
             ],
           },
           {
@@ -828,25 +851,67 @@ export const siteContent = {
           {
             heading: "2. Definiciones",
             content: [
-              { kind: "p", text: "“Plataforma”: el conjunto de la Landing Page de RUUM, los Perfiles de Desarrollador, los Enlaces de Proyecto y el Panel de Administración, así como cualquier otro producto, aplicación o funcionalidad que RUUM ofrezca bajo su marca." },
-              { kind: "p", text: "“Landing Page de RUUM”: la página principal o portal general de RUUM, donde se exhiben de forma agregada distintos Desarrolladores y Proyectos." },
-              { kind: "p", text: "“Perfil de Desarrollador”: la sección dentro de la Landing Page que agrupa la marca, información institucional y los Proyectos de un Desarrollador." },
-              { kind: "p", text: "“Enlace del Proyecto”: la página propia y específica de un Proyecto dentro de la Plataforma, distinta de la Landing Page." },
-              { kind: "p", text: "“Panel de Administración”: el módulo de acceso restringido que permite a un Desarrollador cargar y editar la información de sus Proyectos." },
-              { kind: "p", text: "“Contenido”: planos, renders, fotografías, videos, tours virtuales, textos, precios, disponibilidad, marcas y demás material relativo a un Proyecto o a un Perfil de Desarrollador." },
-              { kind: "p", text: "“Leads”: los datos de contacto y demás información de Visitantes o Prospectos interesados en un Proyecto, capturados a través de formularios de la Plataforma." },
-              { kind: "p", text: "“Usuario”: toda persona que accede o usa la Plataforma, incluyendo Visitantes, Prospectos y Desarrolladores." },
-              { kind: "p", text: "“Visitante / Prospecto”: toda persona natural que navega la Plataforma y/o consulta información sobre un Proyecto, con o sin intención de compra." },
-              { kind: "p", text: "“Desarrollador”: la empresa u organización dedicada al desarrollo, construcción y/o comercialización de proyectos inmobiliarios que contrata los servicios de RUUM." },
+              {
+                kind: "p",
+                text: "“Plataforma”: el conjunto de la Landing Page de RUUM, los Perfiles de Desarrollador, los Enlaces de Proyecto y el Panel de Administración, así como cualquier otro producto, aplicación o funcionalidad que RUUM ofrezca bajo su marca.",
+              },
+              {
+                kind: "p",
+                text: "“Landing Page de RUUM”: la página principal o portal general de RUUM, donde se exhiben de forma agregada distintos Desarrolladores y Proyectos.",
+              },
+              {
+                kind: "p",
+                text: "“Perfil de Desarrollador”: la sección dentro de la Landing Page que agrupa la marca, información institucional y los Proyectos de un Desarrollador.",
+              },
+              {
+                kind: "p",
+                text: "“Enlace del Proyecto”: la página propia y específica de un Proyecto dentro de la Plataforma, distinta de la Landing Page.",
+              },
+              {
+                kind: "p",
+                text: "“Panel de Administración”: el módulo de acceso restringido que permite a un Desarrollador cargar y editar la información de sus Proyectos.",
+              },
+              {
+                kind: "p",
+                text: "“Contenido”: planos, renders, fotografías, videos, tours virtuales, textos, precios, disponibilidad, marcas y demás material relativo a un Proyecto o a un Perfil de Desarrollador.",
+              },
+              {
+                kind: "p",
+                text: "“Leads”: los datos de contacto y demás información de Visitantes o Prospectos interesados en un Proyecto, capturados a través de formularios de la Plataforma.",
+              },
+              {
+                kind: "p",
+                text: "“Usuario”: toda persona que accede o usa la Plataforma, incluyendo Visitantes, Prospectos y Desarrolladores.",
+              },
+              {
+                kind: "p",
+                text: "“Visitante / Prospecto”: toda persona natural que navega la Plataforma y/o consulta información sobre un Proyecto, con o sin intención de compra.",
+              },
+              {
+                kind: "p",
+                text: "“Desarrollador”: la empresa u organización dedicada al desarrollo, construcción y/o comercialización de proyectos inmobiliarios que contrata los servicios de RUUM.",
+              },
             ],
           },
           {
             heading: "3. Naturaleza del Servicio",
             content: [
-              { kind: "p", text: "RUUM opera una plataforma tecnológica de exhibición y comercialización digital de proyectos inmobiliarios — una vitrina digital que conecta a Desarrolladores Inmobiliarios con el público interesado." },
-              { kind: "p", text: "RUUM no es una agencia inmobiliaria, corredor, intermediario, agente, representante ni garante de ningún Desarrollador ni de sus Proyectos. RUUM no participa en la negociación, celebración ni ejecución de contratos de compraventa, reserva, promesa de venta, anticrético o cualquier otro instrumento entre un Desarrollador y sus clientes." },
-              { kind: "p", text: "RUUM no interviene, procesa, custodia ni recibe pagos, reservas, señas o anticipos relacionados con la compra de unidades inmobiliarias. Toda transacción se pacta y ejecuta de forma directa entre el Desarrollador y sus clientes, sin intermediación de RUUM." },
-              { kind: "p", text: "Los componentes, funcionalidades y modalidades comerciales de la Plataforma pueden evolucionar, ampliarse, modificarse o descontinuarse en el tiempo, a criterio de RUUM y conforme a su desarrollo como producto y negocio." },
+              {
+                kind: "p",
+                text: "RUUM opera una plataforma tecnológica de exhibición y comercialización digital de proyectos inmobiliarios — una vitrina digital que conecta a Desarrolladores Inmobiliarios con el público interesado.",
+              },
+              {
+                kind: "p",
+                text: "RUUM no es una agencia inmobiliaria, corredor, intermediario, agente, representante ni garante de ningún Desarrollador ni de sus Proyectos. RUUM no participa en la negociación, celebración ni ejecución de contratos de compraventa, reserva, promesa de venta, anticrético o cualquier otro instrumento entre un Desarrollador y sus clientes.",
+              },
+              {
+                kind: "p",
+                text: "RUUM no interviene, procesa, custodia ni recibe pagos, reservas, señas o anticipos relacionados con la compra de unidades inmobiliarias. Toda transacción se pacta y ejecuta de forma directa entre el Desarrollador y sus clientes, sin intermediación de RUUM.",
+              },
+              {
+                kind: "p",
+                text: "Los componentes, funcionalidades y modalidades comerciales de la Plataforma pueden evolucionar, ampliarse, modificarse o descontinuarse en el tiempo, a criterio de RUUM y conforme a su desarrollo como producto y negocio.",
+              },
             ],
           },
           {
@@ -919,7 +984,10 @@ export const siteContent = {
           {
             heading: "8. Uso Aceptable de la Plataforma",
             content: [
-              { kind: "p", text: "Al usar la Plataforma, el Usuario se compromete a no:" },
+              {
+                kind: "p",
+                text: "Al usar la Plataforma, el Usuario se compromete a no:",
+              },
               {
                 kind: "list",
                 items: [
@@ -977,7 +1045,10 @@ export const siteContent = {
           {
             heading: "12. Limitación de Responsabilidad",
             content: [
-              { kind: "p", text: "En la máxima medida permitida por la normativa boliviana aplicable, RUUM no será responsable por:" },
+              {
+                kind: "p",
+                text: "En la máxima medida permitida por la normativa boliviana aplicable, RUUM no será responsable por:",
+              },
               {
                 kind: "list",
                 items: [
@@ -1024,7 +1095,10 @@ export const siteContent = {
           {
             heading: "16. Legislación Aplicable y Resolución de Controversias",
             content: [
-              { kind: "p", text: "Estos Términos se rigen e interpretan conforme a las leyes del Estado Plurinacional de Bolivia." },
+              {
+                kind: "p",
+                text: "Estos Términos se rigen e interpretan conforme a las leyes del Estado Plurinacional de Bolivia.",
+              },
               {
                 kind: "p",
                 text: "Las controversias entre RUUM y un Desarrollador se resuelven conforme al mecanismo pactado en su contrato comercial (arbitraje ante el Centro de Conciliación y Arbitraje Comercial de CAINCO, Santa Cruz de la Sierra).",
@@ -1050,7 +1124,10 @@ export const siteContent = {
                 kind: "p",
                 text: "Estos Términos, junto con la Política de Privacidad de RUUM, constituyen el acuerdo íntegro entre RUUM y el Usuario respecto del uso general de la Plataforma, sin perjuicio de los contratos comerciales específicos suscritos con los Desarrolladores.",
               },
-              { kind: "p", text: "El idioma que prevalece para efectos de interpretación de estos Términos es el español." },
+              {
+                kind: "p",
+                text: "El idioma que prevalece para efectos de interpretación de estos Términos es el español.",
+              },
             ],
           },
           {
@@ -1080,7 +1157,7 @@ export const siteContent = {
       acceptLabel: "Aceptar",
       rejectLabel: "Rechazar",
       moreInfoLabel: "Más información",
-      moreInfoHref: "/privacidad#cookies",
+      moreInfoHref: "/privacy#cookies",
     },
   },
 };
