@@ -13,7 +13,7 @@ import type { LegalContentItem, LegalDocument } from "@/content/site";
 function LegalContentBlock({ item }: { item: LegalContentItem }) {
   switch (item.kind) {
     case "p":
-      return <p>{item.text}</p>;
+      return <p className="text-justify">{item.text}</p>;
     case "subheading":
       return <p className="font-medium text-white">{item.text}</p>;
     case "list":
@@ -26,7 +26,7 @@ function LegalContentBlock({ item }: { item: LegalContentItem }) {
       );
     case "callout":
       return (
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5 text-sm leading-relaxed text-gray-200">
+        <div className="rounded-xl border border-white/10 bg-white/5 p-5 text-sm leading-relaxed text-gray-200 text-justify">
           {item.title && (
             <strong className="text-[#D78951] block mb-1">{item.title}</strong>
           )}

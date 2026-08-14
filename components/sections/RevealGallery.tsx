@@ -41,10 +41,44 @@ function toCardData(project: Project): ProjectCardData {
 export default function RevealGallery() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  // Índice de la tarjeta "activa" para las flechas. Se navega siempre a un
+  // target absoluto (ver scrollByCard) en vez de acumular deltas relativos
+  // sobre track.scrollLeft — con scroll-snap + scroll smooth en mobile, dos
+  // clicks seguidos (next → prev) pueden superponerse con la animación
+  // anterior todavía en vuelo, y leer scrollLeft en ese momento da un valor
+  // intermedio: el segundo click entonces no vuelve exactamente a la
+  // posición original. Trackear el índice evita depender de ese timing.
+  const activeIndexRef = useRef(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(true);
 
   useSectionViewTracking(sectionRef, "projects");
+
+  const getCards = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return [];
+    return Array.from(track.querySelectorAll<HTMLElement>("[data-project-card]"));
+  }, []);
+
+  // Resincroniza el índice activo con la posición real de scroll (soporta
+  // swipe manual). Se corre solo cuando el scroll ya se asentó (scrollend),
+  // no en cada tick — si se recalculara durante la animación smooth de un
+  // click en las flechas, pisaría el índice "optimista" recién fijado.
+  const syncActiveIndex = useCallback(() => {
+    const track = trackRef.current;
+    const cards = getCards();
+    if (!track || cards.length === 0) return;
+    let closest = 0;
+    let closestDelta = Infinity;
+    cards.forEach((card, idx) => {
+      const delta = Math.abs(card.offsetLeft - track.scrollLeft);
+      if (delta < closestDelta) {
+        closestDelta = delta;
+        closest = idx;
+      }
+    });
+    activeIndexRef.current = closest;
+  }, [getCards]);
 
   const updateEdges = useCallback(() => {
     const track = trackRef.current;
@@ -55,24 +89,26 @@ export default function RevealGallery() {
 
   useEffect(() => {
     updateEdges();
+    syncActiveIndex();
     const track = trackRef.current;
     if (!track) return;
 
     track.addEventListener("scroll", updateEdges, { passive: true });
+    track.addEventListener("scrollend", syncActiveIndex, { passive: true });
     window.addEventListener("resize", updateEdges);
     return () => {
       track.removeEventListener("scroll", updateEdges);
+      track.removeEventListener("scrollend", syncActiveIndex);
       window.removeEventListener("resize", updateEdges);
     };
-  }, [updateEdges]);
+  }, [updateEdges, syncActiveIndex]);
 
   function scrollByCard(direction: 1 | -1) {
-    const track = trackRef.current;
-    if (!track) return;
-    const card = track.querySelector<HTMLElement>("[data-project-card]");
-    const gap = 24;
-    const amount = card ? card.offsetWidth + gap : track.clientWidth * 0.8;
-    track.scrollBy({ left: direction * amount, behavior: "smooth" });
+    const cards = getCards();
+    if (cards.length === 0) return;
+    const nextIndex = Math.min(Math.max(activeIndexRef.current + direction, 0), cards.length - 1);
+    activeIndexRef.current = nextIndex;
+    cards[nextIndex].scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
   }
 
   return (
