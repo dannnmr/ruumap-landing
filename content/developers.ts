@@ -368,6 +368,18 @@ export const developers: Developer[] = [
     otherProjects: STTO_OTHER_PROJECTS,
     status: "confirmed",
   },
+  /**
+   * DESHABILITADOS TEMPORALMENTE (2026-08-14, pedido explícito del usuario): Kohler & Weiss y
+   * SYMPRAX todavía no tienen su información verificada — solo STTO Group la tiene. Mientras
+   * estén comentados acá, no aparecen en `developers` y por lo tanto:
+   * - `getDeveloperBySlug()` devuelve `undefined` para "kohler-weiss"/"symprax", así que
+   *   `ProjectCard` no genera link al perfil (el nombre del desarrollador se muestra como texto
+   *   plano, no clickeable) para los proyectos que los referencian en `content/site.ts`.
+   * - `generateStaticParams()` en app/desarrolladores/[slug]/page.tsx ya no pre-renderiza esas
+   *   rutas, así que entrar directo a /desarrolladores/kohler-weiss o /desarrolladores/symprax
+   *   muestra el not-found de esa ruta.
+   * Descomentar (y sacar este comentario) en cuanto se verifique su información.
+   *
   {
     slug: "kohler-weiss",
     name: "Kohler & Weiss Real Estate Development",
@@ -442,6 +454,7 @@ export const developers: Developer[] = [
     otherProjects: SYMPRAX_OTHER_PROJECTS,
     status: "confirmed",
   },
+  */
 ];
 
 export function getDeveloperBySlug(slug: string): Developer | undefined {

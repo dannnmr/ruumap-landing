@@ -12,12 +12,13 @@ import { Embed360Viewer } from "@/components/ui/Embed360Viewer";
 import { AutoplayVideo } from "@/components/ui/AutoplayVideo";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useStackedCards } from "@/hooks/useStackedCards";
+import { useSectionViewTracking } from "@/hooks/useSectionViewTracking";
 import { SECTION_IDS } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const { features } = siteContent;
+const { features, featuresSection } = siteContent;
 
 /**
  * Imagen de una fila de features:
@@ -121,12 +122,24 @@ export default function FeatureSection() {
 
   const { activeIndex } = useStackedCards({ sectionRef, cardRefs, disabled: prefersReducedMotion });
 
+  useSectionViewTracking(sectionRef, "features");
+
   return (
     <section
       ref={sectionRef}
       id={SECTION_IDS.servicios}
       className="relative scroll-mt-24 bg-background"
     >
+      {/*
+        Encabezado semántico visualmente oculto: el stack `sticky` no tiene
+        bloque de intro (pedido explícito del usuario, 2026-08-05) y agregar
+        un <h2> visible correría dónde empieza a pegarse la primera tarjeta,
+        cambiando el layout actual. `sr-only` cierra el salto de jerarquía
+        (antes h1 -> h3 directo) para lectores de pantalla/SEO sin mover un
+        solo píxel — ver content/site.ts, `featuresSection`.
+      */}
+      <h2 className="sr-only">{featuresSection.heading}</h2>
+
       {features.map((feature, i) => (
         <div
           key={feature.index}

@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { siteContent } from "@/content/site";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useSectionViewTracking } from "@/hooks/useSectionViewTracking";
 import { SECTION_IDS } from "@/lib/navigation";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -23,6 +24,8 @@ export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
   const columnRefs = useRef<(HTMLDivElement | null)[]>([]);
   const prefersReducedMotion = usePrefersReducedMotion();
+
+  useSectionViewTracking(sectionRef, "how_it_works");
 
   useGSAP(
     () => {

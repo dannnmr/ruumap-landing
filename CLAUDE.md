@@ -40,6 +40,9 @@ tecnológica, visual e inmersiva. Detalle completo en [docs/product-context.md](
 - **Estado real de cada sección** (qué coincide con el diseño de referencia y qué no):
   [docs/page-structure.md](docs/page-structure.md).
 - **Reglas de performance**: [docs/performance-guidelines.md](docs/performance-guidelines.md).
+- **SEO técnico, analítica/consentimiento y páginas legales** (qué se implementó, variables de
+  entorno, pendientes conocidos):
+  [docs/seo-analytics-and-legal.md](docs/seo-analytics-and-legal.md).
 
 ## Reglas para preservar el diseño
 

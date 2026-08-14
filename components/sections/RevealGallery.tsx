@@ -5,6 +5,7 @@ import { siteContent, type Project } from "@/content/site";
 import { getDeveloperBySlug } from "@/content/developers";
 import { SECTION_IDS } from "@/lib/navigation";
 import { ProjectCard, type ProjectCardData } from "@/components/ui/ProjectCard";
+import { useSectionViewTracking } from "@/hooks/useSectionViewTracking";
 
 const { eyebrow, heading, projects } = siteContent.revealGallery;
 
@@ -38,9 +39,12 @@ function toCardData(project: Project): ProjectCardData {
  * `add-reusable-developer-profiles`.
  */
 export default function RevealGallery() {
+  const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(true);
+
+  useSectionViewTracking(sectionRef, "projects");
 
   const updateEdges = useCallback(() => {
     const track = trackRef.current;
@@ -72,7 +76,11 @@ export default function RevealGallery() {
   }
 
   return (
-    <section id={SECTION_IDS.proyectos} className="scroll-mt-24 px-5 py-14 sm:px-10 sm:py-20 lg:px-16 lg:py-16">
+    <section
+      ref={sectionRef}
+      id={SECTION_IDS.proyectos}
+      className="scroll-mt-24 px-5 py-14 sm:px-10 sm:py-20 lg:px-16 lg:py-16"
+    >
       <div className="mb-10 sm:mb-14">
         <p className="mb-4 font-sans text-[12px] font-light uppercase tracking-[0.28em] text-accent sm:mb-[18px] sm:text-[13px]">
           {eyebrow}

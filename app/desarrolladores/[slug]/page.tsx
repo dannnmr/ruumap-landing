@@ -26,9 +26,25 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
     return { title: `Perfil no encontrado — ${siteContent.brand.name}` };
   }
 
+  const title = `${developer.name} — ${siteContent.brand.name}`;
+  const description =
+    developer.slogan ?? developer.description ?? `Perfil de ${developer.name} en Ruum.`;
+  const canonical = `/desarrolladores/${developer.slug}`;
+
   return {
-    title: `${developer.name} — ${siteContent.brand.name}`,
-    description: developer.slogan ?? developer.description ?? `Perfil de ${developer.name} en Ruum.`,
+    title,
+    description,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      images: developer.coverImage
+        ? [{ url: developer.coverImage.src, alt: developer.coverImage.alt }]
+        : undefined,
+    },
   };
 }
 

@@ -8,12 +8,14 @@ import { SocialIcon } from "@/components/ui/Icons";
 import { siteContent } from "@/content/site";
 
 import { scrollToHash } from "@/lib/navigation";
+import { useConsent } from "@/components/consent/ConsentProvider";
 
 const { brand, footer } = siteContent;
 
 export default function Footer() {
   const lenis = useLenis();
   const pathname = usePathname();
+  const { reopen } = useConsent();
 
   function handleLinkClick(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
     if (
@@ -73,10 +75,19 @@ export default function Footer() {
       </div>
 
       <div className="flex flex-col-reverse items-center gap-6 border-t border-border pt-7.5 text-[13px] text-muted-7 sm:flex-row sm:justify-between">
-        <p>
-          © {new Date().getFullYear()} {brand.name}. Todos los derechos
-          reservados.
-        </p>
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+          <p>
+            © {new Date().getFullYear()} {brand.name}. Todos los derechos
+            reservados.
+          </p>
+          <button
+            type="button"
+            onClick={reopen}
+            className="transition-colors duration-300 hover:text-accent"
+          >
+            {footer.cookiePreferences.label}
+          </button>
+        </div>
 
         <div className="flex gap-3">
           {footer.social.map((social) => (

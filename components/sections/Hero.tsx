@@ -8,6 +8,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useInViewport } from "@/hooks/useInViewport";
 import { Button } from "@/components/ui/Button";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+import { track } from "@/lib/analytics/track";
 
 const { eyebrow, titleLines, subcopy, primaryCta, secondaryCta, video } =
   siteContent.hero;
@@ -117,6 +118,9 @@ export default function Hero() {
               href={primaryCta.href}
               variant="primary"
               className="rounded-[10px] px-8 py-3.5"
+              onClick={() =>
+                track({ name: "cta_click", label: primaryCta.label, target: primaryCta.href })
+              }
             >
               {primaryCta.label}
             </Button>
@@ -124,6 +128,9 @@ export default function Hero() {
               href={secondaryCta.href}
               variant="secondary"
               className="rounded-[10px] px-8 py-3.5"
+              onClick={() =>
+                track({ name: "cta_click", label: secondaryCta.label, target: secondaryCta.href })
+              }
             >
               {secondaryCta.label}
             </Button>

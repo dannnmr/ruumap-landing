@@ -29,6 +29,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# openspec: planning/spec artifacts for AI-assisted development — local only,
+# never meant for the shared repo or production (Next.js never builds/serves
+# these files regardless, but they're excluded here too since collaborators
+# with repo access shouldn't see Claude's internal planning process either).
+openspec/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

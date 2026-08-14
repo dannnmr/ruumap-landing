@@ -1,13 +1,23 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
 import { siteContent } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 import { SECTION_IDS } from "@/lib/navigation";
+import { useSectionViewTracking } from "@/hooks/useSectionViewTracking";
+import { track } from "@/lib/analytics/track";
 
 const { heading, subcopy, primaryCta, backgroundImage } = siteContent.closingCTA;
 
 export default function ClosingCTA() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useSectionViewTracking(sectionRef, "contact");
+
   return (
     <section
+      ref={sectionRef}
       id={SECTION_IDS.contacto}
       className="relative flex min-h-[640px] items-center justify-center scroll-mt-24 overflow-hidden bg-background"
     >
@@ -40,6 +50,7 @@ export default function ClosingCTA() {
             rel={primaryCta.href.startsWith("http") ? "noopener noreferrer" : undefined}
             variant="primary"
             className="rounded-[10px] px-9 font-normal py-4 text-sm sm:px-11 sm:py-[18px] sm:text-[15px]"
+            onClick={() => track({ name: "contact_click", channel: "whatsapp" })}
           >
             {primaryCta.label}
           </Button>

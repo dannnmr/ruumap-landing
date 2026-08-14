@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { SiteImage } from "@/content/site";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics/track";
 
 /**
  * Forma de datos mínima y agnóstica de origen para renderizar una tarjeta de
@@ -75,6 +78,20 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const palette = THEME_CLASSES[theme];
 
+  // `profileHref` ya trae el slug embebido (`/desarrolladores/<slug>`) — se
+  // reutiliza para el payload de `profile_open` en vez de agregar un campo
+  // nuevo a `ProjectCardData` solo para esto.
+  const developerSlug = project.profileHref?.split("/").pop();
+
+  function trackProjectOpen() {
+    track({ name: "project_open", project: project.name, developerSlug });
+  }
+
+  function trackProfileOpen() {
+    if (!developerSlug) return;
+    track({ name: "profile_open", developerSlug });
+  }
+
   const media = (
     <div
       className="relative overflow-hidden rounded-2xl bg-surface"
@@ -99,7 +116,7 @@ export function ProjectCard({
   return (
     <article data-project-card className={cn("w-full", className)}>
       {project.href ? (
-        <a href={project.href} target="_blank" rel="noopener noreferrer">
+        <a href={project.href} target="_blank" rel="noopener noreferrer" onClick={trackProjectOpen}>
           {media}
         </a>
       ) : (
@@ -108,7 +125,7 @@ export function ProjectCard({
 
       <div className="pt-4">
         {project.href ? (
-          <a href={project.href} target="_blank" rel="noopener noreferrer">
+          <a href={project.href} target="_blank" rel="noopener noreferrer" onClick={trackProjectOpen}>
             {heading}
           </a>
         ) : (
@@ -120,6 +137,7 @@ export function ProjectCard({
             {project.profileHref ? (
               <Link
                 href={project.profileHref}
+                onClick={trackProfileOpen}
                 className={cn(
                   "text-[11px] font-light uppercase tracking-[0.12em] transition-opacity duration-300 hover:opacity-70",
                   palette.developer
@@ -144,6 +162,7 @@ export function ProjectCard({
               href={project.href}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackProjectOpen}
               className={cn("mt-2 inline-block text-[14px] font-medium transition-opacity duration-300 hover:opacity-80", palette.action)}
             >
               Ver proyecto
