@@ -498,7 +498,7 @@ export const siteContent = {
       "Contáctanos y conversemos acerca de tu próximo proyecto inmobiliario.",
     primaryCta: {
       label: "Contáctanos",
-      href: "https://wa.me/59168183484?text=Quiero%20m%C3%A1s%20informaci%C3%B3n",
+      href: "https://wa.me/59175018763?text=%C2%A1Hola!%20Estoy%20interesado/a%20en%20recibir%20m%C3%A1s%20informaci%C3%B3n.",
     },
     backgroundImage: {
       src: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1920&auto=format&fit=crop",
@@ -506,7 +506,7 @@ export const siteContent = {
     } satisfies SiteImage,
     contact: {
       name: "Guillermo Castillo",
-      phone: "+591 68183484",
+      phone: "+591 75018763",
       email: "atencion@ruumap.com",
       photo: {
         src: "/images/contact.section.img.webp",
